@@ -1,0 +1,7 @@
+0-240   frames  : idle
+241-263 frames  : running
+264-314 frames  : waitingforbattle
+315-350 frames  : attack
+351-386 frames  : gethit
+387-457 frames  : die
+458-1275 frames : club dancing :)
