@@ -1,53 +1,9 @@
 Assets/JustGood.meta
-Assets/JustGood/GoodEditor.meta
-Assets/JustGood/GoodEditor/Editor.meta
-Assets/JustGood/GoodEditor/Editor/GoodEditorPanel.cs
-Assets/JustGood/GoodEditor/Editor/GoodEditorPanel.cs.meta
-Assets/JustGood/GoodEditor/Editor/GoodEditorPrefs.cs
-Assets/JustGood/GoodEditor/Editor/GoodEditorPrefs.cs.meta
-Assets/JustGood/GoodEditor/Editor/GoodEditorProcess.cs
-Assets/JustGood/GoodEditor/Editor/GoodEditorProcess.cs.meta
-Assets/JustGood/GoodSVN.meta
-Assets/JustGood/GoodSVN/Editor.meta
-Assets/JustGood/GoodSVN/Editor/GoodCrossOver.sh
-Assets/JustGood/GoodSVN/Editor/GoodCrossOver.sh.meta
-Assets/JustGood/GoodSVN/Editor/GoodSVN.cs
-Assets/JustGood/GoodSVN/Editor/GoodSVN.cs.meta
-Assets/JustGood/GoodSVN/Editor/GoodSVNPanel.cs
-Assets/JustGood/GoodSVN/Editor/GoodSVNPanel.cs.meta
-Assets/JustGood/GoodSVN/Readme.txt
-Assets/JustGood/GoodSVN/Readme.txt.meta
-Assets/JustGood/Textures.meta
-Assets/JustGood/Textures/JustGoodDesign.png
-Assets/JustGood/Textures/JustGoodDesign.png.meta
+Assets/JustGood/
 Assets/TAGENIGMA Toolbox.meta
-Assets/TAGENIGMA Toolbox/Editor.meta
-Assets/TAGENIGMA Toolbox/Editor/MenuAssetsConvertToDosLineEndings.cs
-Assets/TAGENIGMA Toolbox/Editor/MenuAssetsConvertToDosLineEndings.cs.meta
-Assets/TAGENIGMA Toolbox/Editor/MenuAssetsConvertToUnixEndings.cs
-Assets/TAGENIGMA Toolbox/Editor/MenuAssetsConvertToUnixEndings.cs.meta
-Assets/TAGENIGMA Toolbox/Editor/MenuAssetsRemoveDiffFiles.cs
-Assets/TAGENIGMA Toolbox/Editor/MenuAssetsRemoveDiffFiles.cs.meta
-Assets/TAGENIGMA Toolbox/Editor/MenuAssetsSyncVS11.cs
-Assets/TAGENIGMA Toolbox/Editor/MenuAssetsSyncVS11.cs.meta
-Assets/TAGENIGMA Toolbox/Editor/MenuAssetsSyncVS2008.cs
-Assets/TAGENIGMA Toolbox/Editor/MenuAssetsSyncVS2008.cs.meta
-Assets/TAGENIGMA Toolbox/Editor/MenuAssetsSyncVS2010.cs
-Assets/TAGENIGMA Toolbox/Editor/MenuAssetsSyncVS2010.cs.meta
-Assets/TAGENIGMA Toolbox/Editor/MenuAssetsSyncVSCommon.cs
-Assets/TAGENIGMA Toolbox/Editor/MenuAssetsSyncVSCommon.cs.meta
-Assets/TAGENIGMA Toolbox/Editor/PostProcessorLineEndings.cs
-Assets/TAGENIGMA Toolbox/Editor/PostProcessorLineEndings.cs.meta
-Assets/TAGENIGMA Toolbox/Editor/ToolboxEditor.cs
-Assets/TAGENIGMA Toolbox/Editor/ToolboxEditor.cs.meta
-Assets/TAGENIGMA Toolbox/Readme.txt
-Assets/TAGENIGMA Toolbox/Readme.txt.meta
-Assets/TAGENIGMA Toolbox/RegisterSymbol.cs
-Assets/TAGENIGMA Toolbox/RegisterSymbol.cs.meta
+Assets/TAGENIGMA Toolbox/
 Assets/UnityVS.meta
-Assets/UnityVS/Editor.meta
-Assets/UnityVS/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll.meta
-Assets/UnityVS/Editor/SyntaxTree.VisualStudio.Unity.Messaging.dll.meta
+Assets/UnityVS/
 Library/
 Temp/
 *.csproj
