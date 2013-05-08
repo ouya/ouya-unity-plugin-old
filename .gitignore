@@ -9,3 +9,4 @@ Temp/
 *.csproj
 *.sln
 UnityVS.ouya-unity-plugin.sln.DotSettings
+obj/Debug/ouya-unity-plugin-VS11.csproj.FileListAbsolute.txt
