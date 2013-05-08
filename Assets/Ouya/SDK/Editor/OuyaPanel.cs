@@ -155,7 +155,17 @@ public class OuyaPanel : EditorWindow
             {
                 using (StreamReader sr = new StreamReader(GetApplicationJava()))
                 {
-                    applicationJavaPackageName = sr.ReadLine();
+                    string line = string.Empty;
+                    do
+                    {
+                        line = sr.ReadLine();
+                        if (line.Trim().StartsWith("package"))
+                        {
+                            applicationJavaPackageName = line;
+                            break;
+                        }
+                        
+                    } while (null != line);
                 }
             }
             catch (System.Exception)
@@ -442,25 +452,36 @@ public class OuyaPanel : EditorWindow
             if (File.Exists(path))
             {
                 StringBuilder sb = new StringBuilder();
-                sb.AppendFormat("package {0};", bundleId);
-                sb.AppendLine();
-
                 using (StreamReader sr = new StreamReader(GetApplicationJava()))
                 {
-                    int count = 0;
+                    bool foundPackge = false;
                     string line;
                     do
                     {
                         line = sr.ReadLine();
                         if (null != line)
                         {
-                            if (count > 0)
+                            if (!foundPackge)
+                            {
+                                if (line.Trim().StartsWith("package"))
+                                {
+                                    sb.AppendFormat("package {0};", bundleId);
+                                    sb.AppendLine();
+
+                                    foundPackge = true;
+                                }
+                                else
+                                {
+                                    sb.Append(line);
+                                    sb.AppendLine();
+                                }
+                            }
+                            else
                             {
                                 sb.Append(line);
                                 sb.AppendLine();
                             }
                         }
-                        ++count;
                     } while (null != line);
                 }
 
@@ -1493,7 +1514,7 @@ public class OuyaPanel : EditorWindow
                 GUILayout.Label(GetLicenseInfo(), EditorStyles.wordWrappedLabel, GUILayout.MaxWidth(position.width - 130));
                 GUILayout.EndHorizontal();
 
-                ShowIcons();
+                //ShowIcons();
 
                 // show splash screen settings
 
