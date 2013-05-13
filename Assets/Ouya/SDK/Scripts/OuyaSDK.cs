@@ -21,6 +21,7 @@
 
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 public static class OuyaSDK
 {
@@ -640,20 +641,21 @@ public static class OuyaSDK
         public static void JavaInit()
         {
 #if UNITY_ANDROID && !UNITY_EDITOR && !UNITY_STANDALONE_OSX && !UNITY_STANDALONE_WIN && !UNITY_STANDALONE_LINUX
-    // attach our thread to the java vm; obviously the main thread is already attached but this is good practice..
-        AndroidJNI.AttachCurrentThread();
 
-        // first we try to find our main activity..
-        IntPtr cls_Activity = AndroidJNI.FindClass("com/unity3d/player/UnityPlayer");
-        IntPtr fid_Activity = AndroidJNI.GetStaticFieldID(cls_Activity, "currentActivity", "Landroid/app/Activity;");
-        IntPtr obj_Activity = AndroidJNI.GetStaticObjectField(cls_Activity, fid_Activity);
-        Debug.Log("obj_Activity = " + obj_Activity);
+            // attach our thread to the java vm; obviously the main thread is already attached but this is good practice..
+            AndroidJNI.AttachCurrentThread();
 
-        // create a JavaClass object...
-        IntPtr cls_JavaClass = AndroidJNI.FindClass("tv/ouya/sdk/OuyaUnityPlugin");
-        IntPtr mid_JavaClass = AndroidJNI.GetMethodID(cls_JavaClass, "<init>", "(Landroid/app/Activity;)V");
-        IntPtr obj_JavaClass = AndroidJNI.NewObject(cls_JavaClass, mid_JavaClass, new jvalue[] { new jvalue() { l = obj_Activity } });
-        Debug.Log("JavaClass object = " + obj_JavaClass);
+            // first we try to find our main activity..
+            IntPtr cls_Activity = AndroidJNI.FindClass("com/unity3d/player/UnityPlayer");
+            IntPtr fid_Activity = AndroidJNI.GetStaticFieldID(cls_Activity, "currentActivity", "Landroid/app/Activity;");
+            IntPtr obj_Activity = AndroidJNI.GetStaticObjectField(cls_Activity, fid_Activity);
+            Debug.Log("obj_Activity = " + obj_Activity);
+
+            // create a JavaClass object...
+            IntPtr cls_JavaClass = AndroidJNI.FindClass("tv/ouya/sdk/OuyaUnityPlugin");
+            IntPtr mid_JavaClass = AndroidJNI.GetMethodID(cls_JavaClass, "<init>", "(Landroid/app/Activity;)V");
+            IntPtr obj_JavaClass = AndroidJNI.NewObject(cls_JavaClass, mid_JavaClass, new jvalue[] { new jvalue() { l = obj_Activity } });
+            Debug.Log("JavaClass object = " + obj_JavaClass);
 #endif
         }
 
@@ -661,27 +663,27 @@ public static class OuyaSDK
         {
 #if UNITY_ANDROID && !UNITY_EDITOR && !UNITY_STANDALONE_OSX && !UNITY_STANDALONE_WIN && !UNITY_STANDALONE_LINUX
 
-    // again, make sure the thread is attached..
-        AndroidJNI.AttachCurrentThread();
+            // again, make sure the thread is attached..
+            AndroidJNI.AttachCurrentThread();
 
-        AndroidJNI.PushLocalFrame(0);
+            AndroidJNI.PushLocalFrame(0);
 
-        try
-        {
-            Debug.Log("JavaSetDeveloperId");
-            using (AndroidJavaClass ajc = new AndroidJavaClass(JAVA_CLASS))
+            try
             {
-                ajc.CallStatic<String>("setDeveloperId", new object[] { m_developerId + "\0" });
+                Debug.Log("JavaSetDeveloperId");
+                using (AndroidJavaClass ajc = new AndroidJavaClass(JAVA_CLASS))
+                {
+                    ajc.CallStatic<String>("setDeveloperId", new object[] { m_developerId + "\0" });
+                }
             }
-        }
-        catch (Exception ex)
-        {
-            Debug.LogError(string.Format("OuyaSDK.JavaSetDeveloperId exception={0}", ex));
-        }
-        finally
-        {
-            AndroidJNI.PopLocalFrame(IntPtr.Zero);
-        }
+            catch (Exception ex)
+            {
+                Debug.LogError(string.Format("OuyaSDK.JavaSetDeveloperId exception={0}", ex));
+            }
+            finally
+            {
+                AndroidJNI.PopLocalFrame(IntPtr.Zero);
+            }
 #endif
         }
 
@@ -689,27 +691,27 @@ public static class OuyaSDK
         {
 #if UNITY_ANDROID && !UNITY_EDITOR && !UNITY_STANDALONE_OSX && !UNITY_STANDALONE_WIN && !UNITY_STANDALONE_LINUX
 
-    // again, make sure the thread is attached..
-        AndroidJNI.AttachCurrentThread();
+            // again, make sure the thread is attached..
+            AndroidJNI.AttachCurrentThread();
 
-        AndroidJNI.PushLocalFrame(0);
+            AndroidJNI.PushLocalFrame(0);
 
-        try
-        {
-            Debug.Log("useLegacyInput");
-            using (AndroidJavaClass ajc = new AndroidJavaClass(JAVA_CLASS))
+            try
             {
-                ajc.CallStatic("useLegacyInput");
+                Debug.Log("useLegacyInput");
+                using (AndroidJavaClass ajc = new AndroidJavaClass(JAVA_CLASS))
+                {
+                    ajc.CallStatic("useLegacyInput");
+                }
             }
-        }
-        catch (Exception ex)
-        {
-            Debug.LogError(string.Format("OuyaSDK.JavaUseLegacyInput exception={0}", ex));
-        }
-        finally
-        {
-            AndroidJNI.PopLocalFrame(IntPtr.Zero);
-        }
+            catch (Exception ex)
+            {
+                Debug.LogError(string.Format("OuyaSDK.JavaUseLegacyInput exception={0}", ex));
+            }
+            finally
+            {
+                AndroidJNI.PopLocalFrame(IntPtr.Zero);
+            }
 #endif
         }
 
@@ -717,27 +719,27 @@ public static class OuyaSDK
         {
 #if UNITY_ANDROID && !UNITY_EDITOR && !UNITY_STANDALONE_OSX && !UNITY_STANDALONE_WIN && !UNITY_STANDALONE_LINUX
 
-    // again, make sure the thread is attached..
-        AndroidJNI.AttachCurrentThread();
+            // again, make sure the thread is attached..
+            AndroidJNI.AttachCurrentThread();
 
-        AndroidJNI.PushLocalFrame(0);
+            AndroidJNI.PushLocalFrame(0);
 
-        try
-        {
-            Debug.Log("JavaUnityInitialized");
-            using (AndroidJavaClass ajc = new AndroidJavaClass(JAVA_CLASS))
+            try
             {
-                ajc.CallStatic("unityInitialized");
+                Debug.Log("JavaUnityInitialized");
+                using (AndroidJavaClass ajc = new AndroidJavaClass(JAVA_CLASS))
+                {
+                    ajc.CallStatic("unityInitialized");
+                }
             }
-        }
-        catch (Exception ex)
-        {
-            Debug.LogError(string.Format("OuyaSDK.JavaUnityInitialized exception={0}", ex));
-        }
-        finally
-        {
-            AndroidJNI.PopLocalFrame(IntPtr.Zero);
-        }
+            catch (Exception ex)
+            {
+                Debug.LogError(string.Format("OuyaSDK.JavaUnityInitialized exception={0}", ex));
+            }
+            finally
+            {
+                AndroidJNI.PopLocalFrame(IntPtr.Zero);
+            }
 #endif
         }
 
@@ -745,195 +747,195 @@ public static class OuyaSDK
         {
 #if UNITY_ANDROID && !UNITY_EDITOR && !UNITY_STANDALONE_OSX && !UNITY_STANDALONE_WIN && !UNITY_STANDALONE_LINUX
 
-        // again, make sure the thread is attached..
-        AndroidJNI.AttachCurrentThread();
+            // again, make sure the thread is attached..
+            AndroidJNI.AttachCurrentThread();
 
-        AndroidJNI.PushLocalFrame(0);
+            AndroidJNI.PushLocalFrame(0);
 
-        try
-        {
-            Debug.Log("JavaSetResolution");
-            using (AndroidJavaClass ajc = new AndroidJavaClass(JAVA_CLASS))
+            try
             {
-                ajc.CallStatic("setResolution", resolutionId);
+                Debug.Log("JavaSetResolution");
+                using (AndroidJavaClass ajc = new AndroidJavaClass(JAVA_CLASS))
+                {
+                    ajc.CallStatic("setResolution", resolutionId);
+                }
             }
-        }
-        catch (Exception ex)
-        {
-            Debug.LogError(string.Format("OuyaSDK.JavaSetResolution exception={0}", ex));
-        }
-        finally
-        {
-            AndroidJNI.PopLocalFrame(IntPtr.Zero);
-        }
+            catch (Exception ex)
+            {
+                Debug.LogError(string.Format("OuyaSDK.JavaSetResolution exception={0}", ex));
+            }
+            finally
+            {
+                AndroidJNI.PopLocalFrame(IntPtr.Zero);
+            }
 #endif
         }
 
         public static void JavaAddGetProduct(Purchasable purchasable)
         {
 #if UNITY_ANDROID && !UNITY_EDITOR && !UNITY_STANDALONE_OSX && !UNITY_STANDALONE_WIN && !UNITY_STANDALONE_LINUX
-    // again, make sure the thread is attached..
-        AndroidJNI.AttachCurrentThread();
+            // again, make sure the thread is attached..
+            AndroidJNI.AttachCurrentThread();
 
-        AndroidJNI.PushLocalFrame(0);
+            AndroidJNI.PushLocalFrame(0);
 
-        try
-        {
-            Debug.Log(string.Format("{0} OuyaSDK.JavaAddGetProduct", DateTime.Now));
-
-            using (AndroidJavaClass ajc = new AndroidJavaClass(JAVA_CLASS))
+            try
             {
-                ajc.CallStatic("addGetProduct", purchasable.getProductId());
+                Debug.Log(string.Format("{0} OuyaSDK.JavaAddGetProduct", DateTime.Now));
+
+                using (AndroidJavaClass ajc = new AndroidJavaClass(JAVA_CLASS))
+                {
+                    ajc.CallStatic("addGetProduct", purchasable.getProductId());
+                }
             }
-        }
-        catch (Exception ex)
-        {
-            Debug.LogError(string.Format("OuyaSDK.JavaAddGetProduct exception={0}", ex));
-        }
-        finally
-        {
-            AndroidJNI.PopLocalFrame(IntPtr.Zero);
-        }
+            catch (Exception ex)
+            {
+                Debug.LogError(string.Format("OuyaSDK.JavaAddGetProduct exception={0}", ex));
+            }
+            finally
+            {
+                AndroidJNI.PopLocalFrame(IntPtr.Zero);
+            }
 #endif
         }
 
         public static void JavaDebugGetProductList()
         {
 #if UNITY_ANDROID && !UNITY_EDITOR && !UNITY_STANDALONE_OSX && !UNITY_STANDALONE_WIN && !UNITY_STANDALONE_LINUX
-    // again, make sure the thread is attached..
-        AndroidJNI.AttachCurrentThread();
+            // again, make sure the thread is attached..
+            AndroidJNI.AttachCurrentThread();
 
-        AndroidJNI.PushLocalFrame(0);
+            AndroidJNI.PushLocalFrame(0);
 
-        try
-        {
-            Debug.Log(string.Format("{0} OuyaSDK.JavaDebugGetProductList", DateTime.Now));
-
-            using (AndroidJavaClass ajc = new AndroidJavaClass(JAVA_CLASS))
+            try
             {
-                ajc.CallStatic("debugGetProductList");
+                Debug.Log(string.Format("{0} OuyaSDK.JavaDebugGetProductList", DateTime.Now));
+
+                using (AndroidJavaClass ajc = new AndroidJavaClass(JAVA_CLASS))
+                {
+                    ajc.CallStatic("debugGetProductList");
+                }
             }
-        }
-        catch (Exception ex)
-        {
-            Debug.LogError(string.Format("OuyaSDK.JavaDebugGetProductList exception={0}", ex));
-        }
-        finally
-        {
-            AndroidJNI.PopLocalFrame(IntPtr.Zero);
-        }
+            catch (Exception ex)
+            {
+                Debug.LogError(string.Format("OuyaSDK.JavaDebugGetProductList exception={0}", ex));
+            }
+            finally
+            {
+                AndroidJNI.PopLocalFrame(IntPtr.Zero);
+            }
 #endif
         }
 
         public static void JavaClearGetProductList()
         {
 #if UNITY_ANDROID && !UNITY_EDITOR && !UNITY_STANDALONE_OSX && !UNITY_STANDALONE_WIN && !UNITY_STANDALONE_LINUX
-    // again, make sure the thread is attached..
-        AndroidJNI.AttachCurrentThread();
+            // again, make sure the thread is attached..
+            AndroidJNI.AttachCurrentThread();
 
-        AndroidJNI.PushLocalFrame(0);
+            AndroidJNI.PushLocalFrame(0);
 
-        try
-        {
-            Debug.Log(string.Format("{0} OuyaSDK.JavaClearGetProductList", DateTime.Now));
-
-            using (AndroidJavaClass ajc = new AndroidJavaClass(JAVA_CLASS))
+            try
             {
-                ajc.CallStatic("clearGetProductList");
+                Debug.Log(string.Format("{0} OuyaSDK.JavaClearGetProductList", DateTime.Now));
+
+                using (AndroidJavaClass ajc = new AndroidJavaClass(JAVA_CLASS))
+                {
+                    ajc.CallStatic("clearGetProductList");
+                }
             }
-        }
-        catch (Exception ex)
-        {
-            Debug.LogError(string.Format("OuyaSDK.JavaClearGetProductList exception={0}", ex));
-        }
-        finally
-        {
-            AndroidJNI.PopLocalFrame(IntPtr.Zero);
-        }
+            catch (Exception ex)
+            {
+                Debug.LogError(string.Format("OuyaSDK.JavaClearGetProductList exception={0}", ex));
+            }
+            finally
+            {
+                AndroidJNI.PopLocalFrame(IntPtr.Zero);
+            }
 #endif
         }
 
         public static void JavaGetProductsAsync()
         {
 #if UNITY_ANDROID && !UNITY_EDITOR && !UNITY_STANDALONE_OSX && !UNITY_STANDALONE_WIN && !UNITY_STANDALONE_LINUX
-    // again, make sure the thread is attached..
-        AndroidJNI.AttachCurrentThread();
+            // again, make sure the thread is attached..
+            AndroidJNI.AttachCurrentThread();
 
-        AndroidJNI.PushLocalFrame(0);
+            AndroidJNI.PushLocalFrame(0);
 
-        try
-        {
-            Debug.Log("OuyaSDK.JavaGetProductsAsync");
-
-            using (AndroidJavaClass ajc = new AndroidJavaClass(JAVA_CLASS))
+            try
             {
-                ajc.CallStatic("getProductsAsync");
+                Debug.Log("OuyaSDK.JavaGetProductsAsync");
+
+                using (AndroidJavaClass ajc = new AndroidJavaClass(JAVA_CLASS))
+                {
+                    ajc.CallStatic("getProductsAsync");
+                }
             }
-        }
-        catch (Exception ex)
-        {
-            Debug.LogError(string.Format("OuyaSDK.JavaGetProductsAsync exception={0}", ex));
-        }
-        finally
-        {
-            AndroidJNI.PopLocalFrame(IntPtr.Zero);
-        }
+            catch (Exception ex)
+            {
+                Debug.LogError(string.Format("OuyaSDK.JavaGetProductsAsync exception={0}", ex));
+            }
+            finally
+            {
+                AndroidJNI.PopLocalFrame(IntPtr.Zero);
+            }
 #endif
         }
 
         public static void JavaRequestPurchaseAsync(Purchasable purchasable)
         {
 #if UNITY_ANDROID && !UNITY_EDITOR && !UNITY_STANDALONE_OSX && !UNITY_STANDALONE_WIN && !UNITY_STANDALONE_LINUX
-    // again, make sure the thread is attached..
-        AndroidJNI.AttachCurrentThread();
+            // again, make sure the thread is attached..
+            AndroidJNI.AttachCurrentThread();
 
-        AndroidJNI.PushLocalFrame(0);
+            AndroidJNI.PushLocalFrame(0);
 
-        try
-        {
-            Debug.Log(string.Format("JavaRequestPurchaseAsync purchasable: {0}", purchasable.getProductId()));
-
-            using (AndroidJavaClass ajc = new AndroidJavaClass(JAVA_CLASS))
+            try
             {
-                ajc.CallStatic<String>("requestPurchaseAsync", new object[] { purchasable.getProductId() + "\0" });
+                Debug.Log(string.Format("JavaRequestPurchaseAsync purchasable: {0}", purchasable.getProductId()));
+
+                using (AndroidJavaClass ajc = new AndroidJavaClass(JAVA_CLASS))
+                {
+                    ajc.CallStatic<String>("requestPurchaseAsync", new object[] { purchasable.getProductId() + "\0" });
+                }
             }
-        }
-        catch (Exception ex)
-        {
-            Debug.LogError(string.Format("OuyaSDK.JavaRequestPurchaseAsync exception={0}", ex));
-        }
-        finally
-        {
-            AndroidJNI.PopLocalFrame(IntPtr.Zero);
-        }
+            catch (Exception ex)
+            {
+                Debug.LogError(string.Format("OuyaSDK.JavaRequestPurchaseAsync exception={0}", ex));
+            }
+            finally
+            {
+                AndroidJNI.PopLocalFrame(IntPtr.Zero);
+            }
 #endif
         }
 
         public static void JavaGetReceiptsAsync()
         {
 #if UNITY_ANDROID && !UNITY_EDITOR && !UNITY_STANDALONE_OSX && !UNITY_STANDALONE_WIN && !UNITY_STANDALONE_LINUX
-    // again, make sure the thread is attached..
-        AndroidJNI.AttachCurrentThread();
+            // again, make sure the thread is attached..
+            AndroidJNI.AttachCurrentThread();
 
-        AndroidJNI.PushLocalFrame(0);
+            AndroidJNI.PushLocalFrame(0);
 
-        try
-        {
-            Debug.Log("OuyaSDK.JavaGetReceiptsAsync");
-
-            using (AndroidJavaClass ajc = new AndroidJavaClass(JAVA_CLASS))
+            try
             {
-                ajc.CallStatic("getReceiptsAsync");
+                Debug.Log("OuyaSDK.JavaGetReceiptsAsync");
+
+                using (AndroidJavaClass ajc = new AndroidJavaClass(JAVA_CLASS))
+                {
+                    ajc.CallStatic("getReceiptsAsync");
+                }
             }
-        }
-        catch (Exception ex)
-        {
-            Debug.LogError(string.Format("OuyaSDK.JavaGetReceiptsAsync exception={0}", ex));
-        }
-        finally
-        {
-            AndroidJNI.PopLocalFrame(IntPtr.Zero);
-        }
+            catch (Exception ex)
+            {
+                Debug.LogError(string.Format("OuyaSDK.JavaGetReceiptsAsync exception={0}", ex));
+            }
+            finally
+            {
+                AndroidJNI.PopLocalFrame(IntPtr.Zero);
+            }
 #endif
         }
     }
