@@ -1,6 +1,6 @@
 //----------------------------------------------
 //            NGUI: Next-Gen UI kit
-// Copyright ï¿½ 2011-2012 Tasharen Entertainment
+// Copyright © 2011-2012 Tasharen Entertainment
 //----------------------------------------------
 
 using UnityEngine;
