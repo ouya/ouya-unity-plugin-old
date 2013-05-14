@@ -1868,28 +1868,22 @@ public class OuyaPanel : EditorWindow
                     EditorGUIUtility.ExitGUI();
                 }
 
+                GUILayout.BeginHorizontal();
+                GUILayout.Label("Language:");
+                Languages newLang = (Languages)EditorGUILayout.EnumPopup(m_language);
+                if (newLang != m_language)
+                {
+                    m_language = newLang;
+                    //set language on console
+                    SetLanguage();
+                    Reboot();
+                    EditorGUIUtility.ExitGUI();
+                }
+                GUILayout.EndHorizontal();
+
                 if (GUILayout.Button("Reboot Console"))
                 {
-                    if (File.Exists(pathADB))
-                    {
-                        //Debug.Log(appPath);
-                        //Debug.Log(pathADB);
-                        string args = string.Format(@"reboot");
-                        //Debug.Log(args);
-                        ProcessStartInfo ps = new ProcessStartInfo(pathADB, args);
-                        Process p = new Process();
-                        ps.RedirectStandardOutput = false;
-                        ps.UseShellExecute = true;
-                        ps.CreateNoWindow = false;
-                        ps.WorkingDirectory = Path.GetDirectoryName(pathADB);
-                        p.StartInfo = ps;
-                        p.Exited += (object sender, EventArgs e) =>
-                        {
-                            p.Dispose();
-                        };
-                        p.Start();
-                        //p.WaitForExit();
-                    }
+                    Reboot();
                     EditorGUIUtility.ExitGUI();
                 }
 
@@ -1925,6 +1919,135 @@ public class OuyaPanel : EditorWindow
 
         GUILayout.EndScrollView();
     }
+
+    #region Language
+
+    enum Languages
+    {
+        EnglishUnitedStates,
+        EnglishUnitedAustralia,
+        EnglishUnitedCanada,
+        EnglishUnitedKingdom,
+        German,
+        Spanish,
+        Korean,
+        China,
+        Taiwan,
+        Japan,
+    }
+
+    struct LanguageDetails
+    {
+        public Languages Language;
+        public string PropertySystemLanguage;
+        public string PropertySystemCountry;
+    }
+
+    private static LanguageDetails[] LanguageMap =
+        {
+            new LanguageDetails() { Language = Languages.EnglishUnitedStates, PropertySystemLanguage="en", PropertySystemCountry="US"}, 
+            new LanguageDetails() { Language = Languages.EnglishUnitedAustralia, PropertySystemLanguage="en", PropertySystemCountry="AU"}, 
+            new LanguageDetails() { Language = Languages.EnglishUnitedCanada, PropertySystemLanguage="en", PropertySystemCountry="CA"}, 
+            new LanguageDetails() { Language = Languages.EnglishUnitedKingdom, PropertySystemLanguage="en", PropertySystemCountry="GB"}, 
+            new LanguageDetails() { Language = Languages.German, PropertySystemLanguage="de", PropertySystemCountry="de"}, 
+            new LanguageDetails() { Language = Languages.Spanish, PropertySystemLanguage="es", PropertySystemCountry="ES"}, 
+            new LanguageDetails() { Language = Languages.Korean, PropertySystemLanguage="ko", PropertySystemCountry="KR"}, 
+            new LanguageDetails() { Language = Languages.China, PropertySystemLanguage="zh", PropertySystemCountry="CN"}, 
+            new LanguageDetails() { Language = Languages.Taiwan, PropertySystemLanguage="zh", PropertySystemCountry="TW"}, 
+            new LanguageDetails() { Language = Languages.Japan, PropertySystemLanguage="ja", PropertySystemCountry="JP"}, 
+        };
+
+    private Languages m_language = Languages.EnglishUnitedStates;
+
+    private string GetPropertySystemLanguage()
+    {
+        foreach (LanguageDetails details in LanguageMap)
+        {
+            if (details.Language == m_language)
+            {
+                return details.PropertySystemLanguage;
+            }
+        }
+        return string.Empty;
+    }
+
+    private string GetPropertySystemCountry()
+    {
+        foreach (LanguageDetails details in LanguageMap)
+        {
+            if (details.Language == m_language)
+            {
+                return details.PropertySystemCountry;
+            }
+        }
+        return string.Empty;
+    }
+
+    private void SetLanguage()
+    {
+        if (File.Exists(pathADB))
+        {
+            //Debug.Log(appPath);
+            //Debug.Log(pathADB);
+            string args = "shell";
+            //Debug.Log(args);
+            ProcessStartInfo ps = new ProcessStartInfo(pathADB, args);
+            Process p = new Process();
+            ps.RedirectStandardOutput = false;
+            ps.RedirectStandardInput = true;
+            ps.UseShellExecute = false;
+            ps.CreateNoWindow = false;
+            ps.WorkingDirectory = Path.GetDirectoryName(pathADB);
+            p.StartInfo = ps;
+            p.Exited += (object sender, EventArgs e) =>
+            {
+                p.Dispose();
+            };
+            p.Start();
+
+            p.StandardInput.AutoFlush = true;
+            p.StandardInput.WriteLine("su");
+            p.StandardInput.WriteLine("setprop persist.sys.language {0}; setprop persist.sys.country {1}; stop; sleep 1; start;",
+                GetPropertySystemLanguage(),
+                GetPropertySystemCountry());
+            p.StandardInput.WriteLine("exit");
+            p.StandardInput.WriteLine("exit");
+            p.WaitForExit(1);
+            p.Close();
+            
+            Thread.Sleep(1000);
+        }
+    }
+
+    #endregion
+
+    #region Reboot
+
+    private void Reboot()
+    {
+        if (File.Exists(pathADB))
+        {
+            //Debug.Log(appPath);
+            //Debug.Log(pathADB);
+            string args = string.Format(@"reboot");
+            //Debug.Log(args);
+            ProcessStartInfo ps = new ProcessStartInfo(pathADB, args);
+            Process p = new Process();
+            ps.RedirectStandardOutput = false;
+            ps.UseShellExecute = true;
+            ps.CreateNoWindow = false;
+            ps.WorkingDirectory = Path.GetDirectoryName(pathADB);
+            p.StartInfo = ps;
+            p.Exited += (object sender, EventArgs e) =>
+            {
+                p.Dispose();
+            };
+            p.Start();
+            //p.WaitForExit();
+        }
+    }
+
+    #endregion
 
     #region RUN PROCESS
     public static void RunProcess(string path, string arguments)
