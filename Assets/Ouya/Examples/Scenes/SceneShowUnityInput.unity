@@ -1505,7 +1505,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 336093680}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: -4.37113883e-08}
   m_LocalPosition: {x: 5.5, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -2157,7 +2157,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 407985737}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: -4.37113883e-08}
   m_LocalPosition: {x: -5.5, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -3146,7 +3146,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 632983504}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.44481611, y: 1.44385028, z: 0}
+  m_LocalPosition: {x: -2.35743546, y: 1.17903936, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1457720449}
@@ -5386,8 +5386,8 @@ GameObject:
   - 114: {fileID: 1233174281}
   - 114: {fileID: 1233174283}
   - 114: {fileID: 1233174282}
-  - 114: {fileID: 1233174284}
-  - 114: {fileID: 1233174285}
+  - 114: {fileID: 1233174286}
+  - 114: {fileID: 1233174287}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -5492,7 +5492,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b6d5b8ee9c7764489c02de77e7e1741, type: 1}
   m_Name: 
   PlotMaterial: {fileID: 2100000, guid: dbd5cf4595311f04b8a9b6ed347e4969, type: 2}
---- !u!114 &1233174284
+--- !u!114 &1233174286
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
@@ -5500,16 +5500,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1233174275}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31a7398514b173541a169ff73aa6775a, type: 1}
+  m_Script: {fileID: 11500000, guid: 1d0112a47b4e2714d9676ffc92bdced3, type: 1}
   m_Name: 
-  PlotMaterial: {fileID: 2100000, guid: bcf956e338e18bb44b265edf3c76b64c, type: 2}
+  Player: 1
+  PlotMesh: {fileID: 407985739}
   BackgroundColor:
     serializedVersion: 2
     rgba: 0
   StickX: LX
   StickY: LY
   m_label: {fileID: 1981345553}
---- !u!114 &1233174285
+--- !u!114 &1233174287
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
@@ -5517,9 +5518,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1233174275}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31a7398514b173541a169ff73aa6775a, type: 1}
+  m_Script: {fileID: 11500000, guid: 1d0112a47b4e2714d9676ffc92bdced3, type: 1}
   m_Name: 
-  PlotMaterial: {fileID: 2100000, guid: 9379cd5fe2f422740b02618d76bf1742, type: 2}
+  Player: 1
+  PlotMesh: {fileID: 336093682}
   BackgroundColor:
     serializedVersion: 2
     rgba: 0
