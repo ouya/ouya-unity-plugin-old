@@ -257,11 +257,11 @@ public class OuyaExampleCommon
         }
         if (invert)
         {
-            return -Input.GetAxis(axisName);
+            return -Input.GetAxisRaw(axisName);
         }
         else
         {
-            return Input.GetAxis(axisName);
+            return Input.GetAxisRaw(axisName);
         }
     }
 

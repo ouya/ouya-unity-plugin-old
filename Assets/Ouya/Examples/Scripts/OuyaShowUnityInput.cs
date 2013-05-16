@@ -41,6 +41,12 @@ public class OuyaShowUnityInput : MonoBehaviour,
 
     #endregion
 
+    #region Thumbstick plots
+
+    public Camera ThumbstickPlotCamera = null;
+
+    #endregion
+
     void Awake()
     {
         OuyaSDK.registerMenuAppearingListener(this);
@@ -200,16 +206,16 @@ public class OuyaShowUnityInput : MonoBehaviour,
         if (nguiHandler != null)
         {
             // Input.GetAxis("Joy1 Axis1");
-            nguiHandler.axis1.text = Input.GetAxis(string.Format("Joy{0} Axis 1", (int) OuyaExampleCommon.Player)).ToString("F2");
-            nguiHandler.axis2.text = Input.GetAxis(string.Format("Joy{0} Axis 2", (int) OuyaExampleCommon.Player)).ToString("F2");
-            nguiHandler.axis3.text = Input.GetAxis(string.Format("Joy{0} Axis 3", (int) OuyaExampleCommon.Player)).ToString("F2");
-            nguiHandler.axis4.text = Input.GetAxis(string.Format("Joy{0} Axis 4", (int) OuyaExampleCommon.Player)).ToString("F2");
-            nguiHandler.axis5.text = Input.GetAxis(string.Format("Joy{0} Axis 5", (int) OuyaExampleCommon.Player)).ToString("F2");
-            nguiHandler.axis6.text = Input.GetAxis(string.Format("Joy{0} Axis 6", (int) OuyaExampleCommon.Player)).ToString("F2");
-            nguiHandler.axis7.text = Input.GetAxis(string.Format("Joy{0} Axis 7", (int) OuyaExampleCommon.Player)).ToString("F2");
-            nguiHandler.axis8.text = Input.GetAxis(string.Format("Joy{0} Axis 8", (int) OuyaExampleCommon.Player)).ToString("F2");
-            nguiHandler.axis9.text = Input.GetAxis(string.Format("Joy{0} Axis 9", (int) OuyaExampleCommon.Player)).ToString("F2");
-            nguiHandler.axis10.text = Input.GetAxis(string.Format("Joy{0} Axis 10", (int) OuyaExampleCommon.Player)).ToString("F2");
+            nguiHandler.axis1.text = Input.GetAxisRaw(string.Format("Joy{0} Axis 1", (int) OuyaExampleCommon.Player)).ToString("F2");
+            nguiHandler.axis2.text = Input.GetAxisRaw(string.Format("Joy{0} Axis 2", (int)OuyaExampleCommon.Player)).ToString("F2");
+            nguiHandler.axis3.text = Input.GetAxisRaw(string.Format("Joy{0} Axis 3", (int)OuyaExampleCommon.Player)).ToString("F2");
+            nguiHandler.axis4.text = Input.GetAxisRaw(string.Format("Joy{0} Axis 4", (int)OuyaExampleCommon.Player)).ToString("F2");
+            nguiHandler.axis5.text = Input.GetAxisRaw(string.Format("Joy{0} Axis 5", (int)OuyaExampleCommon.Player)).ToString("F2");
+            nguiHandler.axis6.text = Input.GetAxisRaw(string.Format("Joy{0} Axis 6", (int)OuyaExampleCommon.Player)).ToString("F2");
+            nguiHandler.axis7.text = Input.GetAxisRaw(string.Format("Joy{0} Axis 7", (int)OuyaExampleCommon.Player)).ToString("F2");
+            nguiHandler.axis8.text = Input.GetAxisRaw(string.Format("Joy{0} Axis 8", (int)OuyaExampleCommon.Player)).ToString("F2");
+            nguiHandler.axis9.text = Input.GetAxisRaw(string.Format("Joy{0} Axis 9", (int)OuyaExampleCommon.Player)).ToString("F2");
+            nguiHandler.axis10.text = Input.GetAxisRaw(string.Format("Joy{0} Axis 10", (int)OuyaExampleCommon.Player)).ToString("F2");
         }
     }
 
@@ -255,6 +261,14 @@ public class OuyaShowUnityInput : MonoBehaviour,
 
     void UpdatePlayerButtons()
     {
+        if (ThumbstickPlotCamera)
+        {
+            foreach (OuyaPlotMeshThumbstick plot in ThumbstickPlotCamera.GetComponents<OuyaPlotMeshThumbstick>())
+            {
+                plot.Player = OuyaExampleCommon.Player;
+            }
+        }
+
         OuyaNGUIHandler nguiHandler = GameObject.Find("_NGUIHandler").GetComponent<OuyaNGUIHandler>();
         if (nguiHandler != null)
         {
