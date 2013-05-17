@@ -735,6 +735,24 @@ public class OuyaPanel : EditorWindow
 
         var sceneArray = sceneList.ToArray();
 
+        if (m_toggleSyncBundleID)
+        {
+            m_toggleSyncBundleID = false;
+
+            SyncBundleID();
+
+            AssetDatabase.Refresh();
+        }
+
+        if (m_toggleCompileNDK)
+        {
+            m_toggleCompileNDK = false;
+
+            CompileNDK();
+
+            AssetDatabase.Refresh();
+        }
+
         if (m_toggleCompilePlugin)
         {
             m_toggleCompilePlugin = false;
@@ -752,24 +770,6 @@ public class OuyaPanel : EditorWindow
             {
                 AssetDatabase.Refresh();
             }
-        }
-
-        if (m_toggleCompileNDK)
-        {
-            m_toggleCompileNDK = false;
-
-            CompileNDK();
-
-            AssetDatabase.Refresh();
-        }
-
-        if (m_toggleSyncBundleID)
-        {
-            m_toggleSyncBundleID = false;
-
-            SyncBundleID();
-
-            AssetDatabase.Refresh();
         }
 
         if (m_toggleRunApplication)
@@ -1331,6 +1331,33 @@ public class OuyaPanel : EditorWindow
     // load the scene in the update method
     private string m_nextScene = string.Empty;
 
+    private void UpdateToExampleScene(string sceneName)
+    {
+        EditorBuildSettingsScene[] scenes =
+            {
+                new EditorBuildSettingsScene(string.Format("Assets/Ouya/Examples/Scenes/{0}.unity", sceneName), true),
+            };
+
+        EditorBuildSettings.scenes = scenes;
+        m_nextScene = scenes[0].path;
+
+        File.Copy(string.Format("Assets/Ouya/Examples/Icons/{0}/app_icon.png", sceneName),
+            "Assets/Plugins/Android/res/drawable/app_icon.png",
+            true);
+
+        File.Copy(string.Format("Assets/Ouya/Examples/Icons/{0}/ouya_icon.png", sceneName),
+            @"Assets/Plugins/Android/res/drawable-xhdpi/ouya_icon.png",
+            true);
+
+        PlayerSettings.bundleIdentifier = string.Format("tv.ouya.demo.{0}", sceneName);
+        PlayerSettings.productName = sceneName;
+
+        m_toggleSyncBundleID = true;
+        m_toggleCompileNDK = true;
+        m_toggleCompilePlugin = true;
+        m_toggleCompileJava = true;
+    }
+
     private Vector2 m_scroll = Vector2.zero;
 
     void OnGUI()
@@ -1421,74 +1448,44 @@ public class OuyaPanel : EditorWindow
 
                 GUILayout.Label("Build Settings:");
 
-                if (GUILayout.Button("Use SetResolution Scene"))
-                {
-                    EditorBuildSettingsScene[] scenes =
-                    {
-                        new EditorBuildSettingsScene("Assets/Ouya/Examples/Scenes/SceneSetResolution.unity", true), 
-                    };
-                    EditorBuildSettings.scenes = scenes;
-                    m_nextScene = scenes[0].path;
-                }
-
                 if (GUILayout.Button("Use SceneMultipleControllers Scene"))
                 {
-                    EditorBuildSettingsScene[] scenes =
-                    {
-                        new EditorBuildSettingsScene("Assets/Ouya/Examples/Scenes/SceneMultipleControllers.unity", true), 
-                    };
-                    EditorBuildSettings.scenes = scenes;
-                    m_nextScene = scenes[0].path;
+                    UpdateToExampleScene("SceneMultipleControllers");
+                }
+
+                if (GUILayout.Button("Use SetResolution Scene"))
+                {
+                    UpdateToExampleScene("SceneSetResolution");
                 }
 
                 if (GUILayout.Button("Use ShowController Scene"))
                 {
-                    EditorBuildSettingsScene[] scenes =
-                    {
-                        new EditorBuildSettingsScene("Assets/Ouya/Examples/Scenes/SceneShowController.unity", true), 
-                    };
-                    EditorBuildSettings.scenes = scenes;
-                    m_nextScene = scenes[0].path;
-                }
-
-                if (GUILayout.Button("Use ShowUnityInput Scene"))
-                {
-                    EditorBuildSettingsScene[] scenes =
-                    {
-                        new EditorBuildSettingsScene("Assets/Ouya/Examples/Scenes/SceneShowUnityInput.unity", true), 
-                    };
-                    EditorBuildSettings.scenes = scenes;
-                    m_nextScene = scenes[0].path;
+                    UpdateToExampleScene("SceneShowController");
                 }
 
                 if (GUILayout.Button("Use SceneShowMeshPerformance Scene"))
                 {
-                    EditorBuildSettingsScene[] scenes =
-                    {
-                        new EditorBuildSettingsScene("Assets/Ouya/Examples/Scenes/SceneShowMeshPerformance.unity", true), 
-                    };
-                    EditorBuildSettings.scenes = scenes;
-                    m_nextScene = scenes[0].path;
+                    UpdateToExampleScene("SceneShowMeshPerformance");
                 }
 
                 if (GUILayout.Button("Use SceneShowNDK Scene"))
                 {
-                    EditorBuildSettingsScene[] scenes =
-                    {
-                        new EditorBuildSettingsScene("Assets/Ouya/Examples/Scenes/SceneShowNDK.unity", true), 
-                    };
-                    EditorBuildSettings.scenes = scenes;
-                    m_nextScene = scenes[0].path;
+                    UpdateToExampleScene("SceneShowNDK");
                 }
 
                 if (GUILayout.Button("Use SceneShowProducts Scene"))
                 {
-                    EditorBuildSettingsScene[] scenes =
-                    {
-                        new EditorBuildSettingsScene("Assets/Ouya/Examples/Scenes/SceneShowProducts.unity", true), 
-                    };
-                    EditorBuildSettings.scenes = scenes;
-                    m_nextScene = scenes[0].path;
+                    UpdateToExampleScene("SceneShowProducts");
+                }
+
+                if (GUILayout.Button("Use ShowSticks Scene"))
+                {
+                    UpdateToExampleScene("SceneShowSticks");
+                }
+
+                if (GUILayout.Button("Use ShowUnityInput Scene"))
+                {
+                    UpdateToExampleScene("SceneShowUnityInput");
                 }
 
                 if (GUILayout.Button("Use Starter Kit Scenes"))
@@ -1517,6 +1514,13 @@ public class OuyaPanel : EditorWindow
                 //ShowIcons();
 
                 // show splash screen settings
+
+                GUILayout.BeginHorizontal(GUILayout.MaxWidth(position.width));
+                GUILayout.Space(25);
+                GUILayout.Label("Product Name", GUILayout.Width(100));
+                GUILayout.Space(5);
+                PlayerSettings.productName = GUILayout.TextField(PlayerSettings.productName, EditorStyles.wordWrappedLabel, GUILayout.MaxWidth(position.width - 130));
+                GUILayout.EndHorizontal();
 
                 GUILayout.BeginHorizontal(GUILayout.MaxWidth(position.width));
                 GUILayout.Space(25);
