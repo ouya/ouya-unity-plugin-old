@@ -70,6 +70,11 @@ public class OuyaShowProducts : MonoBehaviour,
         Debug.LogError(string.Format("OuyaGetProductsOnFailure: error={0} errorMessage={1}", errorCode, errorMessage));
     }
 
+    public void OuyaGetProductsOnCancel()
+    {
+        Debug.LogError("OuyaGetProductsOnCancel:");
+    }
+
     public void OuyaPurchaseOnSuccess(OuyaSDK.Product product)
     {
         
@@ -78,6 +83,11 @@ public class OuyaShowProducts : MonoBehaviour,
     public void OuyaPurchaseOnFailure(int errorCode, string errorMessage)
     {
         Debug.LogError(string.Format("OuyaPurchaseOnFailure: error={0} errorMessage={1}", errorCode, errorMessage));
+    }
+
+    public void OuyaPurchaseOnCancel()
+    {
+        Debug.LogError("OuyaPurchaseOnCancel:");
     }
 
     public void OuyaGetReceiptsOnSuccess(List<OuyaSDK.Receipt> receipts)
@@ -92,6 +102,11 @@ public class OuyaShowProducts : MonoBehaviour,
     public void OuyaGetReceiptsOnFailure(int errorCode, string errorMessage)
     {
         Debug.LogError(string.Format("OuyaGetReceiptsOnFailure: error={0} errorMessage={1}", errorCode, errorMessage));
+    }
+
+    public void OuyaGetReceiptsOnCancel()
+    {
+        Debug.LogError("OuyaGetReceiptsOnCancel:");
     }
 
     #region Data containers

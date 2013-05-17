@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+using System;
 using LitJson;
 using System.Collections.Generic;
 using UnityEngine;
@@ -82,31 +83,38 @@ public class OuyaGameObject : MonoBehaviour
     #endregion 
      
     #region Java To Unity Event Handlers
+
+    [Obsolete("No longer needed in the next version 1.0.3.13")]
     public void onKeyDown(string jsonData)
     {
         InputListener(OuyaSDK.InputAction.KeyDown, jsonData);
     }
 
+    [Obsolete("No longer needed in the next version 1.0.3.13")]
     public void onKeyUp(string jsonData)
     {
         InputListener(OuyaSDK.InputAction.KeyUp, jsonData);
     }
 
+    [Obsolete("No longer needed in the next version 1.0.3.13")]
     public void onGenericMotionEvent(string jsonData)
     {
         InputListener(OuyaSDK.InputAction.GenericMotionEvent, jsonData);
     }
 
+    [Obsolete("No longer needed in the next version 1.0.3.13")]
     public void onTouchEvent(string jsonData)
     {
         InputListener(OuyaSDK.InputAction.TouchEvent, jsonData);
     }
 
+    [Obsolete("No longer needed in the next version 1.0.3.13")]
     public void onTrackballEvent(string jsonData)
     {
         InputListener(OuyaSDK.InputAction.TrackballEvent, jsonData);
     }
 
+    [Obsolete("No longer needed in the next version 1.0.3.13")]
     public void onSetDevices(string jsonData)
     {
 		//Debug.Log(string.Format("Devices jsonData={0}", jsonData));
@@ -197,6 +205,10 @@ public class OuyaGameObject : MonoBehaviour
         Debug.LogError(string.Format("PurchaseFailureListener jsonData={0}", jsonData));
         InvokeOuyaPurchaseOnFailure(0, jsonData);
     }
+    public void PurchaseCancelListener(string ignore)
+    {
+        InvokeOuyaPurchaseOnCancel();
+    }
     
     private List<OuyaSDK.Receipt> m_receipts = new List<OuyaSDK.Receipt>();
 
@@ -232,6 +244,10 @@ public class OuyaGameObject : MonoBehaviour
     {
         Debug.LogError(string.Format("ReceiptListFailureListener jsonData={0}", jsonData));
         InvokeOuyaGetReceiptsOnFailure(0, jsonData);
+    }
+    public void ReceiptListCancelListener(string ignore)
+    {
+        InvokeOuyaGetReceiptsOnCancel();
     }
     
     private void InputListener(OuyaSDK.InputAction inputAction, string jsonData)
@@ -2128,6 +2144,18 @@ public class OuyaGameObject : MonoBehaviour
         }
     }
 
+    public void InvokeOuyaPurchaseOnCancel()
+    {
+        //Debug.Log("InvokeOuyaPurchaseOnCancel");
+        foreach (OuyaSDK.IPurchaseListener listener in OuyaSDK.getPurchaseListeners())
+        {
+            if (null != listener)
+            {
+                listener.OuyaPurchaseOnCancel();
+            }
+        }
+    }
+
     public void InvokeOuyaGetReceiptsOnSuccess(List<OuyaSDK.Receipt> receipts)
     {
         foreach (OuyaSDK.IGetReceiptsListener listener in OuyaSDK.getGetReceiptsListeners())
@@ -2147,6 +2175,18 @@ public class OuyaGameObject : MonoBehaviour
             if (null != listener)
             {
                 listener.OuyaGetReceiptsOnFailure(errorCode, errorMessage);
+            }
+        }
+    }
+
+    public void InvokeOuyaGetReceiptsOnCancel()
+    {
+        //Debug.Log("InvokeOuyaGetReceiptsOnCancel");
+        foreach (OuyaSDK.IGetReceiptsListener listener in OuyaSDK.getGetReceiptsListeners())
+        {
+            if (null != listener)
+            {
+                listener.OuyaGetReceiptsOnCancel();
             }
         }
     }

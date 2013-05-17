@@ -463,7 +463,7 @@ public class TestOuyaFacade
     /**
      * The callback for when the list of user receipts has been requested.
      */
-    private class ReceiptListener extends CancelIgnoringOuyaResponseListener<String> {
+    private class ReceiptListener implements OuyaResponseListener<String> {
 
         /**
          * Handle the successful fetching of the data for the receipts from the server.
@@ -625,12 +625,25 @@ public class TestOuyaFacade
             Log.w(LOG_TAG, "Request Receipts error (code " + errorCode + ": " + errorMessage + ")");
             showError("Could not fetch receipts (error " + errorCode + ": " + errorMessage + ")");
         }
+
+        /**
+         * Handle the cancel event.
+         *
+         */
+        @Override
+        public void onCancel()
+		{
+			showError("Fetch receipts was cancelled");
+
+			Log.i("TestOuyaFacade", "PurchaseListener Invoke ReceiptListCancelListener");
+			UnityPlayer.UnitySendMessage("OuyaGameObject", "ReceiptListCancelListener", "");
+		}
     }
 
     /**
      * The callback for when the user attempts to purchase something
      */
-    private class PurchaseListener extends CancelIgnoringOuyaResponseListener<String> {
+    private class PurchaseListener implements OuyaResponseListener<String> {
         /**
          * The ID of the product the user is trying to purchase. This is used in the
          * onFailure method to start a re-purchase if they user wishes to do so.
@@ -815,14 +828,8 @@ public class TestOuyaFacade
                                         @Override
                                         public void onCancel()
 										{
-											Gson gson = new Gson();
-											ErrorResponse er = new ErrorResponse();
-											er.errorCode = 0;
-											er.errorMessage = "Purchase was cancelled by user";
-											String jsonData = gson.toJson(er);
-
-											Log.i("TestOuyaFacade", "PurchaseListener PurchaseFailureListener=" + jsonData);
-											UnityPlayer.UnitySendMessage("OuyaGameObject", "PurchaseFailureListener", jsonData);
+											Log.i("TestOuyaFacade", "PurchaseListener PurchaseCancelListener=");
+											UnityPlayer.UnitySendMessage("OuyaGameObject", "PurchaseCancelListener", "");
 
 											return;
                                         }
@@ -843,6 +850,19 @@ public class TestOuyaFacade
 				return;				
             }
         }
+
+        /**
+         * Handle the cancel event.
+         *
+         */
+        @Override
+        public void onCancel()
+		{
+			showError("Purchase was cancelled");
+
+			Log.i("TestOuyaFacade", "PurchaseListener Invoke PurchaseCancelListener");
+			UnityPlayer.UnitySendMessage("OuyaGameObject", "PurchaseCancelListener", "");
+		}
     }
 
 }

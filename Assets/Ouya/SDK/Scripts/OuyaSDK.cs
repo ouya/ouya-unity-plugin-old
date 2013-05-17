@@ -25,7 +25,7 @@ using UnityEngine;
 
 public static class OuyaSDK
 {
-    public const string VERSION = "1.0.3.12";
+    public const string VERSION = "1.0.3.13";
 
     /// <summary>
     /// The developer ID assigned by OuyaGameObject
@@ -551,6 +551,7 @@ public static class OuyaSDK
     {
         void OuyaGetProductsOnSuccess(List<OuyaSDK.Product> products);
         void OuyaGetProductsOnFailure(int errorCode, string errorMessage);
+        void OuyaGetProductsOnCancel();
     }
     private static List<IGetProductsListener> m_getProductsListeners = new List<IGetProductsListener>();
     public static List<IGetProductsListener> getGetProductsListeners()
@@ -580,6 +581,7 @@ public static class OuyaSDK
     {
         void OuyaPurchaseOnSuccess(OuyaSDK.Product product);
         void OuyaPurchaseOnFailure(int errorCode, string errorMessage);
+        void OuyaPurchaseOnCancel();
     }
     private static List<IPurchaseListener> m_purchaseListeners = new List<IPurchaseListener>();
     public static List<IPurchaseListener> getPurchaseListeners()
@@ -609,6 +611,7 @@ public static class OuyaSDK
     {
         void OuyaGetReceiptsOnSuccess(List<Receipt> receipts);
         void OuyaGetReceiptsOnFailure(int errorCode, string errorMessage);
+        void OuyaGetReceiptsOnCancel();
     }
     private static List<IGetReceiptsListener> m_getReceiptsListeners = new List<IGetReceiptsListener>();
     public static List<IGetReceiptsListener> getGetReceiptsListeners()

@@ -324,7 +324,6 @@ public class OuyaExampleCommon
                         {
                             return 0;
                         }
-                        break;
                     case "DR":
                         if (GetButton(player, 8))
                         {
@@ -334,7 +333,6 @@ public class OuyaExampleCommon
                         {
                             return 0;
                         }
-                        break;
                     case "DU":
                         if (GetButton(player, 5))
                         {
@@ -344,7 +342,6 @@ public class OuyaExampleCommon
                         {
                             return 0;
                         }
-                        break;
                     case "DD":
                         if (GetButton(player, 6))
                         {
@@ -354,7 +351,6 @@ public class OuyaExampleCommon
                         {
                             return 0;
                         }
-                        break;
                     default:
                         return 0f;
                 }
