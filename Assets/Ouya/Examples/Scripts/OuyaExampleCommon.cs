@@ -638,6 +638,12 @@ public class OuyaExampleCommon
                         return GetAxis("LT", player) > 0f;
                     case OuyaSDK.KeyEnum.BUTTON_RT:
                         return GetAxis("RT", player) > 0f;
+                    case OuyaSDK.KeyEnum.BUTTON_SELECT:
+                        return GetButton(player, 10);
+                    case OuyaSDK.KeyEnum.BUTTON_START:
+                        return GetButton(player, 9);
+                    case OuyaSDK.KeyEnum.BUTTON_SYSTEM:
+                        return GetButton(player, 15);
                     default:
                         return false;
                 }
