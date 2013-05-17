@@ -611,9 +611,9 @@ public class OuyaExampleCommon
                 switch (keyCode)
                 {
                     case OuyaSDK.KeyEnum.BUTTON_LB:
-                        return GetButton(player, 4);
+                        return GetButton(player, 13);
                     case OuyaSDK.KeyEnum.BUTTON_RB:
-                        return GetButton(player, 5);
+                        return GetButton(player, 14);
                     case OuyaSDK.KeyEnum.BUTTON_O:
                         return GetButton(player, 0);
                     case OuyaSDK.KeyEnum.BUTTON_U:
@@ -623,9 +623,9 @@ public class OuyaExampleCommon
                     case OuyaSDK.KeyEnum.BUTTON_A:
                         return GetButton(player, 1);
                     case OuyaSDK.KeyEnum.BUTTON_L3:
-                        return GetButton(player, 8);
+                        return GetButton(player, 11);
                     case OuyaSDK.KeyEnum.BUTTON_R3:
-                        return GetButton(player, 9);
+                        return GetButton(player, 12);
                     case OuyaSDK.KeyEnum.BUTTON_DPAD_UP:
                         return GetButton(player, 5);
                     case OuyaSDK.KeyEnum.BUTTON_DPAD_DOWN:
