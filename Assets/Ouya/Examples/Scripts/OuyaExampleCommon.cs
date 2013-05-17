@@ -615,13 +615,13 @@ public class OuyaExampleCommon
                     case OuyaSDK.KeyEnum.BUTTON_RB:
                         return GetButton(player, 14);
                     case OuyaSDK.KeyEnum.BUTTON_O:
-                        return GetButton(player, 0);
+                        return GetButton(player, 16);
                     case OuyaSDK.KeyEnum.BUTTON_U:
-                        return GetButton(player, 2);
+                        return GetButton(player, 18);
                     case OuyaSDK.KeyEnum.BUTTON_Y:
-                        return GetButton(player, 3);
+                        return GetButton(player, 19);
                     case OuyaSDK.KeyEnum.BUTTON_A:
-                        return GetButton(player, 1);
+                        return GetButton(player, 17);
                     case OuyaSDK.KeyEnum.BUTTON_L3:
                         return GetButton(player, 11);
                     case OuyaSDK.KeyEnum.BUTTON_R3:
