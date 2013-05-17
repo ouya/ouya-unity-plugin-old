@@ -302,34 +302,58 @@ public class OuyaExampleCommon
                         break;
                     case "LY":
                         axisName = string.Format("Joy{0} Axis 2", (int)player);
-                        invert = true;
                         break;
                     case "RX":
                         axisName = string.Format("Joy{0} Axis 3", (int)player);
-                        invert = true;
                         break;
                     case "RY":
                         axisName = string.Format("Joy{0} Axis 4", (int)player);
                         break;
                     case "LT":
-                        axisName = string.Format("Joy{0} Axis 9", (int)player);
+                        axisName = string.Format("Joy{0} Axis 5", (int)player);
                         break;
                     case "RT":
-                        axisName = string.Format("Joy{0} Axis 10", (int)player);
+                        axisName = string.Format("Joy{0} Axis 6", (int)player);
                         break;
                     case "DL":
-                        axisName = string.Format("Joy{0} Axis 6", (int)player);
-                        invert = true;
+                        if (GetButton(player, 7))
+                        {
+                            return -1;
+                        }
+                        else
+                        {
+                            return 0;
+                        }
                         break;
                     case "DR":
-                        axisName = string.Format("Joy{0} Axis 6", (int)player);
-                        invert = true;
+                        if (GetButton(player, 8))
+                        {
+                            return 1;
+                        }
+                        else
+                        {
+                            return 0;
+                        }
                         break;
                     case "DU":
-                        axisName = string.Format("Joy{0} Axis 7", (int)player);
+                        if (GetButton(player, 5))
+                        {
+                            return 1;
+                        }
+                        else
+                        {
+                            return 0;
+                        }
                         break;
                     case "DD":
-                        axisName = string.Format("Joy{0} Axis 7", (int)player);
+                        if (GetButton(player, 6))
+                        {
+                            return -1;
+                        }
+                        else
+                        {
+                            return 0;
+                        }
                         break;
                     default:
                         return 0f;
@@ -603,13 +627,13 @@ public class OuyaExampleCommon
                     case OuyaSDK.KeyEnum.BUTTON_R3:
                         return GetButton(player, 9);
                     case OuyaSDK.KeyEnum.BUTTON_DPAD_UP:
-                        return GetAxis("DU", player) > 0f;
+                        return GetButton(player, 5);
                     case OuyaSDK.KeyEnum.BUTTON_DPAD_DOWN:
-                        return GetAxis("DD", player) < 0f;
+                        return GetButton(player, 6);
                     case OuyaSDK.KeyEnum.BUTTON_DPAD_LEFT:
-                        return GetAxis("DL", player) < 0f;
+                        return GetButton(player, 7);
                     case OuyaSDK.KeyEnum.BUTTON_DPAD_RIGHT:
-                        return GetAxis("DR", player) > 0f;
+                        return GetButton(player, 8);
                     case OuyaSDK.KeyEnum.BUTTON_LT:
                         return GetAxis("LT", player) > 0f;
                     case OuyaSDK.KeyEnum.BUTTON_RT:
