@@ -1092,13 +1092,13 @@ public class OuyaPanel : EditorWindow
 
         //@hack: remove extra class file
         // tv/ouya/sdk/IOuyaActivity.class
-        string extraClass = string.Format("{0}\\tv\\ouya\\sdk\\IOuyaActivity.class", pathClasses);
+        string extraClass = string.Format("{0}/tv/ouya/sdk/IOuyaActivity.class", pathClasses);
         if (File.Exists(extraClass))
         {
             File.Delete(extraClass);
             Debug.Log(string.Format("Removed: {0}", extraClass));
         }
-        extraClass = string.Format("{0}\\tv\\ouya\\sdk\\IOuyaActivity.class.meta", pathClasses);
+        extraClass = string.Format("{0}/tv/ouya/sdk/IOuyaActivity.class.meta", pathClasses);
         if (File.Exists(extraClass))
         {
             File.Delete(extraClass);
@@ -1107,13 +1107,13 @@ public class OuyaPanel : EditorWindow
 
         //@hack: remove extra class file
         // tv/ouya/sdk/TestOuyaFacade.class
-        extraClass = string.Format("{0}\\tv\\ouya\\sdk\\TestOuyaFacade.class", pathClasses);
+        extraClass = string.Format("{0}/tv/ouya/sdk/TestOuyaFacade.class", pathClasses);
         if (File.Exists(extraClass))
         {
             File.Delete(extraClass);
             Debug.Log(string.Format("Removed: {0}", extraClass));
         }
-        extraClass = string.Format("{0}\\tv\\ouya\\sdk\\TestOuyaFacade.class.meta", pathClasses);
+        extraClass = string.Format("{0}/tv/ouya/sdk/TestOuyaFacade.class.meta", pathClasses);
         if (File.Exists(extraClass))
         {
             File.Delete(extraClass);
@@ -1122,13 +1122,13 @@ public class OuyaPanel : EditorWindow
 
         //@hack: remove extra folder
         // tv/ouya/sdk/*
-        string extraFolder = string.Format("{0}\\tv\\ouya\\sdk", pathClasses);
+        string extraFolder = string.Format("{0}/tv/ouya/sdk", pathClasses);
         if (Directory.Exists(extraFolder))
         {
             Directory.Delete(extraFolder, true);
             Debug.Log(string.Format("Removed: {0}", extraFolder));
         }
-        string extraMeta = string.Format("{0}\\tv\\ouya\\sdk.meta", pathClasses);
+        string extraMeta = string.Format("{0}/tv/ouya/sdk.meta", pathClasses);
         if (File.Exists(extraMeta))
         {
             File.Delete(extraMeta);
@@ -1375,6 +1375,9 @@ public class OuyaPanel : EditorWindow
     {
         EditorBuildSettings.scenes = scenes;
         m_nextScene = scenes[0].path;
+		
+		apkName = string.Format ("{0}.apk", productName);
+		EditorPrefs.SetString(KEY_APK_NAME, apkName);
 
         PlayerSettings.bundleIdentifier = string.Format("tv.ouya.demo.{0}", productName);
         PlayerSettings.productName = productName;
