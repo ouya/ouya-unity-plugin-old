@@ -1505,6 +1505,11 @@ public class OuyaPanel : EditorWindow
                     SwitchToExampleScene("SceneShowProducts");
                 }
 
+                if (GUILayout.Button("Use ShowSounds Scene"))
+                {
+                    SwitchToExampleScene("SceneShowSounds");
+                }
+
                 if (GUILayout.Button("Use ShowSticks Scene"))
                 {
                     SwitchToExampleScene("SceneShowSticks");
