@@ -25,6 +25,39 @@ public class OuyaMenuAdmin : MonoBehaviour
     private static Vector3 m_pos = Vector3.zero;
     private static Vector3 m_euler = Vector3.zero;
 
+    [MenuItem("OUYA/Export Core Package", priority = 100)]
+    public static void MenuPackageCore()
+    {
+        string[] paths =
+            {
+                "Assets/Litjson",
+                "Assets/Ouya/ProjectSettings",
+                "Assets/Ouya/SDK",
+                "Assets/Plugins",
+            };
+        AssetDatabase.ExportPackage(paths, "OuyaSDK-Core.unitypackage", ExportPackageOptions.IncludeDependencies | ExportPackageOptions.Recurse | ExportPackageOptions.Interactive);
+    }
+
+    [MenuItem("OUYA/Export Examples Package", priority = 110)]
+    public static void MenuPackageExamples()
+    {
+        string[] paths =
+            {
+                "Assets/Ouya/Examples",
+            };
+        AssetDatabase.ExportPackage(paths, "OuyaSDK-Examples.unitypackage", ExportPackageOptions.IncludeDependencies | ExportPackageOptions.Recurse | ExportPackageOptions.Interactive);
+    }
+
+    [MenuItem("OUYA/Export StarterKit Package", priority = 120)]
+    public static void MenuPackageStarterKit()
+    {
+        string[] paths =
+            {
+                "Assets/Ouya/StarterKit",
+            };
+        AssetDatabase.ExportPackage(paths, "OuyaSDK-StarterKit.unitypackage", ExportPackageOptions.IncludeDependencies | ExportPackageOptions.Recurse | ExportPackageOptions.Interactive);
+    }
+
     [MenuItem("OUYA/Backup Project Input Settings", priority = 990)]
     public static void MenuBackupInput()
     {
