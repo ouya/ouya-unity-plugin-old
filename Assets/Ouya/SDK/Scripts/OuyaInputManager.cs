@@ -444,7 +444,7 @@ public static class OuyaInputManager
             case "BLUETOOTH JOYSTICK":
             case "OUYA GAME CONTROLLER":
                 return JoystickType.ouya;
-            case "b":
+            case "B":
                 return JoystickType.ps2;
             case "MOTIONINJOY VIRTUAL GAME CONTROLLER":
                 return JoystickType.ps3;
