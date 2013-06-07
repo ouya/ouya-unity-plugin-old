@@ -130,7 +130,16 @@ public class OuyaGameObject : MonoBehaviour
         //Debug.Log("DeviceCount:" + devices.Count);
     }
 
-    public void onMenuAppearing()
+    public void onMenuButtonUp(string ignore)
+    {
+        //Debug.Log("onMenuButtonUp");
+        foreach (OuyaSDK.IMenuButtonUpListener listener in OuyaSDK.getMenuButtonUpListeners())
+        {
+            listener.OuyaMenuButtonUp();
+        }
+    }
+
+    public void onMenuAppearing(string ignore)
     {
         //Debug.Log("onMenuAppearing");
         foreach (OuyaSDK.IMenuAppearingListener listener in OuyaSDK.getMenuAppearingListeners())

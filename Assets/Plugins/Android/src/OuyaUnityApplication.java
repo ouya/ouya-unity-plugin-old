@@ -512,6 +512,13 @@ public class OuyaUnityApplication extends Activity
 	@Override
 	public boolean onKeyUp (int keyCode, KeyEvent event)
 	{
+		if (keyCode == OuyaController.BUTTON_MENU) {
+			Log.i("Unity", "BroadcastReceiver tell Unity we see the menu button up");
+			UnityPlayer.UnitySendMessage("OuyaGameObject", "onMenuButtonUp", "");
+			Log.i("Unity", "BroadcastReceiver notified Unity onMenuButtonUp");
+			 
+		}
+
 		if (OuyaUnityPlugin.getUseLegacyInput())
 		{
 			InputContainer box = new InputContainer();

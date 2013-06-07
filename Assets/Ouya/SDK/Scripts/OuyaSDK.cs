@@ -461,6 +461,34 @@ public static class OuyaSDK
 
     #endregion
 
+    #region Menu Button Up Listeners
+
+    public interface IMenuButtonUpListener
+    {
+        void OuyaMenuButtonUp();
+    }
+    private static List<IMenuButtonUpListener> m_menuButtonUpListeners = new List<IMenuButtonUpListener>();
+    public static List<IMenuButtonUpListener> getMenuButtonUpListeners()
+    {
+        return m_menuButtonUpListeners;
+    }
+    public static void registerMenuButtonUpListener(IMenuButtonUpListener listener)
+    {
+        if (!m_menuButtonUpListeners.Contains(listener))
+        {
+            m_menuButtonUpListeners.Add(listener);
+        }
+    }
+    public static void unregisterMenuButtonUpListener(IMenuButtonUpListener listener)
+    {
+        if (m_menuButtonUpListeners.Contains(listener))
+        {
+            m_menuButtonUpListeners.Remove(listener);
+        }
+    }
+
+    #endregion
+
     #region Menu Appearing Listeners
 
     public interface IMenuAppearingListener

@@ -18,6 +18,7 @@ using UnityEngine;
 
 public class OuyaShowUnityInput : MonoBehaviour,
     OuyaSDK.IPauseListener, OuyaSDK.IResumeListener,
+    OuyaSDK.IMenuButtonUpListener,
     OuyaSDK.IMenuAppearingListener
 {
     #region Model reference fields
@@ -49,6 +50,7 @@ public class OuyaShowUnityInput : MonoBehaviour,
 
     void Awake()
     {
+        OuyaSDK.registerMenuButtonUpListener(this);
         OuyaSDK.registerMenuAppearingListener(this);
         OuyaSDK.registerPauseListener(this);
         OuyaSDK.registerResumeListener(this);
@@ -56,6 +58,7 @@ public class OuyaShowUnityInput : MonoBehaviour,
 
     void OnDestroy()
     {
+        OuyaSDK.unregisterMenuButtonUpListener(this);
         OuyaSDK.unregisterMenuAppearingListener(this);
         OuyaSDK.unregisterPauseListener(this);
         OuyaSDK.unregisterResumeListener(this);
@@ -106,6 +109,11 @@ public class OuyaShowUnityInput : MonoBehaviour,
     {
         OuyaExampleCommon.Player = OuyaSDK.OuyaPlayer.player8;
         UpdatePlayerButtons();
+    }
+
+    public void OuyaMenuButtonUp()
+    {
+        Debug.Log(System.Reflection.MethodBase.GetCurrentMethod().ToString());
     }
 
     public void OuyaMenuAppearing()

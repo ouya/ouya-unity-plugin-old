@@ -19,6 +19,7 @@ using System.Collections.Generic;
 
 public class OuyaInputHandlerExample : MonoBehaviour,
     OuyaSDK.IPauseListener, OuyaSDK.IResumeListener,
+    OuyaSDK.IMenuButtonUpListener,
     OuyaSDK.IMenuAppearingListener
 {
     [SerializeField]
@@ -35,6 +36,7 @@ public class OuyaInputHandlerExample : MonoBehaviour,
 
     void Awake()
     {
+        OuyaSDK.registerMenuButtonUpListener(this);
         OuyaSDK.registerMenuAppearingListener(this);
         OuyaSDK.registerPauseListener(this);
         OuyaSDK.registerResumeListener(this);
@@ -107,12 +109,18 @@ public class OuyaInputHandlerExample : MonoBehaviour,
 
     void OnDestroy()
     {
+        OuyaSDK.unregisterMenuButtonUpListener(this);
         OuyaSDK.unregisterMenuAppearingListener(this);
         OuyaSDK.unregisterPauseListener(this);
         OuyaSDK.unregisterResumeListener(this);
 
         OuyaInputManager.OuyaButtonEvent.removeButtonEventListener(HandleButtonEvent);
         OuyaInputManager.initKeyStates();
+    }
+
+    public void OuyaMenuButtonUp()
+    {
+        Debug.Log(System.Reflection.MethodBase.GetCurrentMethod().ToString());
     }
 
     public void OuyaMenuAppearing()

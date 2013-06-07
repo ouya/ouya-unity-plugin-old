@@ -22,6 +22,7 @@ using Random = UnityEngine.Random;
 
 public class OuyaShowMeshPerformance : MonoBehaviour,
                                        OuyaSDK.IPauseListener, OuyaSDK.IResumeListener,
+    OuyaSDK.IMenuButtonUpListener,
                                        OuyaSDK.IMenuAppearingListener
 {
     private DateTime m_timerChange = DateTime.MinValue;
@@ -39,6 +40,7 @@ public class OuyaShowMeshPerformance : MonoBehaviour,
 
     private void Awake()
     {
+        OuyaSDK.registerMenuButtonUpListener(this);
         OuyaSDK.registerMenuAppearingListener(this);
         OuyaSDK.registerPauseListener(this);
         OuyaSDK.registerResumeListener(this);
@@ -46,6 +48,7 @@ public class OuyaShowMeshPerformance : MonoBehaviour,
 
     private void OnDestroy()
     {
+        OuyaSDK.unregisterMenuButtonUpListener(this);
         OuyaSDK.unregisterMenuAppearingListener(this);
         OuyaSDK.unregisterPauseListener(this);
         OuyaSDK.unregisterResumeListener(this);
@@ -54,6 +57,11 @@ public class OuyaShowMeshPerformance : MonoBehaviour,
     private void Start()
     {
         Input.ResetInputAxes();
+    }
+
+    public void OuyaMenuButtonUp()
+    {
+        Debug.Log(System.Reflection.MethodBase.GetCurrentMethod().ToString());
     }
 
     public void OuyaMenuAppearing()

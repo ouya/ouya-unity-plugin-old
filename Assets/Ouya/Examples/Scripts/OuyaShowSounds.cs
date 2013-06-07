@@ -19,6 +19,7 @@ using UnityEngine;
 
 public class OuyaShowSounds : MonoBehaviour,
     OuyaSDK.IPauseListener, OuyaSDK.IResumeListener,
+    OuyaSDK.IMenuButtonUpListener,
     OuyaSDK.IMenuAppearingListener
 {
     public AudioClip m_soundMP3 = null;
@@ -27,15 +28,22 @@ public class OuyaShowSounds : MonoBehaviour,
 
     void Awake()
     {
+        OuyaSDK.registerMenuButtonUpListener(this);
         OuyaSDK.registerMenuAppearingListener(this);
         OuyaSDK.registerPauseListener(this);
         OuyaSDK.registerResumeListener(this);
     }
     void OnDestroy()
     {
+        OuyaSDK.unregisterMenuButtonUpListener(this);
         OuyaSDK.unregisterMenuAppearingListener(this);
         OuyaSDK.unregisterPauseListener(this);
         OuyaSDK.unregisterResumeListener(this);
+    }
+
+    public void OuyaMenuButtonUp()
+    {
+        Debug.Log(System.Reflection.MethodBase.GetCurrentMethod().ToString());
     }
 
     public void OuyaMenuAppearing()
