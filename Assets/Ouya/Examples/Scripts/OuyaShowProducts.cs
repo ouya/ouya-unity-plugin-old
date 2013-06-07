@@ -141,51 +141,7 @@ public class OuyaShowProducts : MonoBehaviour,
             GUILayout.Label(string.Format("Is IAP Init Complete={0}", OuyaSDK.isIAPInitComplete()));
             GUILayout.EndHorizontal();
 
-            GUILayout.BeginHorizontal();
-            GUILayout.Space(400);
-            if (GUILayout.Button("Debug Initialize SDK", GUILayout.Height(40)))
-            {
-                OuyaSDK.initialize(OuyaGameObject.Singleton.DEVELOPER_ID,
-                    OuyaGameObject.Singleton.UseLegacyInput);
-            }
-            GUILayout.EndHorizontal();
-
-            GUILayout.BeginHorizontal();
-            GUILayout.Space(400);
-
-            GUILayout.Label("GetProductList:");
-            GUILayout.EndHorizontal();
-
-            GUILayout.BeginHorizontal();
-            GUILayout.Space(400);
-            if (GUILayout.Button("Clear Get Product List", GUILayout.Height(40)))
-            {
-                OuyaSDK.OuyaJava.JavaClearGetProductList();
-            }
-            GUILayout.EndHorizontal();
-
             GUILayout.Label(string.Empty);
-
-            GUILayout.BeginHorizontal();
-            GUILayout.Space(400);
-            if (GUILayout.Button("Debug Get Product List", GUILayout.Height(40)))
-            {
-                OuyaSDK.OuyaJava.JavaDebugGetProductList();
-            }
-            GUILayout.EndHorizontal();
-
-            GUILayout.BeginHorizontal();
-            GUILayout.Space(400);
-            foreach (string productId in OuyaGameObject.Singleton.Purchasables)
-            {
-                if (GUILayout.Button(string.Format("Add: {0}", productId), GUILayout.Height(40)))
-                {
-                    OuyaSDK.Purchasable purchasable = new OuyaSDK.Purchasable(productId);
-                    OuyaSDK.OuyaJava.JavaAddGetProduct(purchasable);
-                }
-            }
-            GUILayout.EndHorizontal();
-
             GUILayout.Label(string.Empty);
 
             GUILayout.BeginHorizontal();

@@ -174,8 +174,11 @@ public class OuyaUnityPlugin
 
 			if (null == m_test)
 			{
-				//wait for Unity to initialize
-				if (!m_unityInitialized)
+				//wait to read the application key
+				if (null == IOuyaActivity.GetApplicationKey() ||
+
+					//wait for Unity to initialize
+					!m_unityInitialized)
 				{
 					if (m_enableDebugLogging)
 					{
@@ -207,12 +210,12 @@ public class OuyaUnityPlugin
 					else
 					{
 						Log.i("Unity", "InitializeTest: m_developerId is valid,  constructing TestOuyaFacade");
-						m_test = new TestOuyaFacade(IOuyaActivity.GetActivity(), IOuyaActivity.GetSavedInstanceState(), m_developerId);
+						m_test = new TestOuyaFacade(IOuyaActivity.GetActivity(), IOuyaActivity.GetSavedInstanceState(), m_developerId, IOuyaActivity.GetApplicationKey());
 						IOuyaActivity.SetTestOuyaFacade(m_test);
 					}
 					*/
 					
-					m_test = new TestOuyaFacade(IOuyaActivity.GetActivity(), IOuyaActivity.GetSavedInstanceState(), m_developerId);
+					m_test = new TestOuyaFacade(IOuyaActivity.GetActivity(), IOuyaActivity.GetSavedInstanceState(), m_developerId, IOuyaActivity.GetApplicationKey());
 					
 					//make facade accessible by activity
 					IOuyaActivity.SetTestOuyaFacade(m_test);

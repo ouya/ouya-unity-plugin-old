@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package tv.ouya.demo.OuyaUnityApplication;
+package tv.ouya.demo.SceneShowProducts;
 
 import tv.ouya.console.api.OuyaController;
 import tv.ouya.sdk.*;
@@ -43,6 +43,8 @@ import com.unity3d.player.UnityPlayerProxyActivity;
 
 import tv.ouya.console.api.*;
 
+import java.io.InputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class OuyaUnityApplication extends Activity
@@ -66,6 +68,17 @@ public class OuyaUnityApplication extends Activity
 		IOuyaActivity.SetSavedInstanceState(savedInstanceState);
 
 		super.onCreate(savedInstanceState);
+
+		// load the raw resource for the application key
+		try {
+			InputStream inputStream = getResources().openRawResource(R.raw.key);
+			byte[] applicationKey = new byte[inputStream.available()];
+			inputStream.read(applicationKey);
+			inputStream.close();
+			IOuyaActivity.SetApplicationKey(applicationKey);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
 		// Create the UnityPlayer
         IOuyaActivity.SetUnityPlayer(new UnityPlayer(this));

@@ -77,4 +77,18 @@ public class IOuyaActivity
 	{
 		m_testOuyaFacade = testOuyaFacade;
 	}
+
+	/*
+	* The application key. This is used to decrypt encrypted receipt responses. This should be replaced with the
+	* application key obtained from the OUYA developers website.
+	*/
+	protected static byte[] m_applicationKey = null;
+	public static byte[] GetApplicationKey()
+	{
+		return m_applicationKey;
+	}
+	public static void SetApplicationKey(byte[] applicationKey)
+	{
+		m_applicationKey = applicationKey;
+	}
 }
