@@ -25,7 +25,7 @@ using UnityEngine;
 
 public static class OuyaSDK
 {
-    public const string VERSION = "1.0.3.13";
+    public const string VERSION = "1.0.3.14";
 
     /// <summary>
     /// The developer ID assigned by OuyaGameObject

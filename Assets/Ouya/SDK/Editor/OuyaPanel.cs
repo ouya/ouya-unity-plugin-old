@@ -1658,6 +1658,7 @@ public class OuyaPanel : EditorWindow
                 GUIDisplayUnityFile(KEY_PATH_JAR_GSON, pathGuavaJar);
                 GUIDisplayUnityFile(KEY_PATH_JAR_OUYA_UNITY_PLUGIN, pathOuyaUnityPluginJar);
                 GUIDisplayUnityFile("Manifest", pathManifestPath);
+                GUIDisplayUnityFile("key.der", "Assets/Plugins/Android/res/raw/key.der");
                 GUIDisplayUnityFile("R.Java", GetRJava());
                 GUIDisplayUnityFile("Application.Java", GetApplicationJava());
                 GUIDisplayUnityFile("IOuyaActivity.Java", GetIOuyaActivityJava());
