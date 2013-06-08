@@ -1478,6 +1478,11 @@ public class OuyaPanel : EditorWindow
 
                 GUILayout.Label("Build Settings:");
 
+                if (GUILayout.Button("Use SceneShowCamera Scene"))
+                {
+                    SwitchToExampleScene("SceneShowCamera");
+                }
+
                 if (GUILayout.Button("Use SceneMultipleControllers Scene"))
                 {
                     SwitchToExampleScene("SceneMultipleControllers");
