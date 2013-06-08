@@ -59,6 +59,45 @@ public class OuyaExampleCommon
 
         switch (joystickName.ToUpper())
         {
+            case "HARMONIX ROCK BAND GUITAR":
+                switch (ouyaMapping)
+                {
+                    case "LX":
+                        axisName = string.Format("Joy{0} Axis 8", (int)player);
+                        break;
+                    case "LY":
+                        axisName = string.Format("Joy{0} Axis 8", (int)player);
+                        invert = true;
+                        break;
+                    case "RX":
+                        axisName = string.Format("Joy{0} Axis 8", (int)player);
+                        break;
+                    case "RY":
+                        axisName = string.Format("Joy{0} Axis 8", (int)player);
+                        break;
+                    case "LT":
+                        axisName = string.Format("Joy{0} Axis 8", (int)player);
+                        break;
+                    case "RT":
+                        axisName = string.Format("Joy{0} Axis 8", (int)player);
+                        break;
+                    case "DL":
+                        axisName = string.Format("Joy{0} Axis 8", (int)player);
+                        break;
+                    case "DR":
+                        axisName = string.Format("Joy{0} Axis 8", (int)player);
+                        break;
+                    case "DU":
+                        axisName = string.Format("Joy{0} Axis 8", (int)player);
+                        break;
+                    case "DD":
+                        axisName = string.Format("Joy{0} Axis 8", (int)player);
+                        break;
+                    default:
+                        return 0f;
+                }
+                break;
+
             case "BROADCOM BLUETOOTH HID":
             case "MOGA PRO HID":
 #if !UNITY_EDITOR && UNITY_ANDROID
@@ -414,6 +453,33 @@ public class OuyaExampleCommon
 
         switch (joystickName.ToUpper())
         {
+            case "HARMONIX ROCK BAND GUITAR":
+                switch (keyCode)
+                {
+                    case OuyaSDK.KeyEnum.BUTTON_O: //top green
+                        return GetButton(player, 0);
+                    case OuyaSDK.KeyEnum.BUTTON_U: //top red
+                        return GetButton(player, 1);
+                    case OuyaSDK.KeyEnum.BUTTON_Y: //top yellow
+                        return GetButton(player, 4);
+                    case OuyaSDK.KeyEnum.BUTTON_A: //top blue
+                        return GetButton(player, 3);
+                    case OuyaSDK.KeyEnum.BUTTON_L3: //top orange
+                        return GetButton(player, 6);
+                    case OuyaSDK.KeyEnum.BUTTON_R3: //bottom green
+                        return GetButton(player, 0) && GetButton(player, 13);
+                    case OuyaSDK.KeyEnum.BUTTON_DPAD_UP: //bottom red
+                        return GetButton(player, 1) && GetButton(player, 13);
+                    case OuyaSDK.KeyEnum.BUTTON_DPAD_DOWN: //bottom yellow
+                        return GetButton(player, 4) && GetButton(player, 13);
+                    case OuyaSDK.KeyEnum.BUTTON_DPAD_LEFT: //bottom blue
+                        return GetButton(player, 3) && GetButton(player, 13);
+                    case OuyaSDK.KeyEnum.BUTTON_DPAD_RIGHT: //bottom orange
+                        return GetButton(player, 6) && GetButton(player, 13);
+                    default:
+                        return false;
+                }
+
             case "BROADCOM BLUETOOTH HID":
             case "MOGA PRO HID":
                 switch (keyCode)
