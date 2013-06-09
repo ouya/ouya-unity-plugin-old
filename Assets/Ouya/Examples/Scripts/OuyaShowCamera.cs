@@ -94,12 +94,13 @@ public class OuyaShowCamera : MonoBehaviour,
             GUILayout.Label(string.Empty);
             GUILayout.Label(string.Empty);
 
+            WebCamDevice[] devices = WebCamTexture.devices;
+
             GUILayout.BeginHorizontal();
             GUILayout.Space(400);
-            GUILayout.Label("Cameras:");
+            GUILayout.Label(string.Format("Cameras: {0}", devices.Length));
             GUILayout.EndHorizontal();
 
-            WebCamDevice[] devices = WebCamTexture.devices;
             foreach (WebCamDevice device in devices)
             {
                 GUILayout.Label(string.Empty, GUILayout.MinHeight(10));
