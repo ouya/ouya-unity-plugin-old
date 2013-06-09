@@ -132,7 +132,7 @@ public class OuyaShowGuitar : MonoBehaviour,
         if (0 == Random.Range(0, 10))
         {
             note.UseLower = true;
-            note.Instance.transform.rotation = Quaternion.EulerAngles(0, 15, 0);
+            note.Instance.transform.rotation = Quaternion.Euler(0, 15, 0);
         }
         Notes.Add(note);
     }

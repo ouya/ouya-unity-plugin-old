@@ -92,6 +92,8 @@ public class OuyaExampleCommon
 
         switch (joystickName.ToUpper())
         {
+            case "HARMONIX ROCK BAND DRUMKIT":
+                return 0f;
             case "HARMONIX ROCK BAND GUITAR":
                 switch (keyCode)
                 {
@@ -469,6 +471,40 @@ public class OuyaExampleCommon
 
         switch (joystickName.ToUpper())
         {
+            case "HARMONIX ROCK BAND DRUMKIT":
+                switch (keyCode)
+                {
+                    case OuyaSDK.KeyEnum.HARMONIX_ROCK_BAND_DRUMKIT_GREEN:
+                    case OuyaSDK.KeyEnum.HARMONIX_ROCK_BAND_DRUMKIT_A:
+                    case OuyaSDK.KeyEnum.BUTTON_O:
+                        return GetButton(0, player);
+                    case OuyaSDK.KeyEnum.HARMONIX_ROCK_BAND_DRUMKIT_RED:
+                    case OuyaSDK.KeyEnum.HARMONIX_ROCK_BAND_DRUMKIT_B:
+                    case OuyaSDK.KeyEnum.BUTTON_A:
+                        return GetButton(1, player);
+                    case OuyaSDK.KeyEnum.HARMONIX_ROCK_BAND_DRUMKIT_YELLOW:
+                    case OuyaSDK.KeyEnum.HARMONIX_ROCK_BAND_DRUMKIT_Y:
+                    case OuyaSDK.KeyEnum.BUTTON_Y:
+                        return GetButton(4, player);
+                    case OuyaSDK.KeyEnum.HARMONIX_ROCK_BAND_DRUMKIT_BLUE:
+                    case OuyaSDK.KeyEnum.HARMONIX_ROCK_BAND_DRUMKIT_X:
+                    case OuyaSDK.KeyEnum.BUTTON_U:
+                        return GetButton(3, player);
+                    case OuyaSDK.KeyEnum.HARMONIX_ROCK_BAND_DRUMKIT_ORANGE:
+                    case OuyaSDK.KeyEnum.BUTTON_L3:
+                        return GetButton(6, player);
+                    case OuyaSDK.KeyEnum.BUTTON_BACK:
+                    case OuyaSDK.KeyEnum.BUTTON_R3:
+                        return GetButton(10, player);
+                    case OuyaSDK.KeyEnum.BUTTON_START:
+                    case OuyaSDK.KeyEnum.BUTTON_LB:
+                        return GetButton(11, player);
+                    case OuyaSDK.KeyEnum.BUTTON_SYSTEM:
+                    case OuyaSDK.KeyEnum.BUTTON_RB:
+                        return GetButton(12, player);
+                    default:
+                        return false;
+                }
             case "HARMONIX ROCK BAND GUITAR":
                 switch (keyCode)
                 {
@@ -476,13 +512,13 @@ public class OuyaExampleCommon
                     case OuyaSDK.KeyEnum.BUTTON_O:
                         return GetButton(0, player);
                     case OuyaSDK.KeyEnum.HARMONIX_ROCK_BAND_GUITAR_RED:
-                    case OuyaSDK.KeyEnum.BUTTON_U:
+                    case OuyaSDK.KeyEnum.BUTTON_A:
                         return GetButton(1, player);
                     case OuyaSDK.KeyEnum.HARMONIX_ROCK_BAND_GUITAR_YELLOW:
                     case OuyaSDK.KeyEnum.BUTTON_Y:
                         return GetButton(4, player);
                     case OuyaSDK.KeyEnum.HARMONIX_ROCK_BAND_GUITAR_BLUE:
-                    case OuyaSDK.KeyEnum.BUTTON_A:
+                    case OuyaSDK.KeyEnum.BUTTON_U:
                         return GetButton(3, player);
                     case OuyaSDK.KeyEnum.HARMONIX_ROCK_BAND_GUITAR_ORANGE:
                     case OuyaSDK.KeyEnum.BUTTON_L3:
