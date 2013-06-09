@@ -33,6 +33,7 @@ public class OuyaShowGuitar : MonoBehaviour,
         public Color LaneColor = Color.green;
         public OuyaSDK.KeyEnum LaneButton = OuyaSDK.KeyEnum.HARMONIX_ROCK_BAND_GUITAR_GREEN;
         public GameObject Instance = null;
+        public AudioSource LaneSound = null;
     }
 
     public List<CubeLaneItem> Lanes = new List<CubeLaneItem>();
@@ -52,7 +53,7 @@ public class OuyaShowGuitar : MonoBehaviour,
 
     private int NoteTimeToLive = 4000;
 
-    private int NoteTimeToCreate = 175;
+    private int NoteTimeToCreate = 100;
 
     private int NoteTimeToFade = 250;
 
@@ -203,10 +204,11 @@ public class OuyaShowGuitar : MonoBehaviour,
                     //good
                     LastPressed[note.Parent.LaneButton] = true;
 
-                    //this press is good
+                    //hit the note
                     if (note.FadeTime == DateTime.MinValue)
                     {
                         note.FadeTime = DateTime.Now + TimeSpan.FromMilliseconds(NoteTimeToFade);
+                        note.Parent.LaneSound.volume = 1;
                     }
                 }
             }
@@ -240,5 +242,10 @@ public class OuyaShowGuitar : MonoBehaviour,
     void FixedUpdate()
     {
         OuyaExampleCommon.UpdateJoysticks();
+
+        foreach (CubeLaneItem item in Lanes)
+        {
+            item.LaneSound.volume = Mathf.Lerp(item.LaneSound.volume, 0, Time.fixedDeltaTime);
+        }
     }
 }

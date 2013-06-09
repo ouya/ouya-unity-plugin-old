@@ -276,6 +276,7 @@ GameObject:
   serializedVersion: 3
   m_Component:
   - 4: {fileID: 126821233}
+  - 82: {fileID: 126821234}
   m_Layer: 0
   m_Name: CubeLane1
   m_TagString: Untagged
@@ -297,6 +298,62 @@ Transform:
   - {fileID: 1483254420}
   - {fileID: 427115631}
   m_Father: {fileID: 0}
+--- !u!82 &126821234
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 126821232}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_audioClip: {fileID: 8300000, guid: 79b970427ad20da438efa56145a75980, type: 1}
+  m_PlayOnAwake: 1
+  m_Volume: 0
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 1
+  BypassEffects: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
 --- !u!1 &127952257
 GameObject:
   m_ObjectHideFlags: 0
@@ -514,6 +571,7 @@ GameObject:
   serializedVersion: 3
   m_Component:
   - 4: {fileID: 406850992}
+  - 82: {fileID: 406850993}
   m_Layer: 0
   m_Name: CubeLane4
   m_TagString: Untagged
@@ -535,6 +593,62 @@ Transform:
   - {fileID: 806233930}
   - {fileID: 1944617240}
   m_Father: {fileID: 0}
+--- !u!82 &406850993
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 406850991}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_audioClip: {fileID: 8300000, guid: 1f9939e259d4d3d44b2406f55a960836, type: 1}
+  m_PlayOnAwake: 1
+  m_Volume: 0
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 1
+  BypassEffects: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
 --- !u!1 &427115630
 GameObject:
   m_ObjectHideFlags: 0
@@ -873,6 +987,7 @@ GameObject:
   serializedVersion: 3
   m_Component:
   - 4: {fileID: 790087562}
+  - 82: {fileID: 790087563}
   m_Layer: 0
   m_Name: CubeLane3
   m_TagString: Untagged
@@ -894,6 +1009,62 @@ Transform:
   - {fileID: 1622494111}
   - {fileID: 963985485}
   m_Father: {fileID: 0}
+--- !u!82 &790087563
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 790087561}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_audioClip: {fileID: 8300000, guid: 7001c18dd85858940a25b1ac217cf69b, type: 1}
+  m_PlayOnAwake: 1
+  m_Volume: 0
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 1
+  BypassEffects: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
 --- !u!1 &806233929
 GameObject:
   m_ObjectHideFlags: 0
@@ -1080,6 +1251,7 @@ GameObject:
   serializedVersion: 3
   m_Component:
   - 4: {fileID: 1060845661}
+  - 82: {fileID: 1060845662}
   m_Layer: 0
   m_Name: CubeLane5
   m_TagString: Untagged
@@ -1101,6 +1273,62 @@ Transform:
   - {fileID: 572141851}
   - {fileID: 368550446}
   m_Father: {fileID: 0}
+--- !u!82 &1060845662
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1060845660}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_audioClip: {fileID: 8300000, guid: 2aec3b67a02cf254bae66c15d6264a12, type: 1}
+  m_PlayOnAwake: 1
+  m_Volume: 0
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 1
+  BypassEffects: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
 --- !u!1 &1139339719
 GameObject:
   m_ObjectHideFlags: 0
@@ -1320,6 +1548,7 @@ GameObject:
   serializedVersion: 3
   m_Component:
   - 4: {fileID: 1351401175}
+  - 82: {fileID: 1351401176}
   m_Layer: 0
   m_Name: CubeLane2
   m_TagString: Untagged
@@ -1341,6 +1570,62 @@ Transform:
   - {fileID: 1139339720}
   - {fileID: 684716901}
   m_Father: {fileID: 0}
+--- !u!82 &1351401176
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1351401174}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_audioClip: {fileID: 8300000, guid: 7043e3d7a59a6fc48a9737f0449b6402, type: 1}
+  m_PlayOnAwake: 1
+  m_Volume: 0
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 1
+  BypassEffects: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
 --- !u!1 &1457992874
 GameObject:
   m_ObjectHideFlags: 0
@@ -1384,26 +1669,31 @@ MonoBehaviour:
     LaneColor: {r: 0, g: 1, b: 0, a: 1}
     LaneButton: 25
     Instance: {fileID: 0}
+    LaneSound: {fileID: 126821234}
   - StartPosition: {fileID: 684716900}
     EndPosition: {fileID: 1659675736}
     LaneColor: {r: 1, g: 0, b: 0, a: 1}
     LaneButton: 26
     Instance: {fileID: 0}
+    LaneSound: {fileID: 1351401176}
   - StartPosition: {fileID: 963985484}
     EndPosition: {fileID: 566238382}
     LaneColor: {r: 1, g: 1, b: 0, a: 1}
     LaneButton: 27
     Instance: {fileID: 0}
+    LaneSound: {fileID: 790087563}
   - StartPosition: {fileID: 1944617239}
     EndPosition: {fileID: 9038993}
     LaneColor: {r: 0, g: 0, b: 1, a: 1}
     LaneButton: 28
     Instance: {fileID: 0}
+    LaneSound: {fileID: 406850993}
   - StartPosition: {fileID: 368550445}
     EndPosition: {fileID: 638768309}
     LaneColor: {r: 1, g: .549019635, b: 0, a: 1}
     LaneButton: 29
     Instance: {fileID: 0}
+    LaneSound: {fileID: 1060845662}
   TrackEnd: {fileID: 1333879578}
 --- !u!1 &1483254419
 GameObject:
