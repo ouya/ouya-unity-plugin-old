@@ -62,30 +62,21 @@ public class OuyaExampleCommon
             case "HARMONIX ROCK BAND GUITAR":
                 switch (ouyaMapping)
                 {
-                    case "LX":
-                        axisName = string.Format("Joy{0} Axis 8", (int)player);
-                        break;
                     case "LY":
                         axisName = string.Format("Joy{0} Axis 8", (int)player);
                         invert = true;
                         break;
-                    case "RX":
-                        axisName = string.Format("Joy{0} Axis 8", (int)player);
-                        break;
-                    case "RY":
-                        axisName = string.Format("Joy{0} Axis 8", (int)player);
-                        break;
                     case "LT":
-                        axisName = string.Format("Joy{0} Axis 8", (int)player);
+                        axisName = string.Format("Joy{0} Axis 3", (int)player);
                         break;
                     case "RT":
-                        axisName = string.Format("Joy{0} Axis 8", (int)player);
+                        axisName = string.Format("Joy{0} Axis 4", (int)player);
                         break;
                     case "DL":
-                        axisName = string.Format("Joy{0} Axis 8", (int)player);
+                        axisName = string.Format("Joy{0} Axis 7", (int)player);
                         break;
                     case "DR":
-                        axisName = string.Format("Joy{0} Axis 8", (int)player);
+                        axisName = string.Format("Joy{0} Axis 7", (int)player);
                         break;
                     case "DU":
                         axisName = string.Format("Joy{0} Axis 8", (int)player);
@@ -466,16 +457,24 @@ public class OuyaExampleCommon
                         return GetButton(player, 3);
                     case OuyaSDK.KeyEnum.BUTTON_L3: //top orange
                         return GetButton(player, 6);
-                    case OuyaSDK.KeyEnum.BUTTON_R3: //bottom green
-                        return GetButton(player, 0) && GetButton(player, 13);
-                    case OuyaSDK.KeyEnum.BUTTON_DPAD_UP: //bottom red
-                        return GetButton(player, 1) && GetButton(player, 13);
+                    case OuyaSDK.KeyEnum.BUTTON_R3: //back
+                        return GetButton(player, 10);
+                    case OuyaSDK.KeyEnum.BUTTON_LB: //start
+                        return GetButton(player, 11);
+                    case OuyaSDK.KeyEnum.BUTTON_RB: //xbox
+                        return GetButton(player, 12);
+                    case OuyaSDK.KeyEnum.BUTTON_LT: //pickup
+                        return false;
+                    case OuyaSDK.KeyEnum.BUTTON_RT: //whammi
+                        return false;
+                    case OuyaSDK.KeyEnum.BUTTON_DPAD_UP:
+                        return GetAxis("DU", player) > 0f;
                     case OuyaSDK.KeyEnum.BUTTON_DPAD_DOWN: //bottom yellow
-                        return GetButton(player, 4) && GetButton(player, 13);
+                        return GetAxis("DD", player) < 0f;
                     case OuyaSDK.KeyEnum.BUTTON_DPAD_LEFT: //bottom blue
-                        return GetButton(player, 3) && GetButton(player, 13);
+                        return GetAxis("DL", player) > 0f;
                     case OuyaSDK.KeyEnum.BUTTON_DPAD_RIGHT: //bottom orange
-                        return GetButton(player, 6) && GetButton(player, 13);
+                        return GetAxis("DR", player) < 0f;
                     default:
                         return false;
                 }

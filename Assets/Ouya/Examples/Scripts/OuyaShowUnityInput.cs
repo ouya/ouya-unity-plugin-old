@@ -326,6 +326,10 @@ public class OuyaShowUnityInput : MonoBehaviour,
 
         RendererAxisRight.transform.localRotation = Quaternion.Euler(OuyaExampleCommon.GetAxis("RY", OuyaExampleCommon.Player) * 15, 0, OuyaExampleCommon.GetAxis("RX", OuyaExampleCommon.Player) * 15);
 
+        RendererLT.transform.localRotation = Quaternion.Euler(OuyaExampleCommon.GetAxis("LT", OuyaExampleCommon.Player) * -15, 0, 0);
+
+        RendererRT.transform.localRotation = Quaternion.Euler(OuyaExampleCommon.GetAxis("RT", OuyaExampleCommon.Player) * -15, 0, 0);
+
         if (OuyaExampleCommon.GetButton(OuyaExampleCommon.Player, OuyaSDK.KeyEnum.BUTTON_L3))
         {
             RendererAxisLeft.transform.localPosition = Vector3.Lerp(RendererAxisLeft.transform.localPosition,
