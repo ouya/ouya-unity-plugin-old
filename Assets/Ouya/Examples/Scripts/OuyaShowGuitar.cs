@@ -50,9 +50,11 @@ public class OuyaShowGuitar : MonoBehaviour,
 
     private int NoteTimeToLive = 3000;
 
-    private int NoteTimeToCreate = 500;
+    private int NoteTimeToCreate = 200;
 
     private int NoteTimeToFade = 250;
+
+    private Dictionary<OuyaSDK.KeyEnum, bool> LastPressed = new Dictionary<OuyaSDK.KeyEnum, bool>();
 
     private DateTime m_timerCreate = DateTime.MinValue;
 
@@ -146,12 +148,28 @@ public class OuyaShowGuitar : MonoBehaviour,
                     note.Parent.StartPosition.transform.position,
                     note.Parent.EndPosition.transform.position,
                     elapsed/(float) NoteTimeToLive);
+
+            // correct button is pressed
             if (OuyaExampleCommon.GetButton(note.Parent.LaneButton, OuyaSDK.OuyaPlayer.player1))
             {
-                if (note.FadeTime == DateTime.MinValue)
+                //check if button was already pressed
+                if (!LastPressed.ContainsKey(note.Parent.LaneButton))
                 {
-                    note.FadeTime = DateTime.Now + TimeSpan.FromMilliseconds(NoteTimeToFade);
+                    //good
+                    LastPressed[note.Parent.LaneButton] = true;
+
+                    //this press is good
+                    if (note.FadeTime == DateTime.MinValue)
+                    {
+                        note.FadeTime = DateTime.Now + TimeSpan.FromMilliseconds(NoteTimeToFade);
+                    }
                 }
+            }
+            
+            // no longer pressed
+            else if (LastPressed.ContainsKey(note.Parent.LaneButton))
+            {
+                LastPressed.Remove(note.Parent.LaneButton);
             }
 
             if (note.FadeTime != DateTime.MinValue)
