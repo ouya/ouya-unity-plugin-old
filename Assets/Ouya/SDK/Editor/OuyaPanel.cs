@@ -1483,6 +1483,11 @@ public class OuyaPanel : EditorWindow
                     SwitchToExampleScene("SceneShowCamera");
                 }
 
+                if (GUILayout.Button("Use SceneShowGuitar Scene"))
+                {
+                    SwitchToExampleScene("SceneShowGuitar");
+                }
+
                 if (GUILayout.Button("Use SceneMultipleControllers Scene"))
                 {
                     SwitchToExampleScene("SceneMultipleControllers");

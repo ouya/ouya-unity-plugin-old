@@ -143,11 +143,21 @@ public class OuyaShowGuitar : MonoBehaviour,
                     note.Parent.StartPosition.transform.position,
                     note.Parent.EndPosition.transform.position,
                     elapsed/(float) NoteTimeToLive);
+            if (OuyaExampleCommon.GetButton(note.Parent.LaneButton, OuyaSDK.OuyaPlayer.player1))
+            {
+                (note.Instance.renderer as MeshRenderer).material.color = Color.Lerp((note.Instance.renderer as MeshRenderer).material.color, Color.white, Time.deltaTime);
+                note.Instance.transform.localScale = Vector3.Lerp(note.Instance.transform.localScale, note.Parent.StartPosition.transform.localScale * 2, Time.deltaTime);
+            }
         }
         foreach (NoteItem note in removeList)
         {
             Notes.Remove(note);
             DestroyNote(note);
         }
+    }
+
+    void FixedUpdate()
+    {
+        OuyaExampleCommon.UpdateJoysticks();
     }
 }
