@@ -489,6 +489,8 @@ public class OuyaExampleCommon
                     case OuyaSDK.KeyEnum.HARMONIX_ROCK_BAND_GUITAR_ORANGE:
                     case OuyaSDK.KeyEnum.BUTTON_L3:
                         return GetButton(6, player);
+                    case OuyaSDK.KeyEnum.HARMONIX_ROCK_BAND_GUITAR_LOWER:
+                        return GetButton(13, player);
                     case OuyaSDK.KeyEnum.BUTTON_BACK:
                     case OuyaSDK.KeyEnum.BUTTON_R3:
                         return GetButton(10, player);

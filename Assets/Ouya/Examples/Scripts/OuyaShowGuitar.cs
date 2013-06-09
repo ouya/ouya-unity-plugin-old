@@ -18,6 +18,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Object=UnityEngine.Object;
+using Random = UnityEngine.Random;
 
 public class OuyaShowGuitar : MonoBehaviour,
     OuyaSDK.IPauseListener, OuyaSDK.IResumeListener,
@@ -44,19 +45,24 @@ public class OuyaShowGuitar : MonoBehaviour,
         public DateTime StartTime = DateTime.MinValue;
         public DateTime EndTime = DateTime.MinValue;
         public DateTime FadeTime = DateTime.MinValue;
+        public bool UseLower = false;
     }
 
     private List<NoteItem> Notes = new List<NoteItem>();
 
-    private int NoteTimeToLive = 3000;
+    private int NoteTimeToLive = 4000;
 
-    private int NoteTimeToCreate = 200;
+    private int NoteTimeToCreate = 175;
 
     private int NoteTimeToFade = 250;
 
     private Dictionary<OuyaSDK.KeyEnum, bool> LastPressed = new Dictionary<OuyaSDK.KeyEnum, bool>();
 
     private DateTime m_timerCreate = DateTime.MinValue;
+
+    private float LastStrum = 0f;
+
+    public Transform TrackEnd = null;
 
     void Awake()
     {
@@ -122,6 +128,11 @@ public class OuyaShowGuitar : MonoBehaviour,
         note.Parent = item;
         note.Instance = (GameObject)Instantiate(item.StartPosition);
         (note.Instance.renderer as MeshRenderer).material.color = item.LaneColor;
+        if (0 == Random.Range(0, 10))
+        {
+            note.UseLower = true;
+            note.Instance.transform.rotation = Quaternion.EulerAngles(0, 15, 0);
+        }
         Notes.Add(note);
     }
 
@@ -130,7 +141,7 @@ public class OuyaShowGuitar : MonoBehaviour,
         if (m_timerCreate < DateTime.Now)
         {
             m_timerCreate = DateTime.Now + TimeSpan.FromMilliseconds(NoteTimeToCreate);
-            int index = UnityEngine.Random.Range(0, Lanes.Count);
+            int index = Random.Range(0, Lanes.Count);
             CreateNote(Lanes[index]);
         }
 
@@ -142,18 +153,52 @@ public class OuyaShowGuitar : MonoBehaviour,
                 removeList.Add(note);
                 continue;
             }
+            
             float elapsed = (float)(DateTime.Now - note.StartTime).TotalMilliseconds;
+            
             note.Instance.transform.position =
                 Vector3.Lerp(
                     note.Parent.StartPosition.transform.position,
                     note.Parent.EndPosition.transform.position,
                     elapsed/(float) NoteTimeToLive);
 
+            bool inRange = Mathf.Abs(TrackEnd.position.z - note.Instance.transform.position.z) <= 16;
+            bool afterRange = (note.Instance.transform.position.z - 8) < TrackEnd.position.z;
+            if (inRange)
+            {
+                (note.Instance.renderer as MeshRenderer).material.color = Color.white;
+            }
+            else if (afterRange)
+            {
+                (note.Instance.renderer as MeshRenderer).material.color = new Color(0, 0, 0, 0.75f);
+            }
+
             // correct button is pressed
             if (OuyaExampleCommon.GetButton(note.Parent.LaneButton, OuyaSDK.OuyaPlayer.player1))
             {
-                //check if button was already pressed
-                if (!LastPressed.ContainsKey(note.Parent.LaneButton))
+                bool lower = OuyaExampleCommon.GetButton(OuyaSDK.KeyEnum.HARMONIX_ROCK_BAND_GUITAR_LOWER,
+                                                         OuyaSDK.OuyaPlayer.player1);
+
+                float strum = OuyaExampleCommon.GetAxis(OuyaSDK.KeyEnum.HARMONIX_ROCK_BAND_GUITAR_STRUM,
+                                                        OuyaSDK.OuyaPlayer.player1);
+
+                bool strumChanged = LastStrum != strum;
+                LastStrum = strum;
+
+                if (
+                    //check if note is across the finish line
+                    inRange && 
+
+                    //check if button state changed
+                    //!LastPressed.ContainsKey(note.Parent.LaneButton) &&
+
+                    //check if lower was used
+                    (!note.UseLower ||
+                    lower == note.UseLower) &&
+
+                    // check if strum was used
+                    strumChanged &&
+                    strum != 0f)
                 {
                     //good
                     LastPressed[note.Parent.LaneButton] = true;
