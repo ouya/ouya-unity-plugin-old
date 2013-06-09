@@ -43,6 +43,7 @@ public class OuyaShowGuitar : MonoBehaviour,
         public GameObject Instance = null;
         public DateTime StartTime = DateTime.MinValue;
         public DateTime EndTime = DateTime.MinValue;
+        public DateTime FadeTime = DateTime.MinValue;
     }
 
     private List<NoteItem> Notes = new List<NoteItem>();
@@ -50,6 +51,8 @@ public class OuyaShowGuitar : MonoBehaviour,
     private int NoteTimeToLive = 3000;
 
     private int NoteTimeToCreate = 500;
+
+    private int NoteTimeToFade = 250;
 
     private DateTime m_timerCreate = DateTime.MinValue;
 
@@ -145,8 +148,23 @@ public class OuyaShowGuitar : MonoBehaviour,
                     elapsed/(float) NoteTimeToLive);
             if (OuyaExampleCommon.GetButton(note.Parent.LaneButton, OuyaSDK.OuyaPlayer.player1))
             {
-                (note.Instance.renderer as MeshRenderer).material.color = Color.Lerp((note.Instance.renderer as MeshRenderer).material.color, Color.white, Time.deltaTime);
-                note.Instance.transform.localScale = Vector3.Lerp(note.Instance.transform.localScale, note.Parent.StartPosition.transform.localScale * 2, Time.deltaTime);
+                if (note.FadeTime == DateTime.MinValue)
+                {
+                    note.FadeTime = DateTime.Now + TimeSpan.FromMilliseconds(NoteTimeToFade);
+                }
+            }
+
+            if (note.FadeTime != DateTime.MinValue)
+            {
+                if (note.FadeTime < DateTime.Now)
+                {
+                    removeList.Add(note);
+                    continue;
+                }
+                elapsed = (float)(note.FadeTime - DateTime.Now).TotalMilliseconds;
+                (note.Instance.renderer as MeshRenderer).material.color = Color.Lerp(note.Parent.LaneColor, Color.clear, 1f - elapsed / (float)NoteTimeToFade);
+                note.Instance.transform.localScale = Vector3.Lerp(note.Instance.transform.localScale, note.Parent.StartPosition.transform.localScale * 2, elapsed / (float)NoteTimeToFade);
+
             }
         }
         foreach (NoteItem note in removeList)
