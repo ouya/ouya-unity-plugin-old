@@ -146,6 +146,21 @@ public class OuyaShowGuitar : MonoBehaviour,
             CreateNote(Lanes[index]);
         }
 
+        bool lower = OuyaExampleCommon.GetButton(OuyaSDK.KeyEnum.HARMONIX_ROCK_BAND_GUITAR_LOWER,
+                                                 OuyaSDK.OuyaPlayer.player1);
+
+        float strum = OuyaExampleCommon.GetAxis(OuyaSDK.KeyEnum.HARMONIX_ROCK_BAND_GUITAR_STRUM,
+                                                OuyaSDK.OuyaPlayer.player1);
+
+        bool strumChanged = LastStrum != strum;
+        LastStrum = strum;
+
+        foreach (CubeLaneItem item in Lanes)
+        {
+            // cache the button state
+            LastPressed[item.LaneButton] = OuyaExampleCommon.GetButton(item.LaneButton, OuyaSDK.OuyaPlayer.player1);
+        }
+
         List<NoteItem> removeList = new List<NoteItem>();
         foreach (NoteItem note in Notes)
         {
@@ -174,24 +189,13 @@ public class OuyaShowGuitar : MonoBehaviour,
                 (note.Instance.renderer as MeshRenderer).material.color = new Color(0, 0, 0, 0.75f);
             }
 
-            // correct button is pressed
-            if (OuyaExampleCommon.GetButton(note.Parent.LaneButton, OuyaSDK.OuyaPlayer.player1))
+            // use available press of the lane button
+            if (LastPressed.ContainsKey(note.Parent.LaneButton) &&
+                LastPressed[note.Parent.LaneButton])
             {
-                bool lower = OuyaExampleCommon.GetButton(OuyaSDK.KeyEnum.HARMONIX_ROCK_BAND_GUITAR_LOWER,
-                                                         OuyaSDK.OuyaPlayer.player1);
-
-                float strum = OuyaExampleCommon.GetAxis(OuyaSDK.KeyEnum.HARMONIX_ROCK_BAND_GUITAR_STRUM,
-                                                        OuyaSDK.OuyaPlayer.player1);
-
-                bool strumChanged = LastStrum != strum;
-                LastStrum = strum;
-
                 if (
                     //check if note is across the finish line
                     inRange && 
-
-                    //check if button state changed
-                    //!LastPressed.ContainsKey(note.Parent.LaneButton) &&
 
                     //check if lower was used
                     (!note.UseLower ||
@@ -201,8 +205,8 @@ public class OuyaShowGuitar : MonoBehaviour,
                     strumChanged &&
                     strum != 0f)
                 {
-                    //good
-                    LastPressed[note.Parent.LaneButton] = true;
+                    //use button press
+                    LastPressed[note.Parent.LaneButton] = false;
 
                     //hit the note
                     if (note.FadeTime == DateTime.MinValue)
@@ -211,12 +215,6 @@ public class OuyaShowGuitar : MonoBehaviour,
                         note.Parent.LaneSound.volume = 1;
                     }
                 }
-            }
-            
-            // no longer pressed
-            else if (LastPressed.ContainsKey(note.Parent.LaneButton))
-            {
-                LastPressed.Remove(note.Parent.LaneButton);
             }
 
             if (note.FadeTime != DateTime.MinValue)
