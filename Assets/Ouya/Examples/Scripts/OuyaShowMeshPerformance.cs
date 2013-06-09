@@ -146,27 +146,27 @@ public class OuyaShowMeshPerformance : MonoBehaviour,
         {
             m_timerChange = DateTime.Now + TimeSpan.FromMilliseconds(200);
 
-            if (OuyaExampleCommon.GetButton(OuyaSDK.OuyaPlayer.player1, OuyaSDK.KeyEnum.BUTTON_DPAD_LEFT))
+            if (OuyaExampleCommon.GetButton(OuyaSDK.KeyEnum.BUTTON_DPAD_LEFT, OuyaSDK.OuyaPlayer.player1))
             {
                 DecreaseGeometry(1f);
             }
 
-            if (OuyaExampleCommon.GetButton(OuyaSDK.OuyaPlayer.player1, OuyaSDK.KeyEnum.BUTTON_DPAD_RIGHT))
+            if (OuyaExampleCommon.GetButton(OuyaSDK.KeyEnum.BUTTON_DPAD_RIGHT, OuyaSDK.OuyaPlayer.player1))
             {
                 IncreaseGeometry(1f);
             }
 
-            if (OuyaExampleCommon.GetButton(OuyaSDK.OuyaPlayer.player1, OuyaSDK.KeyEnum.BUTTON_DPAD_UP))
+            if (OuyaExampleCommon.GetButton(OuyaSDK.KeyEnum.BUTTON_DPAD_UP, OuyaSDK.OuyaPlayer.player1))
             {
                 CombineGeometry();
             }
 
-            if (OuyaExampleCommon.GetButton(OuyaSDK.OuyaPlayer.player1, OuyaSDK.KeyEnum.BUTTON_O))
+            if (OuyaExampleCommon.GetButton(OuyaSDK.KeyEnum.BUTTON_O, OuyaSDK.OuyaPlayer.player1))
             {
                 IncreaseGeometry(0.1f);
             }
 
-            if (OuyaExampleCommon.GetButton(OuyaSDK.OuyaPlayer.player1, OuyaSDK.KeyEnum.BUTTON_A))
+            if (OuyaExampleCommon.GetButton(OuyaSDK.KeyEnum.BUTTON_A, OuyaSDK.OuyaPlayer.player1))
             {
                 DecreaseGeometry(0.1f);
             }

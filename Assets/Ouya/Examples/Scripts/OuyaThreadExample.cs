@@ -105,13 +105,13 @@ public class OuyaThreadExample : MonoBehaviour
 
     void OnGUI()
     {
-        if (OuyaExampleCommon.GetButton(OuyaSDK.OuyaPlayer.player1, OuyaSDK.KeyEnum.BUTTON_O))
+        if (OuyaExampleCommon.GetButton(OuyaSDK.KeyEnum.BUTTON_O, OuyaSDK.OuyaPlayer.player1))
         {
             ++m_threadCount;
             RespawnThreads();
         }
 
-        if (OuyaExampleCommon.GetButton(OuyaSDK.OuyaPlayer.player1, OuyaSDK.KeyEnum.BUTTON_A))
+        if (OuyaExampleCommon.GetButton(OuyaSDK.KeyEnum.BUTTON_A, OuyaSDK.OuyaPlayer.player1))
         {
             m_threadCount = Mathf.Max(0, m_threadCount - 1);
             RespawnThreads();

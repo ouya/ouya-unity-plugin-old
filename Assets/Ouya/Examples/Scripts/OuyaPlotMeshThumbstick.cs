@@ -149,7 +149,7 @@ public class OuyaPlotMeshThumbstick : MonoBehaviour
 
         // put in 0 to TextureSize range
         int x = (int)((axisX + 1) * 0.5f * (TextureSize - 1));
-        int y = (int)((axisY + 1) * 0.5f * (TextureSize - 1));
+        int y = (int)((-axisY + 1) * 0.5f * (TextureSize - 1));
 
         int index = x + y * TextureSize;
 

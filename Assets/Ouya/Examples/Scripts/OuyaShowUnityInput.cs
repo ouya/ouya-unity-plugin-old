@@ -178,26 +178,26 @@ public class OuyaShowUnityInput : MonoBehaviour,
                     }
                 }
 
-                nguiHandler.button1.text = OuyaExampleCommon.GetButton(OuyaExampleCommon.Player, 0).ToString();
-                nguiHandler.button2.text = OuyaExampleCommon.GetButton(OuyaExampleCommon.Player, 1).ToString();
-                nguiHandler.button3.text = OuyaExampleCommon.GetButton(OuyaExampleCommon.Player, 2).ToString();
-                nguiHandler.button4.text = OuyaExampleCommon.GetButton(OuyaExampleCommon.Player, 3).ToString();
-                nguiHandler.button5.text = OuyaExampleCommon.GetButton(OuyaExampleCommon.Player, 4).ToString();
-                nguiHandler.button6.text = OuyaExampleCommon.GetButton(OuyaExampleCommon.Player, 5).ToString();
-                nguiHandler.button7.text = OuyaExampleCommon.GetButton(OuyaExampleCommon.Player, 6).ToString();
-                nguiHandler.button8.text = OuyaExampleCommon.GetButton(OuyaExampleCommon.Player, 7).ToString();
-                nguiHandler.button9.text = OuyaExampleCommon.GetButton(OuyaExampleCommon.Player, 8).ToString();
-                nguiHandler.button10.text = OuyaExampleCommon.GetButton(OuyaExampleCommon.Player, 9).ToString();
-                nguiHandler.button11.text = OuyaExampleCommon.GetButton(OuyaExampleCommon.Player, 10).ToString();
-                nguiHandler.button12.text = OuyaExampleCommon.GetButton(OuyaExampleCommon.Player, 11).ToString();
-                nguiHandler.button13.text = OuyaExampleCommon.GetButton(OuyaExampleCommon.Player, 12).ToString();
-                nguiHandler.button14.text = OuyaExampleCommon.GetButton(OuyaExampleCommon.Player, 13).ToString();
-                nguiHandler.button15.text = OuyaExampleCommon.GetButton(OuyaExampleCommon.Player, 14).ToString();
-                nguiHandler.button16.text = OuyaExampleCommon.GetButton(OuyaExampleCommon.Player, 15).ToString();
-                nguiHandler.button17.text = OuyaExampleCommon.GetButton(OuyaExampleCommon.Player, 16).ToString();
-                nguiHandler.button18.text = OuyaExampleCommon.GetButton(OuyaExampleCommon.Player, 17).ToString();
-                nguiHandler.button19.text = OuyaExampleCommon.GetButton(OuyaExampleCommon.Player, 18).ToString();
-                nguiHandler.button20.text = OuyaExampleCommon.GetButton(OuyaExampleCommon.Player, 19).ToString();
+                nguiHandler.button1.text = OuyaExampleCommon.GetButton(0, OuyaExampleCommon.Player).ToString();
+                nguiHandler.button2.text = OuyaExampleCommon.GetButton(1, OuyaExampleCommon.Player).ToString();
+                nguiHandler.button3.text = OuyaExampleCommon.GetButton(2, OuyaExampleCommon.Player).ToString();
+                nguiHandler.button4.text = OuyaExampleCommon.GetButton(3, OuyaExampleCommon.Player).ToString();
+                nguiHandler.button5.text = OuyaExampleCommon.GetButton(4, OuyaExampleCommon.Player).ToString();
+                nguiHandler.button6.text = OuyaExampleCommon.GetButton(5, OuyaExampleCommon.Player).ToString();
+                nguiHandler.button7.text = OuyaExampleCommon.GetButton(6, OuyaExampleCommon.Player).ToString();
+                nguiHandler.button8.text = OuyaExampleCommon.GetButton(7, OuyaExampleCommon.Player).ToString();
+                nguiHandler.button9.text = OuyaExampleCommon.GetButton(8, OuyaExampleCommon.Player).ToString();
+                nguiHandler.button10.text = OuyaExampleCommon.GetButton(9, OuyaExampleCommon.Player).ToString();
+                nguiHandler.button11.text = OuyaExampleCommon.GetButton(10, OuyaExampleCommon.Player).ToString();
+                nguiHandler.button12.text = OuyaExampleCommon.GetButton(11, OuyaExampleCommon.Player).ToString();
+                nguiHandler.button13.text = OuyaExampleCommon.GetButton(12, OuyaExampleCommon.Player).ToString();
+                nguiHandler.button14.text = OuyaExampleCommon.GetButton(13, OuyaExampleCommon.Player).ToString();
+                nguiHandler.button15.text = OuyaExampleCommon.GetButton(14, OuyaExampleCommon.Player).ToString();
+                nguiHandler.button16.text = OuyaExampleCommon.GetButton(15, OuyaExampleCommon.Player).ToString();
+                nguiHandler.button17.text = OuyaExampleCommon.GetButton(16, OuyaExampleCommon.Player).ToString();
+                nguiHandler.button18.text = OuyaExampleCommon.GetButton(17, OuyaExampleCommon.Player).ToString();
+                nguiHandler.button19.text = OuyaExampleCommon.GetButton(18, OuyaExampleCommon.Player).ToString();
+                nguiHandler.button20.text = OuyaExampleCommon.GetButton(19, OuyaExampleCommon.Player).ToString();
 
                 //nguiHandler.rawOut.text = OuyaGameObject.InputData;
                 nguiHandler.device.text = SystemInfo.deviceModel;
@@ -330,7 +330,7 @@ public class OuyaShowUnityInput : MonoBehaviour,
 
         RendererRT.transform.localRotation = Quaternion.Euler(OuyaExampleCommon.GetAxis("RT", OuyaExampleCommon.Player) * -15, 0, 0);
 
-        if (OuyaExampleCommon.GetButton(OuyaExampleCommon.Player, OuyaSDK.KeyEnum.BUTTON_L3))
+        if (OuyaExampleCommon.GetButton(OuyaSDK.KeyEnum.BUTTON_L3, OuyaExampleCommon.Player))
         {
             RendererAxisLeft.transform.localPosition = Vector3.Lerp(RendererAxisLeft.transform.localPosition,
                                                                      new Vector3(5.503977f, 0.75f, -3.344945f), Time.fixedDeltaTime);
@@ -341,7 +341,7 @@ public class OuyaShowUnityInput : MonoBehaviour,
                                                                      new Vector3(5.503977f, 1.127527f, -3.344945f), Time.fixedDeltaTime);
         }
 
-        if (OuyaExampleCommon.GetButton(OuyaExampleCommon.Player, OuyaSDK.KeyEnum.BUTTON_R3))
+        if (OuyaExampleCommon.GetButton(OuyaSDK.KeyEnum.BUTTON_R3, OuyaExampleCommon.Player))
         {
             RendererAxisRight.transform.localPosition = Vector3.Lerp(RendererAxisRight.transform.localPosition,
                                                                      new Vector3(-2.707688f, 0.75f, -1.354063f), Time.fixedDeltaTime);
@@ -359,7 +359,7 @@ public class OuyaShowUnityInput : MonoBehaviour,
 
         #region BUTTONS O - A
         //Check O button for down state
-        if (OuyaExampleCommon.GetButton(OuyaExampleCommon.Player, OuyaSDK.KeyEnum.BUTTON_O))
+        if (OuyaExampleCommon.GetButton(OuyaSDK.KeyEnum.BUTTON_O, OuyaExampleCommon.Player))
         {
             UpdateHighlight(RendererButtonO, true, true);
         }
@@ -369,7 +369,7 @@ public class OuyaShowUnityInput : MonoBehaviour,
         }
 
         //Check U button for down state
-        if (OuyaExampleCommon.GetButton(OuyaExampleCommon.Player, OuyaSDK.KeyEnum.BUTTON_U))
+        if (OuyaExampleCommon.GetButton(OuyaSDK.KeyEnum.BUTTON_U, OuyaExampleCommon.Player))
         {
             UpdateHighlight(RendererButtonU, true, true);
         }
@@ -379,7 +379,7 @@ public class OuyaShowUnityInput : MonoBehaviour,
         }
 
         //Check Y button for down state
-        if (OuyaExampleCommon.GetButton(OuyaExampleCommon.Player, OuyaSDK.KeyEnum.BUTTON_Y))
+        if (OuyaExampleCommon.GetButton(OuyaSDK.KeyEnum.BUTTON_Y, OuyaExampleCommon.Player))
         {
             UpdateHighlight(RendererButtonY, true, true);
         }
@@ -389,7 +389,7 @@ public class OuyaShowUnityInput : MonoBehaviour,
         }
 
         //Check A button for down state
-        if (OuyaExampleCommon.GetButton(OuyaExampleCommon.Player, OuyaSDK.KeyEnum.BUTTON_A))
+        if (OuyaExampleCommon.GetButton(OuyaSDK.KeyEnum.BUTTON_A, OuyaExampleCommon.Player))
         {
             UpdateHighlight(RendererButtonA, true, true);
         }
@@ -399,7 +399,7 @@ public class OuyaShowUnityInput : MonoBehaviour,
         }
 
         //Check L3 button for down state
-        if (OuyaExampleCommon.GetButton(OuyaExampleCommon.Player, OuyaSDK.KeyEnum.BUTTON_L3))
+        if (OuyaExampleCommon.GetButton(OuyaSDK.KeyEnum.BUTTON_L3, OuyaExampleCommon.Player))
         {
             UpdateHighlight(RendererAxisLeft, true, true);
         }
@@ -409,7 +409,7 @@ public class OuyaShowUnityInput : MonoBehaviour,
         }
 
         //Check R3 button for down state
-        if (OuyaExampleCommon.GetButton(OuyaExampleCommon.Player, OuyaSDK.KeyEnum.BUTTON_R3))
+        if (OuyaExampleCommon.GetButton(OuyaSDK.KeyEnum.BUTTON_R3, OuyaExampleCommon.Player))
         {
             UpdateHighlight(RendererAxisRight, true, true);
         }
@@ -421,7 +421,7 @@ public class OuyaShowUnityInput : MonoBehaviour,
 
         #region Bumpers
         //Check LB button for down state
-        if (OuyaExampleCommon.GetButton(OuyaExampleCommon.Player, OuyaSDK.KeyEnum.BUTTON_LB))
+        if (OuyaExampleCommon.GetButton(OuyaSDK.KeyEnum.BUTTON_LB, OuyaExampleCommon.Player))
         {
             UpdateHighlight(RendererLB, true, true);
         }
@@ -431,7 +431,7 @@ public class OuyaShowUnityInput : MonoBehaviour,
         }
 
         //Check RB button for down state
-        if (OuyaExampleCommon.GetButton(OuyaExampleCommon.Player, OuyaSDK.KeyEnum.BUTTON_RB))
+        if (OuyaExampleCommon.GetButton(OuyaSDK.KeyEnum.BUTTON_RB, OuyaExampleCommon.Player))
         {
             UpdateHighlight(RendererRB, true, true);
         }
@@ -443,7 +443,7 @@ public class OuyaShowUnityInput : MonoBehaviour,
 
         #region triggers
         //Check LT button for down state
-        if (OuyaExampleCommon.GetButton(OuyaExampleCommon.Player, OuyaSDK.KeyEnum.BUTTON_LT))
+        if (OuyaExampleCommon.GetButton(OuyaSDK.KeyEnum.BUTTON_LT, OuyaExampleCommon.Player))
         {
             UpdateHighlight(RendererLT, true, true);
         }
@@ -453,7 +453,7 @@ public class OuyaShowUnityInput : MonoBehaviour,
         }
 
         //Check RT button for down state
-        if (OuyaExampleCommon.GetButton(OuyaExampleCommon.Player, OuyaSDK.KeyEnum.BUTTON_RT))
+        if (OuyaExampleCommon.GetButton(OuyaSDK.KeyEnum.BUTTON_RT, OuyaExampleCommon.Player))
         {
             UpdateHighlight(RendererRT, true, true);
         }
@@ -465,7 +465,7 @@ public class OuyaShowUnityInput : MonoBehaviour,
 
         #region DPAD
         //Check DPAD UP button for down state
-        if (OuyaExampleCommon.GetButton(OuyaExampleCommon.Player, OuyaSDK.KeyEnum.BUTTON_DPAD_UP))
+        if (OuyaExampleCommon.GetButton(OuyaSDK.KeyEnum.BUTTON_DPAD_UP, OuyaExampleCommon.Player))
         {
             UpdateHighlight(RendererDpadUp, true, true);
         }
@@ -475,7 +475,7 @@ public class OuyaShowUnityInput : MonoBehaviour,
         }
 
         //Check DPAD DOWN button for down state
-        if (OuyaExampleCommon.GetButton(OuyaExampleCommon.Player, OuyaSDK.KeyEnum.BUTTON_DPAD_DOWN))
+        if (OuyaExampleCommon.GetButton(OuyaSDK.KeyEnum.BUTTON_DPAD_DOWN, OuyaExampleCommon.Player))
         {
             UpdateHighlight(RendererDpadDown, true, true);
         }
@@ -485,7 +485,7 @@ public class OuyaShowUnityInput : MonoBehaviour,
         }
 
         //Check DPAD LEFT button for down state
-        if (OuyaExampleCommon.GetButton(OuyaExampleCommon.Player, OuyaSDK.KeyEnum.BUTTON_DPAD_LEFT))
+        if (OuyaExampleCommon.GetButton(OuyaSDK.KeyEnum.BUTTON_DPAD_LEFT, OuyaExampleCommon.Player))
         {
             UpdateHighlight(RendererDpadLeft, true, true);
         }
@@ -495,7 +495,7 @@ public class OuyaShowUnityInput : MonoBehaviour,
         }
 
         //Check DPAD RIGHT button for down state
-        if (OuyaExampleCommon.GetButton(OuyaExampleCommon.Player, OuyaSDK.KeyEnum.BUTTON_DPAD_RIGHT))
+        if (OuyaExampleCommon.GetButton(OuyaSDK.KeyEnum.BUTTON_DPAD_RIGHT, OuyaExampleCommon.Player))
         {
             UpdateHighlight(RendererDpadRight, true, true);
         }
