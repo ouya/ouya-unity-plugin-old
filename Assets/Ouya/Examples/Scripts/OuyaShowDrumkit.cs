@@ -34,6 +34,7 @@ public class OuyaShowDrumkit : MonoBehaviour,
         public OuyaSDK.KeyEnum LaneButton = OuyaSDK.KeyEnum.HARMONIX_ROCK_BAND_GUITAR_GREEN;
         public GameObject Instance = null;
         public AudioSource LaneSound = null;
+        public DateTime FadeDelay = DateTime.MinValue;
     }
 
     public List<CubeLaneItem> Lanes = new List<CubeLaneItem>();
@@ -46,6 +47,7 @@ public class OuyaShowDrumkit : MonoBehaviour,
         public DateTime StartTime = DateTime.MinValue;
         public DateTime EndTime = DateTime.MinValue;
         public DateTime FadeTime = DateTime.MinValue;
+        public bool NoteHit = false;
     }
 
     private List<NoteItem> Notes = new List<NoteItem>();
@@ -129,6 +131,22 @@ public class OuyaShowDrumkit : MonoBehaviour,
         Notes.Add(note);
     }
 
+    /// <summary>
+    /// After the correct note is hit play music for a while
+    /// </summary>
+    /// <param name="note"></param>
+    void UpdateFadeDelay(NoteItem note)
+    {
+        if (note.Parent.FadeDelay < DateTime.Now)
+        {
+            note.Parent.FadeDelay = DateTime.Now + TimeSpan.FromMilliseconds(NoteTimeToLive);
+        }
+        else
+        {
+            note.Parent.FadeDelay += TimeSpan.FromMilliseconds(NoteTimeToLive / 2);
+        }
+    }
+
     void Update()
     {
         if (m_timerCreate < DateTime.Now)
@@ -162,15 +180,7 @@ public class OuyaShowDrumkit : MonoBehaviour,
 
             bool inRange = Mathf.Abs(TrackEnd.position.z - note.Instance.transform.position.z) <= 16;
             bool afterRange = (note.Instance.transform.position.z - 8) < TrackEnd.position.z;
-            if (inRange)
-            {
-                (note.Instance.renderer as MeshRenderer).material.color = Color.white;
-            }
-            else if (afterRange)
-            {
-                (note.Instance.renderer as MeshRenderer).material.color = new Color(0, 0, 0, 0.75f);
-            }
-
+            
             // use available press of the lane button
             if (LastPressed.ContainsKey(note.Parent.LaneButton) &&
                 LastPressed[note.Parent.LaneButton])
@@ -184,11 +194,28 @@ public class OuyaShowDrumkit : MonoBehaviour,
                     LastPressed[note.Parent.LaneButton] = false;
 
                     //hit the note
-                    if (note.FadeTime == DateTime.MinValue)
+                    if (!note.NoteHit)
                     {
+                        note.NoteHit = true;
                         note.FadeTime = DateTime.Now + TimeSpan.FromMilliseconds(NoteTimeToFade);
-                        note.Parent.LaneSound.volume = 1;
+                        UpdateFadeDelay(note);
                     }
+                }
+            }
+
+            if (note.NoteHit)
+            {
+            }
+            else if (inRange)
+            {
+                (note.Instance.renderer as MeshRenderer).material.color = Color.white;
+            }
+            else if (afterRange)
+            {
+                (note.Instance.renderer as MeshRenderer).material.color = new Color(0, 0, 0, 0.75f);
+                if (!note.NoteHit)
+                {
+                    note.Parent.FadeDelay = DateTime.Now;
                 }
             }
 
@@ -218,7 +245,17 @@ public class OuyaShowDrumkit : MonoBehaviour,
 
         foreach (CubeLaneItem item in Lanes)
         {
-            item.LaneSound.volume = Mathf.Lerp(item.LaneSound.volume, 0, Time.fixedDeltaTime);
+            if (DateTime.MinValue != item.FadeDelay)
+            {
+                if (item.FadeDelay < DateTime.Now)
+                {
+                    item.LaneSound.volume = Mathf.Lerp(item.LaneSound.volume, 0, Time.fixedDeltaTime);
+                }
+                else
+                {
+                    item.LaneSound.volume = Mathf.Lerp(item.LaneSound.volume, 1, Time.fixedDeltaTime);
+                }
+            }
         }
     }
 }
