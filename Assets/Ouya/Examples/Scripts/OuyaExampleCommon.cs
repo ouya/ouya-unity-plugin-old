@@ -451,6 +451,19 @@ public class OuyaExampleCommon
         return Input.GetKey((KeyCode)(int)key);
     }
 
+    public static bool GetButton(OuyaSDK.KeyEnum keyCode)
+    {
+        return (
+                   GetButton(keyCode, OuyaSDK.OuyaPlayer.player1) ||
+                   GetButton(keyCode, OuyaSDK.OuyaPlayer.player2) ||
+                   GetButton(keyCode, OuyaSDK.OuyaPlayer.player3) ||
+                   GetButton(keyCode, OuyaSDK.OuyaPlayer.player4) ||
+                   GetButton(keyCode, OuyaSDK.OuyaPlayer.player5) ||
+                   GetButton(keyCode, OuyaSDK.OuyaPlayer.player6) ||
+                   GetButton(keyCode, OuyaSDK.OuyaPlayer.player7) ||
+                   GetButton(keyCode, OuyaSDK.OuyaPlayer.player8));
+    }
+
     public static bool GetButton(OuyaSDK.KeyEnum keyCode, OuyaSDK.OuyaPlayer player)
     {
         if (null == OuyaExampleCommon.Joysticks)

@@ -158,7 +158,7 @@ public class OuyaShowDrumkit : MonoBehaviour,
 
         foreach (CubeLaneItem item in Lanes)
         {
-            bool val = OuyaExampleCommon.GetButton(item.LaneButton, OuyaSDK.OuyaPlayer.player1);
+            bool val = OuyaExampleCommon.GetButton(item.LaneButton);
             if (LastPressed.ContainsKey(item.LaneButton))
             {
                 if (!val)
@@ -170,7 +170,7 @@ public class OuyaShowDrumkit : MonoBehaviour,
             {
                 if (val)
                 {
-                    LastPressed[item.LaneButton] = OuyaExampleCommon.GetButton(item.LaneButton, OuyaSDK.OuyaPlayer.player1);
+                    LastPressed[item.LaneButton] = OuyaExampleCommon.GetButton(item.LaneButton);
                 }
             }
         }
