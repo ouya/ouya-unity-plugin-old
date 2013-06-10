@@ -158,7 +158,21 @@ public class OuyaShowDrumkit : MonoBehaviour,
 
         foreach (CubeLaneItem item in Lanes)
         {
-            LastPressed[item.LaneButton] = OuyaExampleCommon.GetButton(item.LaneButton, OuyaSDK.OuyaPlayer.player1);
+            bool val = OuyaExampleCommon.GetButton(item.LaneButton, OuyaSDK.OuyaPlayer.player1);
+            if (LastPressed.ContainsKey(item.LaneButton))
+            {
+                if (!val)
+                {
+                    LastPressed.Remove(item.LaneButton);
+                }
+            }
+            else
+            {
+                if (val)
+                {
+                    LastPressed[item.LaneButton] = OuyaExampleCommon.GetButton(item.LaneButton, OuyaSDK.OuyaPlayer.player1);
+                }
+            }
         }
 
         List<NoteItem> removeList = new List<NoteItem>();
