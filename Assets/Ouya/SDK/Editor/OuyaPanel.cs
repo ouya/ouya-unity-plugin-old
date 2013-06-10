@@ -341,7 +341,8 @@ public class OuyaPanel : EditorWindow
         switch (Application.platform)
         {
             case RuntimePlatform.OSXEditor:
-                pathNDKMake = string.Format("{0}/prebuilt/darwin-x86/bin/make", pathNDK);
+				//change this code to search instead
+                pathNDKMake = string.Format("{0}/prebuilt/darwin-x86_64/bin/make", pathNDK);
                 pathJNICpp = string.Format("{0}/Assets/Plugins/Android/jni/jni.cpp", pathUnityProject);
                 pathOuyaNDKLib = string.Format("{0}/Assets/Plugins/Android/libs/armeabi/lib-ouya-ndk.so", pathUnityProject);
                 break;
