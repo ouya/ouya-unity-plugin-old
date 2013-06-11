@@ -286,7 +286,10 @@ public class OuyaMenuAdmin : MonoBehaviour
         if (!string.IsNullOrEmpty(error))
         {
             Debug.LogError(error);
-            return false;
+            if (OuyaPanel.StopOnErrors)
+            {
+                return false;
+            }
         }
 
         return true;

@@ -48,6 +48,27 @@ public class OuyaPanel : EditorWindow
         }
     }
 
+    private const string KEY_ERROR_STOP_BUILD = "OuyaPanelErrorStopBuild";
+
+    public static bool StopOnErrors
+    {
+        get
+        {
+            if (EditorPrefs.HasKey(OuyaPanel.KEY_ERROR_STOP_BUILD))
+            {
+                return EditorPrefs.GetBool(OuyaPanel.KEY_ERROR_STOP_BUILD);
+            }
+            else
+            {
+                return true;
+            }
+        }
+        set
+        {
+            EditorPrefs.SetBool(OuyaPanel.KEY_ERROR_STOP_BUILD, value);
+        }
+    }
+
     private static string[] m_toolSets =
         {
             "OUYA",
@@ -1123,7 +1144,10 @@ public class OuyaPanel : EditorWindow
         if (!string.IsNullOrEmpty(error))
         {
             Debug.LogError(error);
-            return false;
+            if (StopOnErrors)
+            {
+                return false;
+            }
         }
 
         return true;
@@ -1515,6 +1539,11 @@ public class OuyaPanel : EditorWindow
                 */
 
                 UsePostProcessor = GUILayout.Toggle(UsePostProcessor, "Enable Java/C++ post processor");
+
+                GUILayout.Space(5);
+
+                GUILayout.Label("By default any Java compiler error will stop building");
+                StopOnErrors = GUILayout.Toggle(StopOnErrors, "Stop Build on Errors");
 
                 GUILayout.Space(5);
                 if (GUILayout.Button("Sync Bundle ID"))
