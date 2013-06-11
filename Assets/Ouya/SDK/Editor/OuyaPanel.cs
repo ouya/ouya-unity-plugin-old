@@ -327,27 +327,25 @@ public class OuyaPanel : EditorWindow
     public static string pathNDK = string.Empty;
     public static string pathNDKMake = string.Empty;
     public static string pathJNIMk = string.Empty;
-    public static string pathJNIMkTemp = string.Empty;
     public static string pathJNICpp = string.Empty;
     public static string pathObj = string.Empty;
     public static string pathOuyaNDKLib = string.Empty;
 
+    #region NDK Paths
+
     void UpdateAndroidNDKPaths()
     {
         pathObj = string.Format("{0}/Assets/Plugins/Android/obj", pathUnityProject);
-        pathJNIMk = string.Format("{0}/Assets/Plugins/Android/jni/OuyaAndroid.mk", pathUnityProject);
-        pathJNIMkTemp = string.Format("{0}/Assets/Plugins/Android/jni/Android.mk", pathUnityProject);
+        pathJNIMk = string.Format("{0}/Assets/Plugins/Android/jni/Android.mk", pathUnityProject);
 
         switch (Application.platform)
         {
             case RuntimePlatform.OSXEditor:
-				//change this code to search instead
-                pathNDKMake = string.Format("{0}/prebuilt/darwin-x86_64/bin/make", pathNDK);
+                //change this code to search instead
                 pathJNICpp = string.Format("{0}/Assets/Plugins/Android/jni/jni.cpp", pathUnityProject);
                 pathOuyaNDKLib = string.Format("{0}/Assets/Plugins/Android/libs/armeabi/lib-ouya-ndk.so", pathUnityProject);
                 break;
             case RuntimePlatform.WindowsEditor:
-                pathNDKMake = string.Format("{0}/prebuilt/windows-x86_64/bin/make.exe", pathNDK);
                 pathJNICpp = string.Format("{0}/Assets/Plugins/Android/jni/jni.cpp", pathUnityProject);
                 pathOuyaNDKLib = string.Format("{0}/Assets/Plugins/Android/libs/armeabi/lib-ouya-ndk.so", pathUnityProject);
                 break;
@@ -361,10 +359,10 @@ public class OuyaPanel : EditorWindow
         switch (Application.platform)
         {
             case RuntimePlatform.OSXEditor:
-                pathNDK = @"android-ndk-r8d";
+                pathNDK = @"~/android-ndk-r8e";
                 break;
             case RuntimePlatform.WindowsEditor:
-                pathNDK = @"android-ndk-r8d";
+                pathNDK = @"C:/android-ndk-r8e";
                 break;
         }
 
@@ -377,7 +375,7 @@ public class OuyaPanel : EditorWindow
         switch (Application.platform)
         {
             case RuntimePlatform.OSXEditor:
-                path = EditorUtility.OpenFolderPanel(string.Format("Path to {0}", KEY_PATH_ANDROID_NDK), pathNDK, "../android-ndk-r8c");
+                path = EditorUtility.OpenFolderPanel(string.Format("Path to {0}", KEY_PATH_ANDROID_NDK), pathNDK, "../android-ndk-r8e");
                 break;
             case RuntimePlatform.WindowsEditor:
                 path = EditorUtility.OpenFolderPanel(string.Format("Path to {0}", KEY_PATH_ANDROID_NDK), pathNDK, @"..\android-ndk-r8e");
@@ -389,6 +387,51 @@ public class OuyaPanel : EditorWindow
             UpdateAndroidNDKPaths();
         }
     }
+
+    #endregion
+
+    #region NDK Make Path
+
+    void UpdateAndroidNDKMakePath()
+    {
+        EditorPrefs.SetString(KEY_PATH_ANDROID_NDK_MAKE, pathNDKMake);
+    }
+
+    void ResetAndroidNDKMakePath()
+    {
+        switch (Application.platform)
+        {
+            case RuntimePlatform.OSXEditor:
+                pathNDKMake = string.Format("{0}/prebuilt/darwin-x86_64/bin/make", pathNDK);
+                break;
+            case RuntimePlatform.WindowsEditor:
+                pathNDKMake = string.Format("{0}/prebuilt/windows-x86_64/bin/make.exe", pathNDK);
+                break;
+        }
+
+        UpdateAndroidNDKMakePath();
+    }
+
+    void SelectAndroidNDKMakePath()
+    {
+        string path = string.Empty;
+        switch (Application.platform)
+        {
+            case RuntimePlatform.OSXEditor:
+                path = EditorUtility.OpenFilePanel(string.Format("Path to {0}", KEY_PATH_ANDROID_NDK_MAKE), pathNDKMake, string.Empty);
+                break;
+            case RuntimePlatform.WindowsEditor:
+                path = EditorUtility.OpenFilePanel(string.Format("Path to {0}", KEY_PATH_ANDROID_NDK_MAKE), pathNDKMake, @"exe");
+                break;
+        }
+        if (!string.IsNullOrEmpty(path))
+        {
+            pathNDKMake = path;
+            UpdateAndroidNDKMakePath();
+        }
+    }
+
+    #endregion
 
     public static void CompileNDK()
     {
@@ -407,8 +450,6 @@ public class OuyaPanel : EditorWindow
             return;
         }
 
-        File.Copy(pathJNIMk, pathJNIMkTemp, true);
-
         if (File.Exists(pathOuyaNDKLib))
         {
             File.Delete(pathOuyaNDKLib);
@@ -426,11 +467,6 @@ public class OuyaPanel : EditorWindow
                     string.Format("-f \"{0}/build/core/build-local.mk\" -ouya-ndk",
                         pathNDK.Replace(@"/", "/")));
                 break;
-        }
-
-        if (File.Exists(pathJNIMkTemp))
-        {
-            File.Delete(pathJNIMkTemp);
         }
 
         if (Directory.Exists(pathObj))
@@ -686,7 +722,6 @@ public class OuyaPanel : EditorWindow
         {
             pathNDK = EditorPrefs.GetString(KEY_PATH_ANDROID_NDK);
         }
-
         if (string.IsNullOrEmpty(pathNDK))
         {
             ResetAndroidNDKPaths();
@@ -694,6 +729,19 @@ public class OuyaPanel : EditorWindow
         else
         {
             UpdateAndroidNDKPaths();
+        }
+
+        if (EditorPrefs.HasKey(KEY_PATH_ANDROID_NDK_MAKE))
+        {
+            pathNDKMake = EditorPrefs.GetString(KEY_PATH_ANDROID_NDK_MAKE);
+        }
+        if (string.IsNullOrEmpty(pathNDKMake))
+        {
+            ResetAndroidNDKMakePath();
+        }
+        else
+        {
+            UpdateAndroidNDKMakePath();
         }
 
 
@@ -1949,7 +1997,9 @@ public class OuyaPanel : EditorWindow
                 GUILayout.Label("Android NDK", EditorStyles.boldLabel);
 
                 GUIDisplayFolder(KEY_PATH_ANDROID_NDK, pathNDK);
+                GUI.enabled = !string.IsNullOrEmpty(pathNDK);
                 GUIDisplayFile(KEY_PATH_ANDROID_NDK_MAKE, pathNDKMake);
+                GUI.enabled = true;
                 GUIDisplayUnityFile(KEY_PATH_ANDROID_JNI_CPP, pathJNICpp);
                 GUIDisplayUnityFile(KEY_PATH_ANDROID_JNI_MK, pathJNIMk);
                 GUIDisplayUnityFile(KEY_PATH_OUYA_NDK_LIB, pathOuyaNDKLib);
@@ -1962,6 +2012,17 @@ public class OuyaPanel : EditorWindow
                 if (GUILayout.Button("Reset Paths"))
                 {
                     ResetAndroidNDKPaths();
+                }
+                GUILayout.EndHorizontal();
+                
+                GUILayout.BeginHorizontal(GUILayout.MaxWidth(position.width));
+                if (GUILayout.Button("Select NDK Make Path..."))
+                {
+                    SelectAndroidNDKMakePath();
+                }
+                if (GUILayout.Button("Reset Make Path"))
+                {
+                    ResetAndroidNDKMakePath();
                 }
                 GUILayout.EndHorizontal();
 
