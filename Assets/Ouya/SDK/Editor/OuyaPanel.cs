@@ -359,10 +359,10 @@ public class OuyaPanel : EditorWindow
         switch (Application.platform)
         {
             case RuntimePlatform.OSXEditor:
-                pathNDK = @"~/android-ndk-r8e";
+                pathNDK = @"~/";
                 break;
             case RuntimePlatform.WindowsEditor:
-                pathNDK = @"C:/android-ndk-r8e";
+                pathNDK = @"C:/";
                 break;
         }
 
