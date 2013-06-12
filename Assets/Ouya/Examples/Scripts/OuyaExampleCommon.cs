@@ -224,6 +224,7 @@ public class OuyaExampleCommon
             case "CONTROLLER (XBOX 360 FOR WINDOWS)":
             case "CONTROLLER (XBOX360 GAMEPAD)":
             case "XBOX 360 FOR WINDOWS (CONTROLLER)":
+            case "MICROSOFT WIRELESS 360 CONTROLLER":
 
 #if !UNITY_EDITOR && UNITY_ANDROID
 
@@ -645,6 +646,7 @@ public class OuyaExampleCommon
             case "CONTROLLER (XBOX 360 FOR WINDOWS)":
             case "CONTROLLER (XBOX360 GAMEPAD)":
             case "XBOX 360 FOR WINDOWS (CONTROLLER)":
+            case "MICROSOFT WIRELESS 360 CONTROLLER":
 
 #if !UNITY_EDITOR && UNITY_ANDROID
 
