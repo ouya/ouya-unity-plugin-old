@@ -316,19 +316,19 @@ public class OuyaShowUnityInput : MonoBehaviour,
     {
         #region Axis Code
 
-        UpdateHighlight(RendererAxisLeft, Mathf.Abs(OuyaExampleCommon.GetAxis("LX", OuyaExampleCommon.Player)) > 0.25f ||
-            Mathf.Abs(OuyaExampleCommon.GetAxis("LY", OuyaExampleCommon.Player)) > 0.25f);
+        UpdateHighlight(RendererAxisLeft, Mathf.Abs(OuyaExampleCommon.GetAxis(OuyaSDK.KeyEnum.AXIS_LSTICK_X, OuyaExampleCommon.Player)) > 0.25f ||
+            Mathf.Abs(OuyaExampleCommon.GetAxis(OuyaSDK.KeyEnum.AXIS_LSTICK_Y, OuyaExampleCommon.Player)) > 0.25f);
 
-        RendererAxisLeft.transform.localRotation = Quaternion.Euler(OuyaExampleCommon.GetAxis("LY", OuyaExampleCommon.Player) * 15, 0, OuyaExampleCommon.GetAxis("LX", OuyaExampleCommon.Player) * 15);
+        RendererAxisLeft.transform.localRotation = Quaternion.Euler(OuyaExampleCommon.GetAxis(OuyaSDK.KeyEnum.AXIS_LSTICK_Y, OuyaExampleCommon.Player) * 15, 0, OuyaExampleCommon.GetAxis(OuyaSDK.KeyEnum.AXIS_LSTICK_X, OuyaExampleCommon.Player) * 15);
 
-        UpdateHighlight(RendererAxisRight, Mathf.Abs(OuyaExampleCommon.GetAxis("RX", OuyaExampleCommon.Player)) > 0.25f ||
-            Mathf.Abs(OuyaExampleCommon.GetAxis("RY", OuyaExampleCommon.Player)) > 0.25f);
+        UpdateHighlight(RendererAxisRight, Mathf.Abs(OuyaExampleCommon.GetAxis(OuyaSDK.KeyEnum.AXIS_RSTICK_X, OuyaExampleCommon.Player)) > 0.25f ||
+            Mathf.Abs(OuyaExampleCommon.GetAxis(OuyaSDK.KeyEnum.AXIS_RSTICK_Y, OuyaExampleCommon.Player)) > 0.25f);
 
-        RendererAxisRight.transform.localRotation = Quaternion.Euler(OuyaExampleCommon.GetAxis("RY", OuyaExampleCommon.Player) * 15, 0, OuyaExampleCommon.GetAxis("RX", OuyaExampleCommon.Player) * 15);
+        RendererAxisRight.transform.localRotation = Quaternion.Euler(OuyaExampleCommon.GetAxis(OuyaSDK.KeyEnum.AXIS_RSTICK_Y, OuyaExampleCommon.Player) * 15, 0, OuyaExampleCommon.GetAxis(OuyaSDK.KeyEnum.AXIS_RSTICK_X, OuyaExampleCommon.Player) * 15);
 
-        RendererLT.transform.localRotation = Quaternion.Euler(OuyaExampleCommon.GetAxis("LT", OuyaExampleCommon.Player) * -15, 0, 0);
+        RendererLT.transform.localRotation = Quaternion.Euler(OuyaExampleCommon.GetAxis(OuyaSDK.KeyEnum.BUTTON_LT, OuyaExampleCommon.Player) * -15, 0, 0);
 
-        RendererRT.transform.localRotation = Quaternion.Euler(OuyaExampleCommon.GetAxis("RT", OuyaExampleCommon.Player) * -15, 0, 0);
+        RendererRT.transform.localRotation = Quaternion.Euler(OuyaExampleCommon.GetAxis(OuyaSDK.KeyEnum.BUTTON_RT, OuyaExampleCommon.Player) * -15, 0, 0);
 
         if (OuyaExampleCommon.GetButton(OuyaSDK.KeyEnum.BUTTON_L3, OuyaExampleCommon.Player))
         {
