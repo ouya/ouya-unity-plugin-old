@@ -30,8 +30,8 @@ public class OuyaMenuAdmin : MonoBehaviour
     {
         string[] paths =
             {
+                "ProjectSettings/InputManager.asset",
                 "Assets/Litjson",
-                "Assets/Ouya/ProjectSettings",
                 "Assets/Ouya/SDK",
                 "Assets/Plugins",
             };
@@ -56,53 +56,6 @@ public class OuyaMenuAdmin : MonoBehaviour
                 "Assets/Ouya/StarterKit",
             };
         AssetDatabase.ExportPackage(paths, "OuyaSDK-StarterKit.unitypackage", ExportPackageOptions.IncludeDependencies | ExportPackageOptions.Recurse | ExportPackageOptions.Interactive);
-    }
-
-    [MenuItem("OUYA/Backup Project Input Settings", priority = 990)]
-    public static void MenuBackupInput()
-    {
-        FileInfo fi = new FileInfo(@"ProjectSettings/InputManager.asset");
-        if (fi.Exists)
-        {
-#if UNITY_3_5
-            string dest = @"Assets/Ouya/ProjectSettings/3.X/InputManager.asset";
-            fi.CopyTo(dest, true);
-            Debug.Log(string.Format("{0} Succesfully backed up: {1}", DateTime.Now, dest));
-            AssetDatabase.ImportAsset(dest.Replace(@"\", "/"));
-#elif UNITY_4_0_0 || UNITY_4_0 || UNITY_4_0_1 || UNITY_4_1 || UNITY_4_2
-            string dest = @"Assets/Ouya/ProjectSettings/4.X/InputManager.asset";
-            fi.CopyTo(dest, true);
-            Debug.Log(string.Format("{0} Succesfully backed up: {1}", DateTime.Now, dest));
-            AssetDatabase.ImportAsset(dest.Replace(@"\", "/"));
-#endif
-        }
-    }
-
-    [MenuItem("OUYA/Use Ouya Project Input Settings", priority = 990)]
-    public static void MenuRestoreInput()
-    {
-        EditorApplication.SaveAssets();
-        string dest = @"ProjectSettings/InputManager.asset";
-#if UNITY_3_5
-        string src = @"Assets/Ouya/ProjectSettings/3.X/InputManager.asset";
-        FileInfo fi = new FileInfo(src);
-        if (fi.Exists)
-        {
-            fi.CopyTo(dest, true);
-            Debug.Log(string.Format("{0} Succesfully restored: {1}", DateTime.Now, dest));
-            AssetDatabase.Refresh();
-        }
-#elif UNITY_4_0_0 || UNITY_4_0 || UNITY_4_0_1 || UNITY_4_1 || UNITY_4_2
-
-        string src = @"Assets/Ouya/ProjectSettings/4.X/InputManager.asset";
-        FileInfo fi = new FileInfo(src);
-        if (fi.Exists)
-        {
-            fi.CopyTo(dest, true);
-            Debug.Log(string.Format("{0} Succesfully restored: {1}", DateTime.Now, dest));
-            AssetDatabase.Refresh();
-        }
-#endif
     }
 
     [MenuItem("OUYA/Copy Object Transform", priority=1000)]
