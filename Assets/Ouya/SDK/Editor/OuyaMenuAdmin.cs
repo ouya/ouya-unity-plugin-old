@@ -37,6 +37,7 @@ public class OuyaMenuAdmin : MonoBehaviour
                 "Assets/Plugins",
             };
         AssetDatabase.ExportPackage(paths, "OuyaSDK-Core.unitypackage", ExportPackageOptions.IncludeDependencies | ExportPackageOptions.Recurse | ExportPackageOptions.Interactive);
+        Debug.Log(string.Format("Export OuyaSDK-Core.unitypackage success in: {0}", Directory.GetCurrentDirectory()));
     }
 
     [MenuItem("OUYA/Export Examples Package", priority = 110)]
@@ -47,6 +48,7 @@ public class OuyaMenuAdmin : MonoBehaviour
                 "Assets/Ouya/Examples",
             };
         AssetDatabase.ExportPackage(paths, "OuyaSDK-Examples.unitypackage", ExportPackageOptions.IncludeDependencies | ExportPackageOptions.Recurse | ExportPackageOptions.Interactive);
+        Debug.Log(string.Format("Export OuyaSDK-Examples.unitypackage success in: {0}", Directory.GetCurrentDirectory()));
     }
 
     [MenuItem("OUYA/Export StarterKit Package", priority = 120)]
@@ -57,16 +59,14 @@ public class OuyaMenuAdmin : MonoBehaviour
                 "Assets/Ouya/StarterKit",
             };
         AssetDatabase.ExportPackage(paths, "OuyaSDK-StarterKit.unitypackage", ExportPackageOptions.IncludeDependencies | ExportPackageOptions.Recurse | ExportPackageOptions.Interactive);
+        Debug.Log(string.Format("Export OuyaSDK-StarterKit.unitypackage success in: {0}", Directory.GetCurrentDirectory()));
     }
 
     private static KeyValuePair<string, string>[] moveScripts =
             {
                 new KeyValuePair<string, string>(@"Assets/Ouya/Examples/Scripts/OuyaExampleCommon.cs", @"Assets/Plugins/OuyaExampleCommon.cs"),
-                //new KeyValuePair<string, string>(@"Assets/Ouya/Examples/Scripts/OuyaExampleCommon.cs.meta", @"Assets/Plugins/OuyaExampleCommon.cs.meta"),
                 new KeyValuePair<string, string>(@"Assets/Ouya/SDK/Scripts/OuyaKeyCodes.cs", @"Assets/Plugins/OuyaKeyCodes.cs"),
-                //new KeyValuePair<string, string>(@"Assets/Ouya/SDK/Scripts/OuyaKeyCodes.cs.meta", @"Assets/Plugins/OuyaKeyCodes.cs.meta"),
                 new KeyValuePair<string, string>(@"Assets/Ouya/SDK/Scripts/OuyaSDK.cs", @"Assets/Plugins/OuyaSDK.cs"),
-                //new KeyValuePair<string, string>(@"Assets/Ouya/SDK/Scripts/OuyaSDK.cs.meta", @"Assets/Plugins/OuyaSDK.cs.meta"),
             };
 
     [MenuItem("OUYA/Setup Plugin For C#", priority = 200)]
@@ -85,9 +85,10 @@ public class OuyaMenuAdmin : MonoBehaviour
             catch (Exception)
             {
             }
-
-            AssetDatabase.Refresh();
         }
+
+        AssetDatabase.Refresh();
+        Debug.Log("Move for C# success");
     }
 
     [MenuItem("OUYA/Setup Plugin For JavaScript", priority = 200)]
@@ -106,9 +107,10 @@ public class OuyaMenuAdmin : MonoBehaviour
             catch (Exception)
             {
             }
-
-            AssetDatabase.Refresh();
         }
+
+        AssetDatabase.Refresh();
+        Debug.Log("Move for JavaScript success");
     }
 
     [MenuItem("OUYA/Copy Object Transform", priority=1000)]
