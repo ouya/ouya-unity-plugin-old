@@ -1697,6 +1697,7 @@ public class OuyaPanel : EditorWindow
                 if (!javaPackageName.Equals(string.Format("package {0};", PlayerSettings.bundleIdentifier)))
                 {
                     error = "[error] (bundle mismatched)\n";
+                    ShowNotification(new GUIContent(error));
                 }
                 else
                 {
@@ -1713,6 +1714,7 @@ public class OuyaPanel : EditorWindow
                 if (!manifestPackageName.Equals(PlayerSettings.bundleIdentifier))
                 {
                     error = "[error] (bundle mismatched)\n";
+                    ShowNotification(new GUIContent(error));
                 }
                 else
                 {
