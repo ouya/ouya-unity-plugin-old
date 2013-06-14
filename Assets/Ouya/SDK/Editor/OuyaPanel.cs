@@ -1731,24 +1731,19 @@ public class OuyaPanel : EditorWindow
                 GUIDisplayFolder("Res", pathRes);
                 GUIDisplayFolder("Src", pathSrc);
 
-                if (GUILayout.Button("Subscribe for plugin updates"))
-                {
-                    Application.OpenURL("https://hashbanggamesportal.ontimenow.com/");
-                }
-
                 if (GUILayout.Button("Check for plugin updates"))
                 {
                     Application.OpenURL("http://tagenigma.com/ouya/OuyaSDK-1.0.0/");
                 }
 
-                if (GUILayout.Button("Read OUYA Unity Package Doc"))
-                {
-                    Application.OpenURL("http://tagenigma.com/ouya/OuyaSDK-1.0.0/OUYA_Unity_Package.pdf");
-                }
-
                 if (GUILayout.Button("Visit Unity3d on OUYA Forum"))
                 {
                     Application.OpenURL("http://forums.ouya.tv/categories/unity-on-ouya");
+                }
+
+                if (GUILayout.Button("Read OUYA Unity Docs"))
+                {
+                    Application.OpenURL("https://devs.ouya.tv/developers/docs/unity");
                 }
 
                 if (GUILayout.Button("OUYA Developer Portal"))
