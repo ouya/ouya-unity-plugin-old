@@ -1463,6 +1463,27 @@ public class OuyaPanel : EditorWindow
 
     private Vector2 m_scroll = Vector2.zero;
 
+    private int m_selectedExample = 0;
+
+    private static string[] m_exampleScenes =
+        {
+            "None",
+            "Starter Kit Scenes",
+            "SceneShowCamera",
+            "SceneShowDrumkit",
+            "SceneShowGuitar",
+            "SceneShowJavaScript",
+            "SceneMultipleControllers",
+            "SceneSetResolution",
+            "SceneShowController",
+            "SceneShowMeshPerformance",
+            "SceneShowNDK",
+            "SceneShowProducts",
+            "SceneShowSounds",
+            "SceneShowSticks",
+            "SceneShowUnityInput",
+        };
+
     void OnGUI()
     {
         m_scroll = GUILayout.BeginScrollView(m_scroll, GUILayout.MaxWidth(position.width));
@@ -1556,74 +1577,17 @@ public class OuyaPanel : EditorWindow
 
                 GUILayout.Label("Build Settings:");
 
-                if (GUILayout.Button("Use SceneShowCamera Scene"))
+                int selectedExample = EditorGUILayout.Popup(m_selectedExample, m_exampleScenes, GUILayout.MaxWidth(position.width));
+                if (selectedExample != m_selectedExample)
                 {
-                    SwitchToExampleScene("SceneShowCamera");
-                }
-
-                if (GUILayout.Button("Use SceneShowDrumkit Scene"))
-                {
-                    SwitchToExampleScene("SceneShowDrumkit");
-                }
-
-                if (GUILayout.Button("Use SceneShowGuitar Scene"))
-                {
-                    SwitchToExampleScene("SceneShowGuitar");
-                }
-
-                if (GUILayout.Button("Use SceneShowJavaScript Scene"))
-                {
-                    SwitchToExampleScene("SceneShowJavaScript");
-                }
-
-                if (GUILayout.Button("Use SceneMultipleControllers Scene"))
-                {
-                    SwitchToExampleScene("SceneMultipleControllers");
-                }
-
-                if (GUILayout.Button("Use SetResolution Scene"))
-                {
-                    SwitchToExampleScene("SceneSetResolution");
-                }
-
-                if (GUILayout.Button("Use ShowController Scene"))
-                {
-                    SwitchToExampleScene("SceneShowController");
-                }
-
-                if (GUILayout.Button("Use SceneShowMeshPerformance Scene"))
-                {
-                    SwitchToExampleScene("SceneShowMeshPerformance");
-                }
-
-                if (GUILayout.Button("Use SceneShowNDK Scene"))
-                {
-                    SwitchToExampleScene("SceneShowNDK");
-                }
-
-                if (GUILayout.Button("Use SceneShowProducts Scene"))
-                {
-                    SwitchToExampleScene("SceneShowProducts");
-                }
-
-                if (GUILayout.Button("Use ShowSounds Scene"))
-                {
-                    SwitchToExampleScene("SceneShowSounds");
-                }
-
-                if (GUILayout.Button("Use ShowSticks Scene"))
-                {
-                    SwitchToExampleScene("SceneShowSticks");
-                }
-
-                if (GUILayout.Button("Use ShowUnityInput Scene"))
-                {
-                    SwitchToExampleScene("SceneShowUnityInput");
-                }
-
-                if (GUILayout.Button("Use Starter Kit Scenes"))
-                {
-                    string[] newScenes =
+                    m_selectedExample = selectedExample;
+                    if (m_selectedExample > 1)
+                    {
+                        SwitchToExampleScene(m_exampleScenes[m_selectedExample]);
+                    }
+                    else if (m_selectedExample == 1)
+                    {
+                        string[] newScenes =
                         {
                             "Assets/Ouya/StarterKit/Scenes/SceneInit.unity",
                             "Assets/Ouya/StarterKit/Scenes/SceneSplash.unity",
@@ -1631,7 +1595,8 @@ public class OuyaPanel : EditorWindow
                             "Assets/Ouya/StarterKit/Scenes/SceneGame.unity",
                         };
 
-                    SwitchToStarterKitScene(newScenes, "StarterKit");
+                        SwitchToStarterKitScene(newScenes, "StarterKit");
+                    }
                 }
 
                 #endregion
