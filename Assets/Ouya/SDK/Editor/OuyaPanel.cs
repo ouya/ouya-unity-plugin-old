@@ -1467,7 +1467,6 @@ public class OuyaPanel : EditorWindow
 
     private static string[] m_exampleScenes =
         {
-            "None",
             "Starter Kit Scenes",
             "SceneShowCamera",
             "SceneShowDrumkit",
@@ -1577,15 +1576,15 @@ public class OuyaPanel : EditorWindow
 
                 GUILayout.Label("Build Settings:");
 
-                int selectedExample = EditorGUILayout.Popup(m_selectedExample, m_exampleScenes, GUILayout.MaxWidth(position.width));
-                if (selectedExample != m_selectedExample)
+                GUILayout.BeginHorizontal(GUILayout.MaxWidth(position.width - 35));
+                m_selectedExample = EditorGUILayout.Popup(m_selectedExample, m_exampleScenes, GUILayout.MaxWidth(position.width));
+                if (GUILayout.Button("Switch to Example"))
                 {
-                    m_selectedExample = selectedExample;
-                    if (m_selectedExample > 1)
+                    if (m_selectedExample > 0)
                     {
                         SwitchToExampleScene(m_exampleScenes[m_selectedExample]);
                     }
-                    else if (m_selectedExample == 1)
+                    else if (m_selectedExample == 0)
                     {
                         string[] newScenes =
                         {
@@ -1598,6 +1597,7 @@ public class OuyaPanel : EditorWindow
                         SwitchToStarterKitScene(newScenes, "StarterKit");
                     }
                 }
+                GUILayout.EndHorizontal();
 
                 #endregion
 
