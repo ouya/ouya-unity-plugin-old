@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package tv.ouya.demo.SceneShowProducts;
+package tv.ouya.demo.OuyaUnityApplication;
 
 import tv.ouya.console.api.OuyaController;
 import tv.ouya.sdk.*;
@@ -525,6 +525,7 @@ public class OuyaUnityApplication extends Activity
 	@Override
 	public boolean onKeyUp (int keyCode, KeyEvent event)
 	{
+		//Log.i("Unity", "onKeyUp keyCode=" + keyCode);
 		if (keyCode == OuyaController.BUTTON_MENU) {
 			Log.i("Unity", "BroadcastReceiver tell Unity we see the menu button up");
 			UnityPlayer.UnitySendMessage("OuyaGameObject", "onMenuButtonUp", "");
