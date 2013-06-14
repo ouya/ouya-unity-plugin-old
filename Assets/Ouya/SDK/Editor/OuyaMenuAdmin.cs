@@ -62,57 +62,6 @@ public class OuyaMenuAdmin : MonoBehaviour
         Debug.Log(string.Format("Export OuyaSDK-StarterKit.unitypackage success in: {0}", Directory.GetCurrentDirectory()));
     }
 
-    private static KeyValuePair<string, string>[] moveScripts =
-            {
-                new KeyValuePair<string, string>(@"Assets/Ouya/Examples/Scripts/OuyaExampleCommon.cs", @"Assets/Plugins/OuyaExampleCommon.cs"),
-                new KeyValuePair<string, string>(@"Assets/Ouya/SDK/Scripts/OuyaKeyCodes.cs", @"Assets/Plugins/OuyaKeyCodes.cs"),
-                new KeyValuePair<string, string>(@"Assets/Ouya/SDK/Scripts/OuyaSDK.cs", @"Assets/Plugins/OuyaSDK.cs"),
-            };
-
-    [MenuItem("OUYA/Setup Plugin For C#", priority = 200)]
-    public static void MenuSetupForCSharp()
-    {
-        foreach (KeyValuePair<string, string> kvp in moveScripts)
-        {
-            try
-            {
-                FileInfo src = new FileInfo(kvp.Value);
-                if (src.Exists)
-                {
-                    AssetDatabase.MoveAsset(kvp.Value, kvp.Key);
-                }
-            }
-            catch (Exception)
-            {
-            }
-        }
-
-        AssetDatabase.Refresh();
-        Debug.Log("Move for C# success");
-    }
-
-    [MenuItem("OUYA/Setup Plugin For JavaScript", priority = 200)]
-    public static void MenuSetupForJavaScript()
-    {
-        foreach (KeyValuePair<string, string> kvp in moveScripts)
-        {
-            try
-            {
-                FileInfo src = new FileInfo(kvp.Key);
-                if (src.Exists)
-                {
-                    AssetDatabase.MoveAsset(kvp.Key, kvp.Value);
-                }
-            }
-            catch (Exception)
-            {
-            }
-        }
-
-        AssetDatabase.Refresh();
-        Debug.Log("Move for JavaScript success");
-    }
-
     [MenuItem("OUYA/Copy Object Transform", priority=1000)]
     public static void MenuCopyObjectTransform()
     {

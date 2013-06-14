@@ -132,9 +132,10 @@ public class OuyaGameObject : MonoBehaviour
 
     public void onMenuButtonUp(string ignore)
     {
-        //Debug.Log("onMenuButtonUp");
+        //Debug.Log("OuyaGameObject: onMenuButtonUp");
         foreach (OuyaSDK.IMenuButtonUpListener listener in OuyaSDK.getMenuButtonUpListeners())
         {
+            //Debug.Log("OuyaGameObject: Invoke OuyaMenuButtonUp");
             listener.OuyaMenuButtonUp();
         }
     }
