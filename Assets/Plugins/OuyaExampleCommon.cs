@@ -273,11 +273,9 @@ public class OuyaExampleCommon
                         break;
                     case OuyaSDK.KeyEnum.AXIS_LSTICK_Y:
                         axisName = string.Format("Joy{0} Axis 2", (int)player);
-                        invert = true;
                         break;
                     case OuyaSDK.KeyEnum.AXIS_RSTICK_X:
                         axisName = string.Format("Joy{0} Axis 4", (int)player);
-                        invert = true;
                         break;
                     case OuyaSDK.KeyEnum.AXIS_RSTICK_Y:
                         axisName = string.Format("Joy{0} Axis 5", (int)player);
