@@ -69,6 +69,27 @@ public class OuyaPanel : EditorWindow
         }
     }
 
+    private const string KEY_ADB_IP = "OuyaPanelAdbIpAddress";
+
+    public static string AdbIpAddress
+    {
+        get
+        {
+            if (EditorPrefs.HasKey(OuyaPanel.KEY_ADB_IP))
+            {
+                return EditorPrefs.GetString(OuyaPanel.KEY_ADB_IP);
+            }
+            else
+            {
+                return string.Empty;
+            }
+        }
+        set
+        {
+            EditorPrefs.SetString(OuyaPanel.KEY_ADB_IP, value);
+        }
+    }
+
     private static string[] m_toolSets =
         {
             "OUYA",
@@ -1463,7 +1484,7 @@ public class OuyaPanel : EditorWindow
 
     private Vector2 m_scroll = Vector2.zero;
 
-    private int m_selectedExample = 0;
+    private static int m_selectedExample = 0;
 
     private static string[] m_exampleScenes =
         {
@@ -1481,6 +1502,14 @@ public class OuyaPanel : EditorWindow
             "SceneShowSounds",
             "SceneShowSticks",
             "SceneShowUnityInput",
+        };
+
+    private static int m_selectedAdbMode = 0;
+
+    private static string[] m_abdModes =
+        {
+            "wired",
+            "wireless",
         };
 
     void OnGUI()
@@ -1985,6 +2014,114 @@ public class OuyaPanel : EditorWindow
                 {
                     Reboot();
                     EditorGUIUtility.ExitGUI();
+                }
+
+                GUILayout.BeginHorizontal();
+                GUILayout.Label("ADB Mode:");
+                int adbMode = EditorGUILayout.Popup(m_selectedAdbMode, m_abdModes, GUILayout.MaxWidth(position.width));
+                if (adbMode != m_selectedAdbMode)
+                {
+                    m_selectedAdbMode = adbMode;
+                    string args;
+                    //wired
+                    if (m_selectedAdbMode == 0)
+                    {
+                        args = "usb";
+                    }
+                    //wireless
+                    else
+                    {
+                        args = "tcpip 5555";
+                    }
+
+                    if (File.Exists(pathADB))
+                    {
+                        //Debug.Log(appPath);
+                        //Debug.Log(pathADB);
+                        //Debug.Log(args);
+                        ProcessStartInfo ps = new ProcessStartInfo(pathADB, args);
+                        Process p = new Process();
+                        ps.RedirectStandardOutput = false;
+                        ps.UseShellExecute = true;
+                        ps.CreateNoWindow = false;
+                        ps.WorkingDirectory = Path.GetDirectoryName(pathADB);
+                        p.StartInfo = ps;
+                        p.Exited += (object sender, EventArgs e) =>
+                        {
+                            p.Dispose();
+                        };
+                        p.Start();
+                        //p.WaitForExit();
+                    }
+                    EditorGUIUtility.ExitGUI();
+                }
+                GUILayout.EndHorizontal();
+
+                //wireless
+                if (m_selectedAdbMode == 1)
+                {
+                    GUILayout.BeginHorizontal(GUILayout.MaxWidth(position.width - 25));
+                    GUILayout.Label("Wireless IP:", GUILayout.MaxWidth(100));
+                    string adbIpAddress = GUILayout.TextField(AdbIpAddress);
+                    if (!adbIpAddress.Equals(AdbIpAddress))
+                    {
+                        AdbIpAddress = adbIpAddress;
+                        EditorGUIUtility.ExitGUI();
+                    }
+                    if (!string.IsNullOrEmpty(adbIpAddress))
+                    {
+                        if (GUILayout.Button("Connect", GUILayout.MaxWidth(100)))
+                        {
+                            string args = string.Format("connect {0}", AdbIpAddress);
+
+                            if (File.Exists(pathADB))
+                            {
+                                //Debug.Log(appPath);
+                                //Debug.Log(pathADB);
+                                //Debug.Log(args);
+                                ProcessStartInfo ps = new ProcessStartInfo(pathADB, args);
+                                Process p = new Process();
+                                ps.RedirectStandardOutput = false;
+                                ps.UseShellExecute = true;
+                                ps.CreateNoWindow = false;
+                                ps.WorkingDirectory = Path.GetDirectoryName(pathADB);
+                                p.StartInfo = ps;
+                                p.Exited += (object sender, EventArgs e) =>
+                                                {
+                                                    p.Dispose();
+                                                };
+                                p.Start();
+                                //p.WaitForExit();
+                            }
+                            EditorGUIUtility.ExitGUI();
+                        }
+
+                        if (GUILayout.Button("Disconnect", GUILayout.MaxWidth(100)))
+                        {
+                            string args = string.Format("disconnect {0}", AdbIpAddress);
+
+                            if (File.Exists(pathADB))
+                            {
+                                //Debug.Log(appPath);
+                                //Debug.Log(pathADB);
+                                //Debug.Log(args);
+                                ProcessStartInfo ps = new ProcessStartInfo(pathADB, args);
+                                Process p = new Process();
+                                ps.RedirectStandardOutput = false;
+                                ps.UseShellExecute = true;
+                                ps.CreateNoWindow = false;
+                                ps.WorkingDirectory = Path.GetDirectoryName(pathADB);
+                                p.StartInfo = ps;
+                                p.Exited += (object sender, EventArgs e) =>
+                                {
+                                    p.Dispose();
+                                };
+                                p.Start();
+                                //p.WaitForExit();
+                            }
+                            EditorGUIUtility.ExitGUI();
+                        }
+                    }
                 }
 
                 break;
