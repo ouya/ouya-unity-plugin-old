@@ -42,6 +42,20 @@ public static class OuyaSDK
     /// </summary>
     private static bool m_iapInitComplete = false;
 
+    /// <summary>
+    /// Check if the device is an OUYA
+    /// </summary>
+    /// <returns></returns>
+    public static bool IsOUYA()
+    {
+        if (SystemInfo.deviceModel.ToUpper().Contains("OUYA"))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
     #region Key Codes
 
     public const int KEYCODE_BUTTON_A = 96;
