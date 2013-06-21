@@ -19,16 +19,23 @@ using UnityEngine;
 
 public class OuyaShowProducts : MonoBehaviour,
     OuyaSDK.IPauseListener, OuyaSDK.IResumeListener,
+    OuyaSDK.IFetchGamerUUIDListener,
     OuyaSDK.IGetProductsListener, OuyaSDK.IPurchaseListener, OuyaSDK.IGetReceiptsListener,
     OuyaSDK.IMenuButtonUpListener,
     OuyaSDK.IMenuAppearingListener
 {
+    /// <summary>
+    /// The gamer UUID
+    /// </summary>
+    private string m_gamerUUID = string.Empty;
+
     void Awake()
     {
         OuyaSDK.registerMenuButtonUpListener(this);
         OuyaSDK.registerMenuAppearingListener(this);
         OuyaSDK.registerPauseListener(this);
         OuyaSDK.registerResumeListener(this);
+        OuyaSDK.registerFetchGamerUUIDListener(this);
         OuyaSDK.registerGetProductsListener(this);
         OuyaSDK.registerPurchaseListener(this);
         OuyaSDK.registerGetReceiptsListener(this);
@@ -39,6 +46,7 @@ public class OuyaShowProducts : MonoBehaviour,
         OuyaSDK.unregisterMenuAppearingListener(this);
         OuyaSDK.unregisterPauseListener(this);
         OuyaSDK.unregisterResumeListener(this);
+        OuyaSDK.unregisterFetchGamerUUIDListener(this);
         OuyaSDK.unregisterGetProductsListener(this);
         OuyaSDK.unregisterPurchaseListener(this);
         OuyaSDK.unregisterGetReceiptsListener(this);
@@ -60,6 +68,22 @@ public class OuyaShowProducts : MonoBehaviour,
     }
 
     public void OuyaOnResume()
+    {
+        Debug.Log(System.Reflection.MethodBase.GetCurrentMethod().ToString());
+    }
+
+    public void OuyaFetchGamerUUIDOnSuccess(string gamerUUID)
+    {
+        Debug.Log(System.Reflection.MethodBase.GetCurrentMethod().ToString());
+        m_gamerUUID = gamerUUID;
+    }
+
+    public void OuyaFetchGamerUUIDOnFailure(int errorCode, string errorMessage)
+    {
+        Debug.Log(System.Reflection.MethodBase.GetCurrentMethod().ToString());
+    }
+
+    public void OuyaFetchGamerUUIDOnCancel()
     {
         Debug.Log(System.Reflection.MethodBase.GetCurrentMethod().ToString());
     }
@@ -138,7 +162,23 @@ public class OuyaShowProducts : MonoBehaviour,
 
             GUILayout.BeginHorizontal();
             GUILayout.Space(400);
-            GUILayout.Label(string.Format("Is IAP Init Complete={0}", OuyaSDK.isIAPInitComplete()));
+            GUILayout.Label(OuyaSDK.isIAPInitComplete() ? "IAP is initialized" : "IAP initializing...");
+            GUILayout.EndHorizontal();
+
+            GUILayout.Label(string.Empty);
+            GUILayout.Label(string.Empty);
+
+            GUILayout.BeginHorizontal();
+            GUILayout.Space(400);
+            GUILayout.Label(string.Format("Gamer UUID: {0}", m_gamerUUID));
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal();
+            GUILayout.Space(400);
+            if (GUILayout.Button("Get Gamer UUID", GUILayout.Height(40)))
+            {
+                OuyaSDK.fetchGamerUUID();
+            }
             GUILayout.EndHorizontal();
 
             GUILayout.Label(string.Empty);

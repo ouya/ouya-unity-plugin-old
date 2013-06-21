@@ -171,6 +171,21 @@ public class OuyaGameObject : MonoBehaviour
     
     #region JSON Data Listeners
 
+    public void FetchGamerUUIDSuccessListener(string gamerUUID)
+    {
+        Debug.LogError(string.Format("FetchGamerUUIDSuccessListener gamerUUID={0}", gamerUUID));
+        InvokeOuyaFetchGamerUUIDOnSuccess(gamerUUID);
+    }
+    public void FetchGamerUUIDFailureListener(string jsonData)
+    {
+        Debug.LogError(string.Format("FetchGamerUUIDFailureListener jsonData={0}", jsonData));
+        InvokeOuyaFetchGamerUUIDOnFailure(0, jsonData);
+    }
+    public void FetchGamerUUIDCancelListener(string ignore)
+    {
+        InvokeOuyaFetchGamerUUIDOnCancel();
+    }
+
     private List<OuyaSDK.Product> m_products = new List<OuyaSDK.Product>();
 
     public void ProductListClearListener(string ignore)
@@ -2106,6 +2121,41 @@ public class OuyaGameObject : MonoBehaviour
     public void SendIAPInitComplete(string ignore)
     {
         OuyaSDK.setIAPInitComplete();
+    }
+
+    public void InvokeOuyaFetchGamerUUIDOnSuccess(string gamerUUID)
+    {
+        foreach (OuyaSDK.IFetchGamerUUIDListener listener in OuyaSDK.getFetchGamerUUIDListeners())
+        {
+            if (null != listener)
+            {
+                listener.OuyaFetchGamerUUIDOnSuccess(gamerUUID);
+            }
+        }
+    }
+
+    public void InvokeOuyaFetchGamerUUIDOnFailure(int errorCode, string errorMessage)
+    {
+        Debug.LogError(string.Format("InvokeOuyaFetchGamerUUIDOnFailure: error={0} errorMessage={1}", errorCode, errorMessage));
+        foreach (OuyaSDK.IFetchGamerUUIDListener listener in OuyaSDK.getFetchGamerUUIDListeners())
+        {
+            if (null != listener)
+            {
+                listener.OuyaFetchGamerUUIDOnFailure(errorCode, errorMessage);
+            }
+        }
+    }
+
+    public void InvokeOuyaFetchGamerUUIDOnCancel()
+    {
+        //Debug.Log("InvokeOuyaFetchGamerUUIDOnCancel");
+        foreach (OuyaSDK.IFetchGamerUUIDListener listener in OuyaSDK.getFetchGamerUUIDListeners())
+        {
+            if (null != listener)
+            {
+                listener.OuyaFetchGamerUUIDOnCancel();
+            }
+        }
     }
 
     public void InvokeOuyaGetProductsOnSuccess(List<OuyaSDK.Product> products)

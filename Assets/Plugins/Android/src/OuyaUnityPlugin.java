@@ -245,6 +245,34 @@ public class OuyaUnityPlugin
 		return "";
 	}
 
+	public static void fetchGamerUUID()
+	{
+		try
+		{
+			Log.i("Unity", "OuyaUnityPlugin.fetchGamerUUID");
+
+			if (!m_enableIAP)
+			{
+				Log.i("Unity", "OuyaUnityPlugin.fetchGamerUUID IAP is disabled");
+				return;
+			}
+
+			if (null == m_test)
+			{
+				Log.i("Unity", "OuyaUnityPlugin.fetchGamerUUID: m_test is null");
+			}
+			else
+			{
+				Log.i("Unity", "OuyaUnityPlugin.fetchGamerUUID: m_test is valid");
+				m_test.fetchGamerUUID();
+			}
+		}
+		catch (Exception ex) 
+		{
+			Log.i("Unity", "OuyaUnityPlugin: fetchGamerUUID exception: " + ex.toString());
+		}
+	}
+
 	public static void getProductsAsync()
 	{
 		try

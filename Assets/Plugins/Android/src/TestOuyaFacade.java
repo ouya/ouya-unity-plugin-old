@@ -136,6 +136,9 @@ public class TestOuyaFacade
 	//android context
 	private Context context;
 
+	// Custom-iap-code, listener for fetching gamer uuid
+	CancelIgnoringOuyaResponseListener<String> m_fetchGamerUUIDListener = null;
+
 	// Custom-iap-code, listener for getting products
 	CancelIgnoringOuyaResponseListener<ArrayList<Product>> m_productListListener = null;
 
@@ -178,6 +181,75 @@ public class TestOuyaFacade
 		Log.i("TestOuyaFacade", "OuyaFacade.init(context, " + developerId + ");");
 		UnityPlayer.UnitySendMessage("OuyaGameObject", "DebugLog", "ouyaFacade.init(context, " + developerId + ");");
         ouyaFacade.init(context, developerId);
+
+		// custom-iap-code
+		m_fetchGamerUUIDListener = new CancelIgnoringOuyaResponseListener<String>() {
+            @Override
+            public void onSuccess(String result) {
+				/*
+                new AlertDialog.Builder(IapSampleActivity.this)
+                        .setTitle(getString(R.string.alert_title))
+                        .setMessage(result)
+                        .setPositiveButton(R.string.ok, null)
+                        .show();
+				*/
+				Log.i("TestOuyaFacade", "m_fetchGamerUUIDListener FetchGamerUUIDSuccessListener=" + result);
+				UnityPlayer.UnitySendMessage("OuyaGameObject", "FetchGamerUUIDSuccessListener", result);
+            }
+
+            @Override
+            public void onFailure(int errorCode, String errorMessage, Bundle optionalData) {
+                Log.w(LOG_TAG, "fetch gamer UUID error (code " + errorCode + ": " + errorMessage + ")");
+                boolean wasHandledByAuthHelper =
+                        OuyaAuthenticationHelper.
+                                handleError(
+										//custom iap code										
+										IOuyaActivity.GetActivity(), errorCode, errorMessage,
+
+                                        //IapSampleActivity.this, errorCode, errorMessage,
+                                        optionalData, GAMER_UUID_AUTHENTICATION_ACTIVITY_ID,
+                                        new OuyaResponseListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void result) {
+                                                fetchGamerUUID();   // Retry the fetch if the error was handled.
+                                            }
+
+                                            @Override
+                                            public void onFailure(int errorCode, String errorMessage,
+                                                                  Bundle optionalData) {
+                                                //showError("Unable to fetch gamer UUID (error " + errorCode + ": " + errorMessage + ")");
+												Gson gson = new Gson();
+												ErrorResponse er = new ErrorResponse();
+												er.errorCode = errorCode;
+												er.errorMessage = errorMessage;
+												String jsonData = gson.toJson(er);
+
+												Log.i("TestOuyaFacade", "m_fetchGamerUUIDListener FetchGamerUUIDFailureListener=" + jsonData);
+												UnityPlayer.UnitySendMessage("OuyaGameObject", "FetchGamerUUIDFailureListener", jsonData);
+                                            }
+
+                                            @Override
+                                            public void onCancel() {
+                                                //showError("Unable to fetch gamer UUID");
+												Log.i("TestOuyaFacade", "m_fetchGamerUUIDListener FetchGamerUUIDCancelListener");
+												UnityPlayer.UnitySendMessage("OuyaGameObject", "FetchGamerUUIDCancelListener", "");
+                                            }
+                                        });
+
+                if (!wasHandledByAuthHelper) {
+                    showError("Unable to fetch gamer UUID (error " + errorCode + ": " + errorMessage + ")");
+
+					Gson gson = new Gson();
+					ErrorResponse er = new ErrorResponse();
+					er.errorCode = errorCode;
+					er.errorMessage = errorMessage;
+					String jsonData = gson.toJson(er);
+
+					Log.i("TestOuyaFacade", "m_fetchGamerUUIDListener FetchGamerUUIDFailureListener=" + jsonData);
+					UnityPlayer.UnitySendMessage("OuyaGameObject", "FetchGamerUUIDFailureListener", jsonData);
+                }
+            }
+        };
 
 		// custom-iap-code
 		m_productListListener = new CancelIgnoringOuyaResponseListener<ArrayList<Product>>()
@@ -313,53 +385,19 @@ public class TestOuyaFacade
     }
 
     public void fetchGamerUUID() {
-        ouyaFacade.requestGamerUuid(new CancelIgnoringOuyaResponseListener<String>() {
-            @Override
-            public void onSuccess(String result) {
-				/*
-                new AlertDialog.Builder(IapSampleActivity.this)
-                        .setTitle(getString(R.string.alert_title))
-                        .setMessage(result)
-                        .setPositiveButton(R.string.ok, null)
-                        .show();
-				*/
-            }
 
-            @Override
-            public void onFailure(int errorCode, String errorMessage, Bundle optionalData) {
-                Log.w(LOG_TAG, "fetch gamer UUID error (code " + errorCode + ": " + errorMessage + ")");
-                boolean wasHandledByAuthHelper =
-                        OuyaAuthenticationHelper.
-                                handleError(
-										//custom iap code										
-										IOuyaActivity.GetActivity(), errorCode, errorMessage,
-
-                                        //IapSampleActivity.this, errorCode, errorMessage,
-                                        optionalData, GAMER_UUID_AUTHENTICATION_ACTIVITY_ID,
-                                        new OuyaResponseListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void result) {
-                                                fetchGamerUUID();   // Retry the fetch if the error was handled.
-                                            }
-
-                                            @Override
-                                            public void onFailure(int errorCode, String errorMessage,
-                                                                  Bundle optionalData) {
-                                                showError("Unable to fetch gamer UUID (error " +
-                                                         errorCode + ": " + errorMessage + ")");
-                                            }
-
-                                            @Override
-                                            public void onCancel() {
-                                                showError("Unable to fetch gamer UUID");
-                                            }
-                                        });
-
-                if (!wasHandledByAuthHelper) {
-                    showError("Unable to fetch gamer UUID (error " + errorCode + ": " + errorMessage + ")");
-                }
-            }
-        });
+		//custom-iap-code
+		if (null != m_fetchGamerUUIDListener)
+		{
+			Log.i("TestOuyaFacade", "TestOuyaFacade.fetchGamerUUID m_fetchGamerUUIDListener is valid");
+			UnityPlayer.UnitySendMessage("OuyaGameObject", "DebugLog", "TestOuyaFacade.fetchGamerUUID m_fetchGamerUUIDListener is valid");
+			ouyaFacade.requestGamerUuid(m_fetchGamerUUIDListener);
+		}
+		else
+		{
+			Log.i("TestOuyaFacade", "TestOuyaFacade.fetchGamerUUID m_fetchGamerUUIDListener is null");
+			UnityPlayer.UnitySendMessage("OuyaGameObject", "DebugLog", "TestOuyaFacade.fetchGamerUUID m_fetchGamerUUIDListener is null");
+		}        
     }
 
     /**
