@@ -283,9 +283,11 @@ public class OuyaExampleCommon
                             break;
                         case OuyaSDK.KeyEnum.BUTTON_LT:
                             axisName = string.Format("Joy{0} Axis 5", (int)player);
+                            invert = true;
                             break;
                         case OuyaSDK.KeyEnum.BUTTON_RT:
                             axisName = string.Format("Joy{0} Axis 6", (int)player);
+                            invert = true;
                             break;
                         default:
                             return 0f;
