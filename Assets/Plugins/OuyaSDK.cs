@@ -284,6 +284,11 @@ public static class OuyaSDK
     {
     }
 
+    public static void fetchGamerUUID()
+    {
+        OuyaSDK.OuyaJava.JavaFetchGamerUUID();
+    }
+
     public static void requestProductList(List<Purchasable> purchasables)
     {
         foreach (Purchasable purchasable in purchasables)
@@ -609,6 +614,36 @@ public static class OuyaSDK
 
     #endregion
 
+    #region Fetch Gamer UUID Listener
+
+    public interface IFetchGamerUUIDListener
+    {
+        void OuyaFetchGamerUUIDOnSuccess(string gamerUUID);
+        void OuyaFetchGamerUUIDOnFailure(int errorCode, string errorMessage);
+        void OuyaFetchGamerUUIDOnCancel();
+    }
+    private static List<IFetchGamerUUIDListener> m_fetchGamerUUIDListeners = new List<IFetchGamerUUIDListener>();
+    public static List<IFetchGamerUUIDListener> getFetchGamerUUIDListeners()
+    {
+        return m_fetchGamerUUIDListeners;
+    }
+    public static void registerFetchGamerUUIDListener(IFetchGamerUUIDListener listener)
+    {
+        if (!m_fetchGamerUUIDListeners.Contains(listener))
+        {
+            m_fetchGamerUUIDListeners.Add(listener);
+        }
+    }
+    public static void unregisterFetchGamerUUIDListener(IFetchGamerUUIDListener listener)
+    {
+        if (m_fetchGamerUUIDListeners.Contains(listener))
+        {
+            m_fetchGamerUUIDListeners.Remove(listener);
+        }
+    }
+
+    #endregion
+
     #region Get GetProducts Listeners
 
     public interface IGetProductsListener
@@ -830,6 +865,34 @@ public static class OuyaSDK
             catch (Exception ex)
             {
                 Debug.LogError(string.Format("OuyaSDK.JavaSetResolution exception={0}", ex));
+            }
+            finally
+            {
+                AndroidJNI.PopLocalFrame(IntPtr.Zero);
+            }
+#endif
+        }
+
+        public static void JavaFetchGamerUUID()
+        {
+#if UNITY_ANDROID && !UNITY_EDITOR && !UNITY_STANDALONE_OSX && !UNITY_STANDALONE_WIN && !UNITY_STANDALONE_LINUX
+            // again, make sure the thread is attached..
+            AndroidJNI.AttachCurrentThread();
+
+            AndroidJNI.PushLocalFrame(0);
+
+            try
+            {
+                Debug.Log(string.Format("{0} OuyaSDK.JavaFetchGamerUUID", DateTime.Now));
+
+                using (AndroidJavaClass ajc = new AndroidJavaClass(JAVA_CLASS))
+                {
+                    ajc.CallStatic("fetchGamerUUID");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError(string.Format("OuyaSDK.JavaFetchGamerUUID exception={0}", ex));
             }
             finally
             {
