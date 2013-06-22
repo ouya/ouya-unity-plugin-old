@@ -265,41 +265,69 @@ public class OuyaExampleCommon
                 }
 
 #else
-
-                switch (keyCode)
+                if (Application.platform == RuntimePlatform.OSXEditor)
                 {
-                    case OuyaSDK.KeyEnum.AXIS_LSTICK_X:
-                        axisName = string.Format("Joy{0} Axis 1", (int)player);
-                        break;
-                    case OuyaSDK.KeyEnum.AXIS_LSTICK_Y:
-                        axisName = string.Format("Joy{0} Axis 2", (int)player);
-                        break;
-                    case OuyaSDK.KeyEnum.AXIS_RSTICK_X:
-                        axisName = string.Format("Joy{0} Axis 4", (int)player);
-                        break;
-                    case OuyaSDK.KeyEnum.AXIS_RSTICK_Y:
-                        axisName = string.Format("Joy{0} Axis 5", (int)player);
-                        break;
-                    case OuyaSDK.KeyEnum.BUTTON_LT:
-                        axisName = string.Format("Joy{0} Axis 9", (int)player);
-                        break;
-                    case OuyaSDK.KeyEnum.BUTTON_RT:
-                        axisName = string.Format("Joy{0} Axis 10", (int)player);
-                        break;
-                    case OuyaSDK.KeyEnum.BUTTON_DPAD_LEFT:
-                        axisName = string.Format("Joy{0} Axis 6", (int)player);
-                        break;
-                    case OuyaSDK.KeyEnum.BUTTON_DPAD_RIGHT:
-                        axisName = string.Format("Joy{0} Axis 6", (int)player);
-                        break;
-                    case OuyaSDK.KeyEnum.BUTTON_DPAD_UP:
-                        axisName = string.Format("Joy{0} Axis 7", (int)player);
-                        break;
-                    case OuyaSDK.KeyEnum.BUTTON_DPAD_DOWN:
-                        axisName = string.Format("Joy{0} Axis 7", (int)player);
-                        break;
-                    default:
-                        return 0f;
+                    switch (keyCode)
+                    {
+                        case OuyaSDK.KeyEnum.AXIS_LSTICK_X:
+                            axisName = string.Format("Joy{0} Axis 1", (int)player);
+                            break;
+                        case OuyaSDK.KeyEnum.AXIS_LSTICK_Y:
+                            axisName = string.Format("Joy{0} Axis 2", (int)player);
+                            break;
+                        case OuyaSDK.KeyEnum.AXIS_RSTICK_X:
+                            axisName = string.Format("Joy{0} Axis 3", (int)player);
+                            break;
+                        case OuyaSDK.KeyEnum.AXIS_RSTICK_Y:
+                            axisName = string.Format("Joy{0} Axis 4", (int)player);
+                            break;
+                        case OuyaSDK.KeyEnum.BUTTON_LT:
+                            axisName = string.Format("Joy{0} Axis 5", (int)player);
+                            break;
+                        case OuyaSDK.KeyEnum.BUTTON_RT:
+                            axisName = string.Format("Joy{0} Axis 6", (int)player);
+                            break;
+                        default:
+                            return 0f;
+                    }
+                }
+                else
+                {
+                    switch (keyCode)
+                    {
+                        case OuyaSDK.KeyEnum.AXIS_LSTICK_X:
+                            axisName = string.Format("Joy{0} Axis 1", (int) player);
+                            break;
+                        case OuyaSDK.KeyEnum.AXIS_LSTICK_Y:
+                            axisName = string.Format("Joy{0} Axis 2", (int) player);
+                            break;
+                        case OuyaSDK.KeyEnum.AXIS_RSTICK_X:
+                            axisName = string.Format("Joy{0} Axis 4", (int) player);
+                            break;
+                        case OuyaSDK.KeyEnum.AXIS_RSTICK_Y:
+                            axisName = string.Format("Joy{0} Axis 5", (int) player);
+                            break;
+                        case OuyaSDK.KeyEnum.BUTTON_LT:
+                            axisName = string.Format("Joy{0} Axis 9", (int) player);
+                            break;
+                        case OuyaSDK.KeyEnum.BUTTON_RT:
+                            axisName = string.Format("Joy{0} Axis 10", (int) player);
+                            break;
+                        case OuyaSDK.KeyEnum.BUTTON_DPAD_LEFT:
+                            axisName = string.Format("Joy{0} Axis 6", (int) player);
+                            break;
+                        case OuyaSDK.KeyEnum.BUTTON_DPAD_RIGHT:
+                            axisName = string.Format("Joy{0} Axis 6", (int) player);
+                            break;
+                        case OuyaSDK.KeyEnum.BUTTON_DPAD_UP:
+                            axisName = string.Format("Joy{0} Axis 7", (int) player);
+                            break;
+                        case OuyaSDK.KeyEnum.BUTTON_DPAD_DOWN:
+                            axisName = string.Format("Joy{0} Axis 7", (int) player);
+                            break;
+                        default:
+                            return 0f;
+                    }
                 }
 #endif
 
@@ -680,38 +708,77 @@ public class OuyaExampleCommon
                         return false;
                 }
 #else
-                switch (keyCode)
+                if (Application.platform == RuntimePlatform.OSXEditor)
                 {
-                    case OuyaSDK.KeyEnum.BUTTON_LB:
-                        return GetButton(4, player);
-                    case OuyaSDK.KeyEnum.BUTTON_RB:
-                        return GetButton(5, player);
-                    case OuyaSDK.KeyEnum.BUTTON_O:
-                        return GetButton(0, player);
-                    case OuyaSDK.KeyEnum.BUTTON_U:
-                        return GetButton(2, player);
-                    case OuyaSDK.KeyEnum.BUTTON_Y:
-                        return GetButton(3, player);
-                    case OuyaSDK.KeyEnum.BUTTON_A:
-                        return GetButton(1, player);
-                    case OuyaSDK.KeyEnum.BUTTON_L3:
-                        return GetButton(8, player);
-                    case OuyaSDK.KeyEnum.BUTTON_R3:
-                        return GetButton(9, player);
-                    case OuyaSDK.KeyEnum.BUTTON_DPAD_UP:
-                        return GetAxis(keyCode, player) > 0f;
-                    case OuyaSDK.KeyEnum.BUTTON_DPAD_DOWN:
-                        return GetAxis(keyCode, player) < 0f;
-                    case OuyaSDK.KeyEnum.BUTTON_DPAD_LEFT:
-                        return GetAxis(keyCode, player) < 0f;
-                    case OuyaSDK.KeyEnum.BUTTON_DPAD_RIGHT:
-                        return GetAxis(keyCode, player) > 0f;
-                    case OuyaSDK.KeyEnum.BUTTON_LT:
-                        return GetAxis(keyCode, player) > 0f;
-                    case OuyaSDK.KeyEnum.BUTTON_RT:
-                        return GetAxis(keyCode, player) > 0f;
-                    default:
-                        return false;
+                    switch (keyCode)
+                    {
+                        case OuyaSDK.KeyEnum.BUTTON_LB:
+                            return GetButton(13, player);
+                        case OuyaSDK.KeyEnum.BUTTON_RB:
+                            return GetButton(14, player);
+                        case OuyaSDK.KeyEnum.BUTTON_O:
+                            return GetButton(16, player);
+                        case OuyaSDK.KeyEnum.BUTTON_U:
+                            return GetButton(18, player);
+                        case OuyaSDK.KeyEnum.BUTTON_Y:
+                            return GetButton(19, player);
+                        case OuyaSDK.KeyEnum.BUTTON_A:
+                            return GetButton(17, player);
+                        case OuyaSDK.KeyEnum.BUTTON_L3:
+                            return GetButton(11, player);
+                        case OuyaSDK.KeyEnum.BUTTON_R3:
+                            return GetButton(12, player);
+                        case OuyaSDK.KeyEnum.BUTTON_DPAD_UP:
+                            return GetButton(5, player);
+                        case OuyaSDK.KeyEnum.BUTTON_DPAD_DOWN:
+                            return GetButton(6, player);
+                        case OuyaSDK.KeyEnum.BUTTON_DPAD_LEFT:
+                            return GetButton(7, player);
+                        case OuyaSDK.KeyEnum.BUTTON_DPAD_RIGHT:
+                            return GetButton(8, player);
+                        case OuyaSDK.KeyEnum.BUTTON_LT:
+                            return GetAxis(keyCode, player) > -1f;
+                        case OuyaSDK.KeyEnum.BUTTON_RT:
+                            return GetAxis(keyCode, player) > -1f;
+                        default:
+                            return false;
+                    }
+                }
+                else
+                {
+                    switch (keyCode)
+                    {
+                        case OuyaSDK.KeyEnum.BUTTON_LB:
+                            return GetButton(4, player);
+                        case OuyaSDK.KeyEnum.BUTTON_RB:
+                            return GetButton(5, player);
+                        case OuyaSDK.KeyEnum.BUTTON_O:
+                            return GetButton(0, player);
+                        case OuyaSDK.KeyEnum.BUTTON_U:
+                            return GetButton(2, player);
+                        case OuyaSDK.KeyEnum.BUTTON_Y:
+                            return GetButton(3, player);
+                        case OuyaSDK.KeyEnum.BUTTON_A:
+                            return GetButton(1, player);
+                        case OuyaSDK.KeyEnum.BUTTON_L3:
+                            return GetButton(8, player);
+                        case OuyaSDK.KeyEnum.BUTTON_R3:
+                            return GetButton(9, player);
+                        case OuyaSDK.KeyEnum.BUTTON_DPAD_UP:
+                            return GetAxis(keyCode, player) > 0f;
+                        case OuyaSDK.KeyEnum.BUTTON_DPAD_DOWN:
+                            return GetAxis(keyCode, player) < 0f;
+                        case OuyaSDK.KeyEnum.BUTTON_DPAD_LEFT:
+                            return GetAxis(keyCode, player) < 0f;
+                        case OuyaSDK.KeyEnum.BUTTON_DPAD_RIGHT:
+                            return GetAxis(keyCode, player) > 0f;
+                        case OuyaSDK.KeyEnum.BUTTON_LT:
+                            return GetAxis(keyCode, player) > 0f;
+                        case OuyaSDK.KeyEnum.BUTTON_RT:
+                            return GetAxis(keyCode, player) > 0f;
+                        default:
+                            return false;
+                    }
                 }
 #endif
 
