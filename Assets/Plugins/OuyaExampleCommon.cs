@@ -288,11 +288,9 @@ public class OuyaExampleCommon
                         break;
                     case OuyaSDK.KeyEnum.BUTTON_DPAD_LEFT:
                         axisName = string.Format("Joy{0} Axis 6", (int)player);
-                        invert = true;
                         break;
                     case OuyaSDK.KeyEnum.BUTTON_DPAD_RIGHT:
                         axisName = string.Format("Joy{0} Axis 6", (int)player);
-                        invert = true;
                         break;
                     case OuyaSDK.KeyEnum.BUTTON_DPAD_UP:
                         axisName = string.Format("Joy{0} Axis 7", (int)player);
