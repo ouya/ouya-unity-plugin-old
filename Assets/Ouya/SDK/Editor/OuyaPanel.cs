@@ -2124,6 +2124,60 @@ public class OuyaPanel : EditorWindow
                     }
                 }
 
+                GUILayout.BeginHorizontal();
+                        GUILayout.Label("Volume:");
+                        if (GUILayout.Button("UP"))
+                        {
+                            string args = string.Format("shell input keyevent VOLUME_UP");
+
+                            if (File.Exists(pathADB))
+                            {
+                                //Debug.Log(appPath);
+                                //Debug.Log(pathADB);
+                                //Debug.Log(args);
+                                ProcessStartInfo ps = new ProcessStartInfo(pathADB, args);
+                                Process p = new Process();
+                                ps.RedirectStandardOutput = false;
+                                ps.UseShellExecute = true;
+                                ps.CreateNoWindow = false;
+                                ps.WorkingDirectory = Path.GetDirectoryName(pathADB);
+                                p.StartInfo = ps;
+                                p.Exited += (object sender, EventArgs e) =>
+                                {
+                                    p.Dispose();
+                                };
+                                p.Start();
+                                //p.WaitForExit();
+                            }
+                            EditorGUIUtility.ExitGUI();
+                        }
+                        if (GUILayout.Button("DOWN"))
+                        {
+                            string args = string.Format("shell input keyevent VOLUME_DOWN");
+
+                            if (File.Exists(pathADB))
+                            {
+                                //Debug.Log(appPath);
+                                //Debug.Log(pathADB);
+                                //Debug.Log(args);
+                                ProcessStartInfo ps = new ProcessStartInfo(pathADB, args);
+                                Process p = new Process();
+                                ps.RedirectStandardOutput = false;
+                                ps.UseShellExecute = true;
+                                ps.CreateNoWindow = false;
+                                ps.WorkingDirectory = Path.GetDirectoryName(pathADB);
+                                p.StartInfo = ps;
+                                p.Exited += (object sender, EventArgs e) =>
+                                {
+                                    p.Dispose();
+                                };
+                                p.Start();
+                                //p.WaitForExit();
+                            }
+                            EditorGUIUtility.ExitGUI();
+                        }
+                        GUILayout.EndHorizontal();
+
                 break;
 
             case 4:
