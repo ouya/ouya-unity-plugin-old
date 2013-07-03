@@ -2126,9 +2126,9 @@ public class OuyaPanel : EditorWindow
 
                 GUILayout.BeginHorizontal();
                         GUILayout.Label("Volume:");
-                        if (GUILayout.Button("UP"))
+                        if (GUILayout.Button("DOWN"))
                         {
-                            string args = string.Format("shell input keyevent VOLUME_UP");
+                            string args = string.Format("shell input keyevent VOLUME_DOWN");
 
                             if (File.Exists(pathADB))
                             {
@@ -2151,9 +2151,9 @@ public class OuyaPanel : EditorWindow
                             }
                             EditorGUIUtility.ExitGUI();
                         }
-                        if (GUILayout.Button("DOWN"))
+                        if (GUILayout.Button("UP"))
                         {
-                            string args = string.Format("shell input keyevent VOLUME_DOWN");
+                            string args = string.Format("shell input keyevent VOLUME_UP");
 
                             if (File.Exists(pathADB))
                             {
