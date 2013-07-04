@@ -299,6 +299,8 @@ public class OuyaPanel : EditorWindow
     public static string pathAAPT = string.Empty;
     public static string pathSDK = string.Empty;
 
+    private string m_browserUrl = "https://devs.ouya.tv/developers/docs/unity";
+
     static string GetPathAndroidJar()
     {
         return string.Format("{0}/platforms/android-{1}/android.jar", pathSDK, (int)PlayerSettings.Android.minSdkVersion);
@@ -2178,12 +2180,12 @@ public class OuyaPanel : EditorWindow
                 }
                 GUILayout.EndHorizontal();
 
-                GUILayout.BeginHorizontal();
                 GUILayout.Label("Browser:");
+                GUILayout.BeginHorizontal();
+                GUILayout.Space(25);
                 if (GUILayout.Button("EXPLORER"))
                 {
                     string args = string.Format("shell input keyevent EXPLORER");
-
                     if (File.Exists(pathADB))
                     {
                         //Debug.Log(appPath);
@@ -2234,6 +2236,99 @@ public class OuyaPanel : EditorWindow
                 {
                     string args = string.Format("shell input keyevent BACK");
 
+                    if (File.Exists(pathADB))
+                    {
+                        //Debug.Log(appPath);
+                        //Debug.Log(pathADB);
+                        //Debug.Log(args);
+                        ProcessStartInfo ps = new ProcessStartInfo(pathADB, args);
+                        Process p = new Process();
+                        ps.RedirectStandardOutput = false;
+                        ps.UseShellExecute = true;
+                        ps.CreateNoWindow = false;
+                        ps.WorkingDirectory = Path.GetDirectoryName(pathADB);
+                        p.StartInfo = ps;
+                        p.Exited += (object sender, EventArgs e) =>
+                        {
+                            p.Dispose();
+                        };
+                        p.Start();
+                        //p.WaitForExit();
+                    }
+                    EditorGUIUtility.ExitGUI();
+                }
+                GUILayout.EndHorizontal();
+
+
+                GUILayout.BeginHorizontal();
+                GUILayout.Space(25);
+                m_browserUrl = GUILayout.TextField(m_browserUrl, GUILayout.MinWidth(100));
+                if (GUILayout.Button("GO"))
+                {
+                    string args = string.Format("shell input keyevent EXPLORER");
+                    if (File.Exists(pathADB))
+                    {
+                        //Debug.Log(appPath);
+                        //Debug.Log(pathADB);
+                        //Debug.Log(args);
+                        ProcessStartInfo ps = new ProcessStartInfo(pathADB, args);
+                        Process p = new Process();
+                        ps.RedirectStandardOutput = false;
+                        ps.UseShellExecute = true;
+                        ps.CreateNoWindow = false;
+                        ps.WorkingDirectory = Path.GetDirectoryName(pathADB);
+                        p.StartInfo = ps;
+                        p.Exited += (object sender, EventArgs e) =>
+                        {
+                            p.Dispose();
+                        };
+                        p.Start();
+                        //p.WaitForExit();
+                    }
+                    Thread.Sleep(1000);
+                    args = string.Format("shell input keyevent SEARCH");
+                    if (File.Exists(pathADB))
+                    {
+                        //Debug.Log(appPath);
+                        //Debug.Log(pathADB);
+                        //Debug.Log(args);
+                        ProcessStartInfo ps = new ProcessStartInfo(pathADB, args);
+                        Process p = new Process();
+                        ps.RedirectStandardOutput = false;
+                        ps.UseShellExecute = true;
+                        ps.CreateNoWindow = false;
+                        ps.WorkingDirectory = Path.GetDirectoryName(pathADB);
+                        p.StartInfo = ps;
+                        p.Exited += (object sender, EventArgs e) =>
+                        {
+                            p.Dispose();
+                        };
+                        p.Start();
+                        //p.WaitForExit();
+                    }
+                    Thread.Sleep(500);
+                    args = string.Format("shell input text {0}", m_browserUrl);
+                    if (File.Exists(pathADB))
+                    {
+                        //Debug.Log(appPath);
+                        //Debug.Log(pathADB);
+                        //Debug.Log(args);
+                        ProcessStartInfo ps = new ProcessStartInfo(pathADB, args);
+                        Process p = new Process();
+                        ps.RedirectStandardOutput = false;
+                        ps.UseShellExecute = true;
+                        ps.CreateNoWindow = false;
+                        ps.WorkingDirectory = Path.GetDirectoryName(pathADB);
+                        p.StartInfo = ps;
+                        p.Exited += (object sender, EventArgs e) =>
+                        {
+                            p.Dispose();
+                        };
+                        p.Start();
+                        //p.WaitForExit();
+                    }
+                    Thread.Sleep(4000);
+                    args = "shell input keyevent ENTER";
                     if (File.Exists(pathADB))
                     {
                         //Debug.Log(appPath);
