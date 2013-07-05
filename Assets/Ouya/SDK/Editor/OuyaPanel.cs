@@ -1974,7 +1974,9 @@ public class OuyaPanel : EditorWindow
                     EditorGUIUtility.ExitGUI();
                 }
 
-                if (GUILayout.Button("Open Logcat"))
+                GUILayout.BeginHorizontal();
+                GUILayout.Label("Logcat");
+                if (GUILayout.Button("Open"))
                 {
                     if (File.Exists(pathADB))
                     {
@@ -1998,6 +2000,31 @@ public class OuyaPanel : EditorWindow
                     }
                     EditorGUIUtility.ExitGUI();
                 }
+                if (GUILayout.Button("Clear"))
+                {
+                    if (File.Exists(pathADB))
+                    {
+                        //Debug.Log(appPath);
+                        //Debug.Log(pathADB);
+                        string args = string.Format(@"shell logcat -c");
+                        //Debug.Log(args);
+                        ProcessStartInfo ps = new ProcessStartInfo(pathADB, args);
+                        Process p = new Process();
+                        ps.RedirectStandardOutput = false;
+                        ps.UseShellExecute = true;
+                        ps.CreateNoWindow = false;
+                        ps.WorkingDirectory = Path.GetDirectoryName(pathADB);
+                        p.StartInfo = ps;
+                        p.Exited += (object sender, EventArgs e) =>
+                        {
+                            p.Dispose();
+                        };
+                        p.Start();
+                        //p.WaitForExit();
+                    }
+                    EditorGUIUtility.ExitGUI();
+                }
+                GUILayout.EndHorizontal();
 
                 GUILayout.BeginHorizontal();
                 GUILayout.Label("Language:");
