@@ -2155,7 +2155,7 @@ public class OuyaPanel : EditorWindow
 
                 GUILayout.BeginHorizontal();
                 GUILayout.Label("Volume:");
-                if (GUILayout.Button("DOWN"))
+                if (GUILayout.Button("Down"))
                 {
                     string args = string.Format("shell input keyevent VOLUME_DOWN");
 
@@ -2180,7 +2180,7 @@ public class OuyaPanel : EditorWindow
                     }
                     EditorGUIUtility.ExitGUI();
                 }
-                if (GUILayout.Button("UP"))
+                if (GUILayout.Button("Up"))
                 {
                     string args = string.Format("shell input keyevent VOLUME_UP");
 
@@ -2210,7 +2210,7 @@ public class OuyaPanel : EditorWindow
                 GUILayout.Label("Browser:");
                 GUILayout.BeginHorizontal();
                 GUILayout.Space(25);
-                if (GUILayout.Button("EXPLORER"))
+                if (GUILayout.Button("Explorer"))
                 {
                     string args = string.Format("shell input keyevent EXPLORER");
                     if (File.Exists(pathADB))
@@ -2234,7 +2234,7 @@ public class OuyaPanel : EditorWindow
                     }
                     EditorGUIUtility.ExitGUI();
                 }
-                if (GUILayout.Button("SEARCH"))
+                if (GUILayout.Button("Search"))
                 {
                     string args = string.Format("shell input keyevent SEARCH");
 
@@ -2259,9 +2259,34 @@ public class OuyaPanel : EditorWindow
                     }
                     EditorGUIUtility.ExitGUI();
                 }
-                if (GUILayout.Button("BACK"))
+                if (GUILayout.Button("Back"))
                 {
                     string args = string.Format("shell input keyevent BACK");
+
+                    if (File.Exists(pathADB))
+                    {
+                        //Debug.Log(appPath);
+                        //Debug.Log(pathADB);
+                        //Debug.Log(args);
+                        ProcessStartInfo ps = new ProcessStartInfo(pathADB, args);
+                        Process p = new Process();
+                        ps.RedirectStandardOutput = false;
+                        ps.UseShellExecute = true;
+                        ps.CreateNoWindow = false;
+                        ps.WorkingDirectory = Path.GetDirectoryName(pathADB);
+                        p.StartInfo = ps;
+                        p.Exited += (object sender, EventArgs e) =>
+                        {
+                            p.Dispose();
+                        };
+                        p.Start();
+                        //p.WaitForExit();
+                    }
+                    EditorGUIUtility.ExitGUI();
+                }
+                if (GUILayout.Button("Home"))
+                {
+                    string args = string.Format("shell input keyevent HOME");
 
                     if (File.Exists(pathADB))
                     {
@@ -2290,7 +2315,7 @@ public class OuyaPanel : EditorWindow
                 GUILayout.BeginHorizontal();
                 GUILayout.Space(25);
                 m_browserUrl = GUILayout.TextField(m_browserUrl, GUILayout.MinWidth(100));
-                if (GUILayout.Button("GO"))
+                if (GUILayout.Button("Go"))
                 {
                     string args = string.Format("shell input keyevent EXPLORER");
                     if (File.Exists(pathADB))
