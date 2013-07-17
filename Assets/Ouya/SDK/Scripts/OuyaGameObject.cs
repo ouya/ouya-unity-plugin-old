@@ -34,8 +34,6 @@ public class OuyaGameObject : MonoBehaviour
         "__DECLINED__THIS_PURCHASE",
     };
 
-    public bool UseLegacyInput = true;
-
     [@HideInInspector]
     private static string m_inputData = null;
     public static string InputData{
@@ -1763,7 +1761,7 @@ public class OuyaGameObject : MonoBehaviour
 
             //Initialize OuyaSDK with your developer ID
             //Get your developer_id from the ouya developer portal @ http://developer.ouya.tv
-            OuyaSDK.initialize(DEVELOPER_ID, UseLegacyInput);
+            OuyaSDK.initialize(DEVELOPER_ID);
 
             #endregion
         }
@@ -1828,177 +1826,6 @@ public class OuyaGameObject : MonoBehaviour
             Debug.LogError(string.Format("Failed to register axis events exception={0}", ex));
         }
         #endregion
-    }
-
-
-    void Update()
-    {
-        if (!UseLegacyInput)
-        {
-            return;
-        }
-
-#if UNITY_EDITOR || UNITY_STANDALONE_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_LINUX
-        //Monitor for player input:
-
-        if (!debugOff)
-        {
-            foreach (Device d in devices)
-            {
-                Debug.Log(string.Format("player={0} name={1}", d.player, d.name));
-            }
-        }
-
-        for (int iPlayerJoystick = 1; iPlayerJoystick <= devices.Count; iPlayerJoystick++)
-        {
-            Device device = devices.Find(delegate(Device d) { return (null == d || null == devices) ? false : (d.id == devices[iPlayerJoystick-1].id); });
-            for (int i = 0; i < 20; i++)
-            {
-                //Controller Name:
-                string fireBtnName = string.Format("Joystick{0}Button{1}", iPlayerJoystick,i);
-                OuyaKeyCode keycode = (OuyaKeyCode)System.Enum.Parse(typeof(OuyaKeyCode), fireBtnName); //missing more than 4 joystick buttons
-
-                //Controller Action KeyDown
-                if (Input.GetKeyDown((KeyCode)(int)keycode))
-                {
-                    //@watch for new keycodes and new controller mappings
-                    //Debug.Log((int)keycode);
-
-                    string jsonData = buildInputPackage((KeyCode)(int)keycode, device);
-                    InputListener(OuyaSDK.InputAction.KeyDown, jsonData);
-                    if (!this.debugOff){Debug.Log(jsonData);}//Debug
-                }
-                
-                //Controller Action KeyUp
-                if (Input.GetKeyUp((KeyCode)(int)keycode))
-                {
-                    string jsonData = buildInputPackage((KeyCode)(int)keycode, device);
-                    InputListener(OuyaSDK.InputAction.KeyUp, jsonData);
-                    if (!this.debugOff) { Debug.Log(jsonData); }//Debug
-                }
-            }
-
-            #region DPAD
-            string dpadHps3 = OuyaInputManager.GetInput(device.player, AxisTypes.DPadH, AnalogTypes.DPad);
-            string dpadVps3 = OuyaInputManager.GetInput(device.player, AxisTypes.DPadV, AnalogTypes.DPad);
-
-
-            OuyaSDK.KeyEnum dpad = getDpadPress(dpadVps3, dpadHps3, device);
-            if (dpad != OuyaSDK.KeyEnum.NONE)
-            {
-                bool doEvent = false;
-                //Check which button was pressed.
-                switch (dpad)
-                {
-                    case OuyaSDK.KeyEnum.BUTTON_DPAD_DOWN:
-                        if (!OuyaInputManager.GetButton("DPD", device.player)) { doEvent = true; axisSet = true; OuyaInputManager.SetButton("DPD", device.player, true); }
-                        break;
-                    case OuyaSDK.KeyEnum.BUTTON_DPAD_UP:
-                        if (!OuyaInputManager.GetButton("DPU", device.player)) { doEvent = true; axisSet = true; OuyaInputManager.SetButton("DPU", device.player, true); }
-                        break;
-                    case OuyaSDK.KeyEnum.BUTTON_DPAD_LEFT:
-                        if (!OuyaInputManager.GetButton("DPL", device.player)) { doEvent = true; axisSet = true; OuyaInputManager.SetButton("DPL", device.player, true); }
-                        break;
-                    case OuyaSDK.KeyEnum.BUTTON_DPAD_RIGHT:
-                        if (!OuyaInputManager.GetButton("DPR", device.player)) { doEvent = true; axisSet = true; OuyaInputManager.SetButton("DPR", device.player, true); }
-                        break;
-                }
-                if (doEvent)
-                {
-                    OuyaInputManager.OuyaButtonEvent.buttonPressEvent(device.player, dpad, OuyaSDK.InputAction.KeyDown);
-                }
-            }
-            else
-            {
-
-                //Check each dpad value.. if it was previously down then triggger dpad up.
-                if (OuyaInputManager.GetButton("DPD", device.player) &&  axisSet)
-                {
-                    OuyaInputManager.OuyaButtonEvent.buttonPressEvent(device.player, OuyaSDK.KeyEnum.BUTTON_DPAD_DOWN, OuyaSDK.InputAction.KeyUp);
-                    OuyaInputManager.SetButton("DPD", device.player, false);
-                    axisSet = false;
-                }
-
-                if (OuyaInputManager.GetButton("DPU", device.player) && axisSet)
-                {
-                    OuyaInputManager.OuyaButtonEvent.buttonPressEvent(device.player, OuyaSDK.KeyEnum.BUTTON_DPAD_UP, OuyaSDK.InputAction.KeyUp);
-                    OuyaInputManager.SetButton("DPU", device.player, false);
-                    axisSet = false;
-                }
-
-                if (OuyaInputManager.GetButton("DPL", device.player) && axisSet)
-                {
-                    OuyaInputManager.OuyaButtonEvent.buttonPressEvent(device.player, OuyaSDK.KeyEnum.BUTTON_DPAD_LEFT, OuyaSDK.InputAction.KeyUp);
-                    OuyaInputManager.SetButton("DPL", device.player, false);
-                    axisSet = false;
-                }
-
-                if (OuyaInputManager.GetButton("DPR", device.player) && axisSet)
-                {
-                    OuyaInputManager.OuyaButtonEvent.buttonPressEvent(device.player, OuyaSDK.KeyEnum.BUTTON_DPAD_RIGHT, OuyaSDK.InputAction.KeyUp);
-                    OuyaInputManager.SetButton("DPR", device.player, false);
-                    axisSet = false;
-                }
-            }
-
-            #endregion
-
-            #region handle triggers
-            //KeyDown States only for the PC and Editor Platform.
-            string trigger = OuyaInputManager.GetInput(device.player, AxisTypes.none, AnalogTypes.LTRT);
-            if (!getTriggerPress(trigger).Equals(OuyaSDK.KeyEnum.NONE))
-            {
-                if(getTriggerPress(trigger).Equals(OuyaSDK.KeyEnum.BUTTON_LT) && !OuyaInputManager.GetButton("LT",device.player)){
-                    OuyaInputManager.OuyaButtonEvent.buttonPressEvent(device.player, getTriggerPress(trigger), OuyaSDK.InputAction.KeyDown);
-                    OuyaInputManager.SetButton("LT",device.player,true);
-                    axisSetTriggers = true;
-                }
-
-                if (getTriggerPress(trigger).Equals(OuyaSDK.KeyEnum.BUTTON_RT) && !OuyaInputManager.GetButton("RT", device.player))
-                {
-                    OuyaInputManager.OuyaButtonEvent.buttonPressEvent(device.player, getTriggerPress(trigger), OuyaSDK.InputAction.KeyDown);
-                    OuyaInputManager.SetButton("RT",device.player,true);
-                    axisSetTriggers = true;
-                }
-
-            }
-            else
-            {
-                //We can try to do up state, but no gaurentee it will work.
-                if (OuyaInputManager.GetButton("LT", device.player) && axisSetTriggers)
-                {
-                    OuyaInputManager.OuyaButtonEvent.buttonPressEvent(device.player, OuyaSDK.KeyEnum.BUTTON_LT, OuyaSDK.InputAction.KeyUp);
-                    OuyaInputManager.SetButton("LT", device.player, false);
-                    axisSetTriggers = false;
-                }
-                if (OuyaInputManager.GetButton("RT", device.player) && axisSetTriggers)
-                {
-                    OuyaInputManager.OuyaButtonEvent.buttonPressEvent(device.player, OuyaSDK.KeyEnum.BUTTON_RT, OuyaSDK.InputAction.KeyUp);
-                    OuyaInputManager.SetButton("RT", device.player, false);
-                    axisSetTriggers = false;
-                }
-            }
-            #endregion
-
-            #region AXIS DEBUG CODE UNITY EDITOR / STANDALONE Platforms.
-            if (showRawAxis)
-            {
-                for (int i = 1; i <= 5; i++)
-                {
-                    for (int a = 1; a <= 10; a++)
-                    {
-                        string axisName = string.Format("Joy{0} Axis {1}", i, a);
-                        Debug.Log(string.Format("Name: {0}, AxisValue:{1}", axisName, Input.GetAxis(axisName)));
-                    }
-                }
-            }
-            #endregion
-
-        }
-
-        
-
-#endif
     }
     #endregion
 
@@ -2115,7 +1942,7 @@ public class OuyaGameObject : MonoBehaviour
 
     public void RequestUnityAwake(string ignore)
     {
-        OuyaSDK.initialize(DEVELOPER_ID, UseLegacyInput);
+        OuyaSDK.initialize(DEVELOPER_ID);
     }
 
     public void SendIAPInitComplete(string ignore)

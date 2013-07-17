@@ -33,11 +33,6 @@ public static class OuyaSDK
     static private string m_developerId = string.Empty;
 
     /// <summary>
-    /// Use legacy input assigned by OuyaGameObject
-    /// </summary>
-    private static bool m_useLegacyInput = false;
-
-    /// <summary>
     /// Inidicates IAP has been setup and is ready for processing
     /// </summary>
     private static bool m_iapInitComplete = false;
@@ -234,16 +229,10 @@ public static class OuyaSDK
     /// Initialized by OuyaGameObject
     /// </summary>
     /// <param name="developerId"></param>
-    public static void initialize(string developerId, bool useLegacyInput)
+    public static void initialize(string developerId)
     {
         m_developerId = developerId;
         OuyaSDK.OuyaJava.JavaSetDeveloperId();
-
-        m_useLegacyInput = useLegacyInput;
-        if (m_useLegacyInput)
-        {
-            OuyaSDK.OuyaJava.JavaUseLegacyInput();
-        }
 
         OuyaSDK.OuyaJava.JavaUnityInitialized();
     }
@@ -781,34 +770,6 @@ public static class OuyaSDK
             catch (Exception ex)
             {
                 Debug.LogError(string.Format("OuyaSDK.JavaSetDeveloperId exception={0}", ex));
-            }
-            finally
-            {
-                AndroidJNI.PopLocalFrame(IntPtr.Zero);
-            }
-#endif
-        }
-
-        public static void JavaUseLegacyInput()
-        {
-#if UNITY_ANDROID && !UNITY_EDITOR && !UNITY_STANDALONE_OSX && !UNITY_STANDALONE_WIN && !UNITY_STANDALONE_LINUX
-
-            // again, make sure the thread is attached..
-            AndroidJNI.AttachCurrentThread();
-
-            AndroidJNI.PushLocalFrame(0);
-
-            try
-            {
-                Debug.Log("useLegacyInput");
-                using (AndroidJavaClass ajc = new AndroidJavaClass(JAVA_CLASS))
-                {
-                    ajc.CallStatic("useLegacyInput");
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.LogError(string.Format("OuyaSDK.JavaUseLegacyInput exception={0}", ex));
             }
             finally
             {

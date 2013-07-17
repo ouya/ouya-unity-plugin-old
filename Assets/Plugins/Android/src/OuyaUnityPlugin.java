@@ -64,9 +64,6 @@ public class OuyaUnityPlugin
 	// ENABLE IAP mode this is for testing/debugging to turn off IAP
 	private static Boolean m_enableIAP = true;
 
-	// Legacy input is for debugging which sends verbose JSON data
-	private static Boolean m_useLegacyInput = false;
-
 	// For debugging enable logging for testing
 	private static Boolean m_enableDebugLogging = true;
 
@@ -77,16 +74,6 @@ public class OuyaUnityPlugin
 		Log.i("Unity", "OuyaUnityPlugin: Plugin is awake");
 		
 		m_pluginAwake = true;
-	}
-
-	public static Boolean getUseLegacyInput()
-	{
-		return m_useLegacyInput;
-	}
-
-	public static void useLegacyInput()
-	{
-		m_useLegacyInput = true;
 	}
 
 	public static void setResolution(String resolutionId)
