@@ -1829,7 +1829,7 @@ public class OuyaPanel : EditorWindow
 
                 if (GUILayout.Button("Download JDK 6 32-bit"))
                 {
-                    Application.OpenURL("http://www.oracle.com/technetwork/java/javase/downloads/jdk6downloads-1902814.html");
+                    Application.OpenURL("http://www.oracle.com/technetwork/java/javasebusiness/downloads/java-archive-downloads-javase6-419409.html#jdk-6u45-oth-JPR");
                 }
 
                 break;

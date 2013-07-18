@@ -94,7 +94,6 @@ public class OuyaMenuAdmin : MonoBehaviour
         }
     }
 
-    [MenuItem("OUYA/Generate OUYA Unity Plugin")]
     public static void MenuGeneratePluginJar()
     {
         UpdatePaths();
