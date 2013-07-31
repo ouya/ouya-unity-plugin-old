@@ -1894,6 +1894,40 @@ public class OuyaPanel : EditorWindow
                     EditorGUIUtility.ExitGUI();
                 }
 
+                if (GUILayout.Button("Toggle Safe Overlay"))
+                {
+                    ThreadStart ts = new ThreadStart(() =>
+                    {
+                        if (File.Exists(pathADB))
+                        {
+                            //Debug.Log(appPath);
+                            //Debug.Log(pathADB);
+                            string args =
+                                string.Format(
+                                    @"shell su -c am start -n tv.ouya.console/tv.ouya.console.launcher.ToggleSafeZoneActivity");
+                            //Debug.Log(args);
+                            ProcessStartInfo ps = new ProcessStartInfo(pathADB,
+                                                                       args);
+                            Process p = new Process();
+                            ps.RedirectStandardOutput = false;
+                            ps.UseShellExecute = true;
+                            ps.CreateNoWindow = false;
+                            ps.WorkingDirectory = Path.GetDirectoryName(pathADB);
+                            p.StartInfo = ps;
+                            p.Exited += (object sender, EventArgs e) =>
+                            {
+                                p.Dispose();
+                            };
+                            p.Start();
+
+                            p.WaitForExit();
+                        }
+                    });
+                    Thread thread = new Thread(ts);
+                    thread.Start();
+                    EditorGUIUtility.ExitGUI();
+                }
+
                 if (GUILayout.Button("Take Screenshot"))
                 {
                     ThreadStart ts = new ThreadStart(() =>

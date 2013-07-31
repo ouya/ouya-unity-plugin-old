@@ -139,14 +139,14 @@ public class OuyaShowUnityInput : MonoBehaviour,
         {
             OuyaNGUIHandler nguiHandler = GameObject.Find("_NGUIHandler").GetComponent<OuyaNGUIHandler>();
             if (nguiHandler != null &&
-                null != OuyaExampleCommon.Joysticks)
+                null != OuyaSDK.Joysticks)
             {
-                for (int i = 0; i < OuyaExampleCommon.Joysticks.Length || i < 8; i++)
+                for (int i = 0; i < OuyaSDK.Joysticks.Length || i < 8; i++)
                 {
                     string joyName = "N/A";
-                    if (i < OuyaExampleCommon.Joysticks.Length)
+                    if (i < OuyaSDK.Joysticks.Length)
                     {
-                        joyName = OuyaExampleCommon.Joysticks[i];
+                        joyName = OuyaSDK.Joysticks[i];
                     }
                     switch (i)
                     {
@@ -231,8 +231,6 @@ public class OuyaShowUnityInput : MonoBehaviour,
     {
         UpdateController();
         UpdateLabels();
-
-        OuyaExampleCommon.UpdateJoysticks();
     }
 
     void OnGUI()

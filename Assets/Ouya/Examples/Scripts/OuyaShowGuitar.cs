@@ -239,8 +239,6 @@ public class OuyaShowGuitar : MonoBehaviour,
 
     void FixedUpdate()
     {
-        OuyaExampleCommon.UpdateJoysticks();
-
         foreach (CubeLaneItem item in Lanes)
         {
             item.LaneSound.volume = Mathf.Lerp(item.LaneSound.volume, 0, Time.fixedDeltaTime);

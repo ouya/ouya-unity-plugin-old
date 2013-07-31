@@ -185,8 +185,6 @@ public class OuyaPlotMeshThumbstick : MonoBehaviour
             return;
         }
 
-        OuyaExampleCommon.UpdateJoysticks();
-
         UpdateTexture();
 
         if (m_timerTexture < DateTime.Now)
@@ -217,7 +215,7 @@ public class OuyaPlotMeshThumbstick : MonoBehaviour
             GUILayout.Label(string.Empty);
 
             int index = 0;
-            foreach (string joystick in OuyaExampleCommon.Joysticks)
+            foreach (string joystick in OuyaSDK.Joysticks)
             {
                 GUILayout.BeginHorizontal();
                 GUILayout.Space(Screen.width * 0.296f);

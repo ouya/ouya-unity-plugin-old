@@ -28,6 +28,30 @@ public static class OuyaSDK
     public const string VERSION = "1.0.7.1";
 
     /// <summary>
+    /// Cache joysticks
+    /// </summary>
+    public static string[] Joysticks = null;
+
+    /// <summary>
+    /// Query joysticks every N seconds
+    /// </summary>
+    private static DateTime m_timerJoysticks = DateTime.MinValue;
+
+    /// <summary>
+    /// Update joysticks with a timer
+    /// </summary>
+    public static void UpdateJoysticks()
+    {
+        if (m_timerJoysticks < DateTime.Now)
+        {
+            //check for new joysticks every N seconds
+            m_timerJoysticks = DateTime.Now + TimeSpan.FromSeconds(3);
+
+            Joysticks = Input.GetJoystickNames();
+        }
+    }
+
+    /// <summary>
     /// The developer ID assigned by OuyaGameObject
     /// </summary>
     static private string m_developerId = string.Empty;

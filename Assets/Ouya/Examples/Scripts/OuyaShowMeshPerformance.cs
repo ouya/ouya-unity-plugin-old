@@ -122,8 +122,6 @@ public class OuyaShowMeshPerformance : MonoBehaviour,
 
     private void FixedUpdate()
     {
-        OuyaExampleCommon.UpdateJoysticks();
-
         if (RendererLabel)
         {
             RendererLabel.text = m_items.Count.ToString();

@@ -2080,6 +2080,11 @@ public class OuyaGameObject : MonoBehaviour
 
     #endregion
 
+    private void FixedUpdate()
+    {
+        OuyaSDK.UpdateJoysticks();
+    }
+
     #region Debug Logs
     public void DebugLog(string message)
     {

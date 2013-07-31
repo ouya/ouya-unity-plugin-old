@@ -255,8 +255,6 @@ public class OuyaShowDrumkit : MonoBehaviour,
 
     void FixedUpdate()
     {
-        OuyaExampleCommon.UpdateJoysticks();
-
         foreach (CubeLaneItem item in Lanes)
         {
             if (DateTime.MinValue != item.FadeDelay)

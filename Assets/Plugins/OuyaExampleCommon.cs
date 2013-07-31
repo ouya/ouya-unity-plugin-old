@@ -24,16 +24,6 @@ public class OuyaExampleCommon
     /// </summary>
     public static OuyaSDK.OuyaPlayer Player = OuyaSDK.OuyaPlayer.player1;
 
-    /// <summary>
-    /// Cache joysticks
-    /// </summary>
-    public static string[] Joysticks = null;
-
-    /// <summary>
-    /// Query joysticks every N seconds
-    /// </summary>
-    private static DateTime m_timerJoysticks = DateTime.MinValue;
-
     #region Mapping Helpers
 
     public static float GetAxis(string ouyaMapping, OuyaSDK.OuyaPlayer player)
@@ -71,17 +61,17 @@ public class OuyaExampleCommon
 
     public static float GetAxis(OuyaSDK.KeyEnum keyCode, OuyaSDK.OuyaPlayer player)
     {
-        if (null == OuyaExampleCommon.Joysticks)
+        if (null == OuyaSDK.Joysticks)
         {
             return 0f;
         }
         int playerIndex = (int)player - 1;
-        if (playerIndex >= OuyaExampleCommon.Joysticks.Length)
+        if (playerIndex >= OuyaSDK.Joysticks.Length)
         {
             return 0f;
         }
 
-        string joystickName = OuyaExampleCommon.Joysticks[playerIndex];
+        string joystickName = OuyaSDK.Joysticks[playerIndex];
         if (null == joystickName)
         {
             return 0f;
@@ -587,17 +577,17 @@ public class OuyaExampleCommon
 
     public static bool GetButton(OuyaSDK.KeyEnum keyCode, OuyaSDK.OuyaPlayer player)
     {
-        if (null == OuyaExampleCommon.Joysticks)
+        if (null == OuyaSDK.Joysticks)
         {
             return false;
         }
         int playerIndex = (int) player - 1;
-        if (playerIndex >= OuyaExampleCommon.Joysticks.Length)
+        if (playerIndex >= OuyaSDK.Joysticks.Length)
         {
             return false;
         }
 
-        string joystickName = OuyaExampleCommon.Joysticks[playerIndex];
+        string joystickName = OuyaSDK.Joysticks[playerIndex];
         if (null == joystickName)
         {
             return false;
@@ -1073,15 +1063,4 @@ public class OuyaExampleCommon
     }
 
     #endregion
-
-    public static void UpdateJoysticks()
-    {
-        if (m_timerJoysticks < DateTime.Now)
-        {
-            //check for new joysticks every N seconds
-            m_timerJoysticks = DateTime.Now + TimeSpan.FromSeconds(3);
-
-            Joysticks = Input.GetJoystickNames();
-        }
-    }
 }
