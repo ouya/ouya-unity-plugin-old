@@ -2080,6 +2080,25 @@ public class OuyaGameObject : MonoBehaviour
 
     #endregion
 
+#if UNITY_4_0 || UNITY_4_1 || UNITY_4_2
+
+    public void Update()
+    {
+        Event e = Event.current;
+        if (null == e)
+        {
+            return;
+        }
+        
+        if (e.isKey &&
+            e.keyCode == KeyCode.Menu)
+        {
+            onMenuButtonUp(string.Empty);
+        }
+    }
+
+#endif
+
     private void FixedUpdate()
     {
         OuyaSDK.UpdateJoysticks();
