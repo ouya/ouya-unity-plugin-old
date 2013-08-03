@@ -39,7 +39,7 @@ public class OuyaNativeActivity extends NativeActivity
 	protected void onCreate (Bundle savedInstanceState)
 	{
 		Log.i("Unity", "***Starting OUYA Native Activity*********");
-		
+
 		//make activity accessible to Unity
 		IOuyaActivity.SetActivity(this);
 
@@ -59,7 +59,7 @@ public class OuyaNativeActivity extends NativeActivity
 
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
-		
+
 		getWindow().takeSurface(null);
 		setTheme(android.R.style.Theme_NoTitleBar_Fullscreen);
 		getWindow().setFormat(PixelFormat.RGB_565);
@@ -188,7 +188,7 @@ public class OuyaNativeActivity extends NativeActivity
 	protected void onPause()
 	{
 		UnityPlayer.UnitySendMessage("OuyaGameObject", "onPause", "");
-	
+
 		super.onPause();
 		mUnityPlayer.pause();
 	}
@@ -214,18 +214,5 @@ public class OuyaNativeActivity extends NativeActivity
 		if (event.getAction() == KeyEvent.ACTION_MULTIPLE)
 			return mUnityPlayer.onKeyMultiple(event.getKeyCode(), event.getRepeatCount(), event);
 		return super.dispatchKeyEvent(event);
-	}
-	@Override
-	public boolean onKeyUp (int keyCode, KeyEvent event)
-	{
-		//Log.i("Unity", "onKeyUp keyCode=" + keyCode);
-		if (keyCode == OuyaController.BUTTON_MENU) {
-			Log.i("Unity", "BroadcastReceiver tell Unity we see the menu button up");
-			UnityPlayer.UnitySendMessage("OuyaGameObject", "onMenuButtonUp", "");
-			Log.i("Unity", "BroadcastReceiver notified Unity onMenuButtonUp");
-			return true;
-			 
-		}		
-		return super.onKeyUp(keyCode, event);
 	}
 }
