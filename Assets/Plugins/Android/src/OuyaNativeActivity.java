@@ -215,4 +215,17 @@ public class OuyaNativeActivity extends NativeActivity
 			return mUnityPlayer.onKeyMultiple(event.getKeyCode(), event.getRepeatCount(), event);
 		return super.dispatchKeyEvent(event);
 	}
+	@Override
+	public boolean onKeyUp (int keyCode, KeyEvent event)
+	{
+		//Log.i("Unity", "onKeyUp keyCode=" + keyCode);
+		if (keyCode == OuyaController.BUTTON_MENU) {
+			Log.i("Unity", "BroadcastReceiver tell Unity we see the menu button up");
+			UnityPlayer.UnitySendMessage("OuyaGameObject", "onMenuButtonUp", "");
+			Log.i("Unity", "BroadcastReceiver notified Unity onMenuButtonUp");
+			return true;
+			 
+		}		
+		return super.onKeyUp(keyCode, event);
+	}
 }
