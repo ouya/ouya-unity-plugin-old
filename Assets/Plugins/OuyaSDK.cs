@@ -406,6 +406,8 @@ public static class OuyaSDK
         public int priceInCents = 0;
         public DateTime purchaseDate = DateTime.MinValue;
         public DateTime generatedDate = DateTime.MinValue;
+        public string gamer = string.Empty;
+        public string uuid = string.Empty;
 
         public string getIdentifier()
         {
