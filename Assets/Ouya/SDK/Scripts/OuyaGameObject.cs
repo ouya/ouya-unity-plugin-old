@@ -2082,7 +2082,7 @@ public class OuyaGameObject : MonoBehaviour
 
 #if UNITY_4_0 || UNITY_4_1 || UNITY_4_2
 
-    public void Update()
+    public void OnGUI()
     {
         Event e = Event.current;
         if (null == e)
