@@ -588,16 +588,53 @@ public class OuyaPanel : EditorWindow
                 XmlDocument xDoc = new XmlDocument();
                 xDoc.Load(path);
 
-                foreach (XmlNode level1 in xDoc.ChildNodes)
+                //Debug.Log("Processing Android.manifest");
+
+                foreach (XmlNode nodeManifest in xDoc.ChildNodes)
                 {
-                    if (level1.Name.ToUpper() == "MANIFEST")
+                    if (!(nodeManifest is XmlElement))
                     {
-                        XmlElement element = (XmlElement)level1;
-                        foreach (XmlAttribute attribute in element.Attributes)
+                        continue;
+                    }
+
+                    //Debug.Log(nodeManifest.Name);
+
+                    XmlElement manifest = nodeManifest as XmlElement;
+                    
+                    //Debug.Log(manifest.Name);
+
+                    if (nodeManifest.Name.ToUpper() == "MANIFEST")
+                    {
+                        foreach (XmlAttribute attribute in manifest.Attributes)
                         {
                             if (attribute.Name.ToUpper() == "PACKAGE")
                             {
                                 attribute.Value = bundleId;
+                            }
+                        }
+                        foreach (XmlElement application in manifest.ChildNodes)
+                        {
+                            //Debug.Log(application.Name);
+
+                            if (application.Name.ToUpper() == "APPLICATION")
+                            {
+                                foreach (XmlElement activity in application.ChildNodes)
+                                {
+                                    //Debug.Log(activity.Name);
+
+                                    if (activity.Name.ToUpper() == "ACTIVITY")
+                                    {
+                                        foreach (XmlAttribute attribute in activity.Attributes)
+                                        {
+                                            if (attribute.Name.ToUpper() == "ANDROID:NAME")
+                                            {
+                                                attribute.Value = string.Format(".{0}", javaAppName);
+                                                break; //only update the first activity
+                                            }
+                                        }
+                                        break;
+                                    }
+                                }
                             }
                         }
                     }
