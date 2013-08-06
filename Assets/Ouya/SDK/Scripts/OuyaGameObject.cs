@@ -2103,6 +2103,7 @@ public class OuyaGameObject : MonoBehaviour
             e.type == EventType.KeyUp)
         {
             onMenuButtonUp(string.Empty);
+            e.Use();
         }
     }
 
