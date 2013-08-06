@@ -2099,7 +2099,8 @@ public class OuyaGameObject : MonoBehaviour
         }
         
         if (e.isKey &&
-            e.keyCode == KeyCode.Menu)
+            e.keyCode == KeyCode.Menu &&
+            e.type == EventType.KeyUp)
         {
             onMenuButtonUp(string.Empty);
         }
