@@ -25,7 +25,6 @@ public class OuyaGameObject : MonoBehaviour
 
     public string DEVELOPER_ID = "310a8f51-4d6e-4ae5-bda0-b93878e5f5d0";
     public bool debugOff = false;
-    public bool showRawAxis = false;
 
     public string[] Purchasables =
     {
@@ -53,6 +52,7 @@ public class OuyaGameObject : MonoBehaviour
     #region Private Variables
     //private string m_inputData = string.Empty;
     private static OuyaGameObject m_instance = null;
+    private bool m_sentMenuButtonUp = false;
 #if UNITY_EDITOR || UNITY_STANDALONE_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_LINUX
     private bool axisSetTriggers = false;
     private bool axisSet = false;
@@ -130,6 +130,14 @@ public class OuyaGameObject : MonoBehaviour
 
     public void onMenuButtonUp(string ignore)
     {
+#if UNITY_4_0 || UNITY_4_1 || UNITY_4_2
+        if (m_sentMenuButtonUp)
+        {
+            return;
+        }
+        m_sentMenuButtonUp = true;
+#endif
+
         //Debug.Log("OuyaGameObject: onMenuButtonUp");
         foreach (OuyaSDK.IMenuButtonUpListener listener in OuyaSDK.getMenuButtonUpListeners())
         {
@@ -2095,6 +2103,11 @@ public class OuyaGameObject : MonoBehaviour
         {
             onMenuButtonUp(string.Empty);
         }
+    }
+
+    public void LateUpdate()
+    {
+        m_sentMenuButtonUp = false;
     }
 
 #endif
