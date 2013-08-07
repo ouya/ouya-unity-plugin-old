@@ -47,7 +47,41 @@ public static class OuyaSDK
             //check for new joysticks every N seconds
             m_timerJoysticks = DateTime.Now + TimeSpan.FromSeconds(3);
 
-            Joysticks = Input.GetJoystickNames();
+            string[] joysticks = Input.GetJoystickNames();
+
+            // look for changes
+            bool detectedChange = false;
+
+            if (null == Joysticks)
+            {
+                detectedChange = true;
+            }
+            else if (joysticks.Length != Joysticks.Length)
+            {
+                detectedChange = true;
+            }
+            else
+            {
+                for (int index = 0; index < joysticks.Length; ++index)
+                {
+                    if (joysticks[index] != Joysticks[index])
+                    {
+                        detectedChange = true;
+                        break;
+                    }
+                }
+            }
+
+            Joysticks = joysticks;
+
+            if (detectedChange)
+            {
+                foreach (OuyaSDK.IJoystickCalibrationListener listener in OuyaSDK.getJoystickCalibrationListeners())
+                {
+                    //Debug.Log("OuyaGameObject: Invoke OuyaOnJoystickCalibration");
+                    listener.OuyaOnJoystickCalibration();
+                }
+            }
         }
     }
 
@@ -512,6 +546,34 @@ public static class OuyaSDK
         public OuyaPlayer getPlayer()
         {
             return m_player;
+        }
+    }
+
+    #endregion
+
+    #region Joystick Callibration Listeners
+
+    public interface IJoystickCalibrationListener
+    {
+        void OuyaOnJoystickCalibration();
+    }
+    private static List<IJoystickCalibrationListener> m_joystickCalibrationListeners = new List<IJoystickCalibrationListener>();
+    public static List<IJoystickCalibrationListener> getJoystickCalibrationListeners()
+    {
+        return m_joystickCalibrationListeners;
+    }
+    public static void registerJoystickCalibrationListener(IJoystickCalibrationListener listener)
+    {
+        if (!m_joystickCalibrationListeners.Contains(listener))
+        {
+            m_joystickCalibrationListeners.Add(listener);
+        }
+    }
+    public static void unregisterJoystickCalibrationListener(IJoystickCalibrationListener listener)
+    {
+        if (m_joystickCalibrationListeners.Contains(listener))
+        {
+            m_joystickCalibrationListeners.Remove(listener);
         }
     }
 

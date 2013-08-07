@@ -17,6 +17,7 @@
 using UnityEngine;
 
 public class OuyaShowUnityInput : MonoBehaviour,
+    OuyaSDK.IJoystickCalibrationListener,
     OuyaSDK.IPauseListener, OuyaSDK.IResumeListener,
     OuyaSDK.IMenuButtonUpListener,
     OuyaSDK.IMenuAppearingListener
@@ -50,6 +51,7 @@ public class OuyaShowUnityInput : MonoBehaviour,
 
     void Awake()
     {
+        OuyaSDK.registerJoystickCalibrationListener(this);
         OuyaSDK.registerMenuButtonUpListener(this);
         OuyaSDK.registerMenuAppearingListener(this);
         OuyaSDK.registerPauseListener(this);
@@ -58,6 +60,7 @@ public class OuyaShowUnityInput : MonoBehaviour,
 
     void OnDestroy()
     {
+        OuyaSDK.unregisterJoystickCalibrationListener(this);
         OuyaSDK.unregisterMenuButtonUpListener(this);
         OuyaSDK.unregisterMenuAppearingListener(this);
         OuyaSDK.unregisterPauseListener(this);
@@ -127,6 +130,11 @@ public class OuyaShowUnityInput : MonoBehaviour,
     }
 
     public void OuyaOnResume()
+    {
+        Debug.Log(System.Reflection.MethodBase.GetCurrentMethod().ToString());
+    }
+
+    public void OuyaOnJoystickCalibration()
     {
         Debug.Log(System.Reflection.MethodBase.GetCurrentMethod().ToString());
     }
