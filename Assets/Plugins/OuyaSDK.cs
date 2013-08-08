@@ -21,11 +21,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 
 public static class OuyaSDK
 {
-    public const string VERSION = "1.0.7.1";
+    public const string VERSION = "1.0.7.2";
 
     /// <summary>
     /// Cache joysticks
@@ -109,6 +110,8 @@ public static class OuyaSDK
         return false;
     }
 
+    #region Controllers
+
     #region Key Codes
 
     public const int KEYCODE_BUTTON_A = 96;
@@ -167,16 +170,6 @@ public static class OuyaSDK
     public const int BUTTON_DPAD_DOWN = KEYCODE_DPAD_DOWN;
     public const int BUTTON_DPAD_LEFT = KEYCODE_DPAD_LEFT;
     public const int BUTTON_DPAD_CENTER = KEYCODE_DPAD_CENTER;
-
-    public enum InputAction
-    {
-        None,
-        GenericMotionEvent,
-        KeyDown,
-        KeyUp,
-        TouchEvent,
-        TrackballEvent
-    }
 
     public enum KeyEnum
     {
@@ -255,33 +248,153 @@ public static class OuyaSDK
         none=0,
     }
 
+    /// <summary>
+    /// Array of supported controllers
+    /// </summary>
+    private static List<IOuyaController> m_supportedControllers = new List<IOuyaController>();
+
+    /// <summary>
+    /// Register a supported controllers
+    /// </summary>
+    static OuyaSDK()
+    {
+        try
+        {
+            //Debug.Log("Accessing Assembly for IOuyaController");
+            Assembly assembly = Assembly.GetAssembly(typeof(IOuyaController));
+            //Debug.Log("Getting types");
+            foreach (Type type in assembly.GetTypes())
+            {
+                //Debug.Log(string.Format("Type={0}", type.Name));
+                if (type == typeof (IOuyaController))
+                {
+                    //Debug.Log(" skip...");
+                }
+                else if (typeof (IOuyaController).IsAssignableFrom(type))
+                {
+                    //Debug.Log(" Creating...");
+                    IOuyaController controller = (IOuyaController) Activator.CreateInstance(type);
+                    if (null != controller)
+                    {
+                        m_supportedControllers.Add(controller);
+                        /*
+                        Debug.Log(string.Format("Registered Controller: {0}", controller.GetType()));
+                        foreach (string joystick in controller.GetSupportedJoysicks())
+                        {
+                            Debug.Log(string.Format(" Supports: {0}", joystick));
+                        }
+                        */
+                    }
+                }
+            }
+        }
+        catch (Exception)
+        {
+            
+        }
+    }
+
+    /// <summary>
+    /// Check for a supported controller given the controller name
+    /// </summary>
+    /// <param name="controllerName"></param>
+    /// <returns></returns>
+    public static IOuyaController GetSupportedController(string controllerName)
+    {
+        foreach (IOuyaController controller in m_supportedControllers)
+        {
+            foreach (string name in controller.GetSupportedJoysicks())
+            {
+                if (controllerName.ToUpper().Contains(name.ToUpper()))
+                {
+                    return controller;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    /// <summary>
+    /// Check if the player has a supported controller
+    /// </summary>
+    /// <param name="player"></param>
+    /// <returns></returns>
+    public static IOuyaController GetSupportedController(OuyaSDK.OuyaPlayer player)
+    {
+        if (null == OuyaSDK.Joysticks)
+        {
+            return null;
+        }
+        int playerIndex = (int) player - 1;
+        if (playerIndex >= OuyaSDK.Joysticks.Length)
+        {
+            return null;
+        }
+
+        string joystickName = OuyaSDK.Joysticks[playerIndex];
+        if (null == joystickName)
+        {
+            return null;
+        }
+
+        return GetSupportedController(joystickName);
+    }
+
+    /// <summary>
+    /// Check if the axis should be inverted after accessing the Unity API
+    /// </summary>
+    /// <param name="keyCode"></param>
+    /// <param name="player"></param>
+    /// <returns></returns>
+    public static bool GetAxisInverted(OuyaSDK.KeyEnum keyCode, OuyaSDK.OuyaPlayer player)
+    {
+        IOuyaController controller = GetSupportedController(player);
+        if (null == controller)
+        {
+            return false;
+        }
+
+        return controller.GetAxisInverted(keyCode);
+    }
+
+    /// <summary>
+    /// Get the AxisName to be used with the Unity API
+    /// </summary>
+    /// <param name="keyCode"></param>
+    /// <param name="player"></param>
+    /// <returns></returns>
+    public static string GetUnityAxisName(OuyaSDK.KeyEnum keyCode, OuyaSDK.OuyaPlayer player)
+    {
+        IOuyaController controller = GetSupportedController(player);
+        if (null == controller)
+        {
+            return string.Empty;
+        }
+
+        return controller.GetUnityAxisName(keyCode, player);
+    }
+
+    /// <summary>
+    /// Get the KeyCode to be used with the Unity API
+    /// </summary>
+    /// <param name="keyCode"></param>
+    /// <param name="player"></param>
+    /// <returns></returns>
+    public static KeyCode GetUnityKeyCode(OuyaSDK.KeyEnum keyCode, OuyaSDK.OuyaPlayer player)
+    {
+        IOuyaController controller = GetSupportedController(player);
+        if (null == controller)
+        {
+            return (KeyCode)(-1);
+        }
+
+        return controller.GetUnityKeyCode(keyCode, player);
+    }
+
     #endregion
 
-    /// <summary>
-    /// Listener for the input buttons
-    /// </summary>
-    private static OuyaSDK.InputButtonListener<OuyaSDK.InputButtonEvent> m_inputButtonListener = null;
-    public static OuyaSDK.InputButtonListener<OuyaSDK.InputButtonEvent> getInputButtonListener()
-    {
-        return m_inputButtonListener;
-    }
-    public static void registerInputButtonListener(OuyaSDK.InputButtonListener<OuyaSDK.InputButtonEvent> inputButtonListener)
-    {
-        m_inputButtonListener = inputButtonListener;
-    }
-
-    /// <summary>
-    /// Listener for the input axis
-    /// </summary>
-    private static OuyaSDK.InputAxisListener<OuyaSDK.InputAxisEvent> m_inputAxisListener = null;
-    public static OuyaSDK.InputAxisListener<OuyaSDK.InputAxisEvent> getInputAxisListener()
-    {
-        return m_inputAxisListener;
-    }
-    public static void registerInputAxisListener(OuyaSDK.InputAxisListener<OuyaSDK.InputAxisEvent> inputAxisListener)
-    {
-        m_inputAxisListener = inputAxisListener;
-    }
+    #endregion
 
     /// <summary>
     /// Initialized by OuyaGameObject
@@ -483,72 +596,7 @@ public static class OuyaSDK
             generatedDate = date;
         }
     }
-
-    public class InputButtonEvent
-    {
-        public InputButtonEvent(InputAction inputAction, KeyEnum keyCode, OuyaPlayer player)
-        {
-            m_inputAction = inputAction;
-            m_keyCode = keyCode;
-            m_player = player;
-        }
-
-        private InputAction m_inputAction = InputAction.None;
-        public InputAction getKeyAction()
-        {
-            return m_inputAction;
-        }
-
-        private KeyEnum m_keyCode = 0;
-        public KeyEnum getKeyCode()
-        {
-            return m_keyCode;
-        }
-
-        private OuyaPlayer m_player;
-        public OuyaPlayer getPlayer()
-        {
-            return m_player;
-        }
-    }
-
-    public class InputAxisEvent
-    {
-        private int m_keyCode;
-
-        public InputAxisEvent(InputAction inputAction, OuyaSDK.AxisEnum axisEnum, float axis, OuyaPlayer player)
-        {
-            m_inputAction = inputAction;
-            m_axisCode = axisEnum;
-            m_axis = axis;
-            m_player = player;
-        }
-
-        private InputAction m_inputAction = InputAction.None;
-        public InputAction getInputAction()
-        {
-            return m_inputAction;
-        }
-
-        private AxisEnum m_axisCode = AxisEnum.NONE;
-        public AxisEnum getAxisCode()
-        {
-            return m_axisCode;
-        }
-
-        private float m_axis = 0f;
-        public float getAxis()
-        {
-            return m_axis;
-        }
-
-        private OuyaPlayer m_player;
-        public OuyaPlayer getPlayer()
-        {
-            return m_player;
-        }
-    }
-
+    
     #endregion
 
     #region Joystick Callibration Listeners

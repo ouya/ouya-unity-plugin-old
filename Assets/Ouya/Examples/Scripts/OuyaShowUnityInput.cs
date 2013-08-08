@@ -49,6 +49,12 @@ public class OuyaShowUnityInput : MonoBehaviour,
 
     #endregion
 
+    #region New Input API - in progress
+
+    private bool m_useSDKForInput = false;
+
+    #endregion
+
     void Awake()
     {
         OuyaSDK.registerJoystickCalibrationListener(this);
@@ -271,6 +277,11 @@ public class OuyaShowUnityInput : MonoBehaviour,
             }
         }
         GUILayout.EndHorizontal();
+
+        GUILayout.BeginHorizontal();
+        GUILayout.Space(600);
+        m_useSDKForInput = GUILayout.Toggle(m_useSDKForInput, "Use OuyaSDK Mappings and Unity Input", GUILayout.MinHeight(45));
+        GUILayout.EndHorizontal();
     }
 
     void UpdatePlayerButtons()
@@ -318,25 +329,81 @@ public class OuyaShowUnityInput : MonoBehaviour,
         }
     }
 
+    private float GetAxis(OuyaSDK.KeyEnum keyCode, OuyaSDK.OuyaPlayer player)
+    {
+        // Check if we want the *new* SDK input or the example common
+        if (m_useSDKForInput)
+        {
+            // Get the Unity Axis Name for the Unity API
+            string axisName = OuyaSDK.GetUnityAxisName(keyCode, player);
+
+            // Check if the axis name is valid
+            if (!string.IsNullOrEmpty(axisName))
+            {
+                //use the Unity API to get the axis value, raw or otherwise
+                float axisValue = Input.GetAxisRaw(axisName);
+                //check if the axis should be inverted
+                if (OuyaSDK.GetAxisInverted(keyCode, player))
+                {
+                    return -axisValue;
+                }
+                else
+                {
+                    return axisValue;
+                }
+            }
+        }
+        // moving the common code into the sdk via above
+        else
+        {
+            return OuyaExampleCommon.GetAxis(keyCode, player);
+        }
+        return 0f;
+    }
+
+    private bool GetButton(OuyaSDK.KeyEnum keyCode, OuyaSDK.OuyaPlayer player)
+    {
+        // Check if we want the *new* SDK input or the example common
+        if (m_useSDKForInput)
+        {
+            // Get the Unity KeyCode for the Unity API
+            KeyCode unityKeyCode = OuyaSDK.GetUnityKeyCode(keyCode, player);
+
+            // Check if the KeyCode is valid
+            if (unityKeyCode != (KeyCode)(-1))
+            {
+                //use the Unity API to get the button value
+                bool buttonState = Input.GetKey(unityKeyCode);
+                return buttonState;
+            }
+        }
+        // moving the common code into the sdk via aboveUs
+        else
+        {
+            return OuyaExampleCommon.GetButton(keyCode, player);
+        }
+        return false;
+    }
+
     private void UpdateController()
     {
         #region Axis Code
 
-        UpdateHighlight(RendererAxisLeft, Mathf.Abs(OuyaExampleCommon.GetAxis(OuyaSDK.KeyEnum.AXIS_LSTICK_X, OuyaExampleCommon.Player)) > 0.25f ||
-            Mathf.Abs(OuyaExampleCommon.GetAxis(OuyaSDK.KeyEnum.AXIS_LSTICK_Y, OuyaExampleCommon.Player)) > 0.25f);
+        UpdateHighlight(RendererAxisLeft, Mathf.Abs(GetAxis(OuyaSDK.KeyEnum.AXIS_LSTICK_X, OuyaExampleCommon.Player)) > 0.25f ||
+            Mathf.Abs(GetAxis(OuyaSDK.KeyEnum.AXIS_LSTICK_Y, OuyaExampleCommon.Player)) > 0.25f);
 
-        RendererAxisLeft.transform.localRotation = Quaternion.Euler(OuyaExampleCommon.GetAxis(OuyaSDK.KeyEnum.AXIS_LSTICK_Y, OuyaExampleCommon.Player) * 15, 0, OuyaExampleCommon.GetAxis(OuyaSDK.KeyEnum.AXIS_LSTICK_X, OuyaExampleCommon.Player) * 15);
+        RendererAxisLeft.transform.localRotation = Quaternion.Euler(GetAxis(OuyaSDK.KeyEnum.AXIS_LSTICK_Y, OuyaExampleCommon.Player) * 15, 0, GetAxis(OuyaSDK.KeyEnum.AXIS_LSTICK_X, OuyaExampleCommon.Player) * 15);
 
-        UpdateHighlight(RendererAxisRight, Mathf.Abs(OuyaExampleCommon.GetAxis(OuyaSDK.KeyEnum.AXIS_RSTICK_X, OuyaExampleCommon.Player)) > 0.25f ||
-            Mathf.Abs(OuyaExampleCommon.GetAxis(OuyaSDK.KeyEnum.AXIS_RSTICK_Y, OuyaExampleCommon.Player)) > 0.25f);
+        UpdateHighlight(RendererAxisRight, Mathf.Abs(GetAxis(OuyaSDK.KeyEnum.AXIS_RSTICK_X, OuyaExampleCommon.Player)) > 0.25f ||
+            Mathf.Abs(GetAxis(OuyaSDK.KeyEnum.AXIS_RSTICK_Y, OuyaExampleCommon.Player)) > 0.25f);
 
-        RendererAxisRight.transform.localRotation = Quaternion.Euler(OuyaExampleCommon.GetAxis(OuyaSDK.KeyEnum.AXIS_RSTICK_Y, OuyaExampleCommon.Player) * 15, 0, OuyaExampleCommon.GetAxis(OuyaSDK.KeyEnum.AXIS_RSTICK_X, OuyaExampleCommon.Player) * 15);
+        RendererAxisRight.transform.localRotation = Quaternion.Euler(GetAxis(OuyaSDK.KeyEnum.AXIS_RSTICK_Y, OuyaExampleCommon.Player) * 15, 0, GetAxis(OuyaSDK.KeyEnum.AXIS_RSTICK_X, OuyaExampleCommon.Player) * 15);
 
-        RendererLT.transform.localRotation = Quaternion.Euler(OuyaExampleCommon.GetAxis(OuyaSDK.KeyEnum.BUTTON_LT, OuyaExampleCommon.Player) * -15, 0, 0);
+        RendererLT.transform.localRotation = Quaternion.Euler(GetAxis(OuyaSDK.KeyEnum.BUTTON_LT, OuyaExampleCommon.Player) * -15, 0, 0);
 
-        RendererRT.transform.localRotation = Quaternion.Euler(OuyaExampleCommon.GetAxis(OuyaSDK.KeyEnum.BUTTON_RT, OuyaExampleCommon.Player) * -15, 0, 0);
+        RendererRT.transform.localRotation = Quaternion.Euler(GetAxis(OuyaSDK.KeyEnum.BUTTON_RT, OuyaExampleCommon.Player) * -15, 0, 0);
 
-        if (OuyaExampleCommon.GetButton(OuyaSDK.KeyEnum.BUTTON_L3, OuyaExampleCommon.Player))
+        if (GetButton(OuyaSDK.KeyEnum.BUTTON_L3, OuyaExampleCommon.Player))
         {
             RendererAxisLeft.transform.localPosition = Vector3.Lerp(RendererAxisLeft.transform.localPosition,
                                                                      new Vector3(5.503977f, 0.75f, -3.344945f), Time.fixedDeltaTime);
@@ -347,7 +414,7 @@ public class OuyaShowUnityInput : MonoBehaviour,
                                                                      new Vector3(5.503977f, 1.127527f, -3.344945f), Time.fixedDeltaTime);
         }
 
-        if (OuyaExampleCommon.GetButton(OuyaSDK.KeyEnum.BUTTON_R3, OuyaExampleCommon.Player))
+        if (GetButton(OuyaSDK.KeyEnum.BUTTON_R3, OuyaExampleCommon.Player))
         {
             RendererAxisRight.transform.localPosition = Vector3.Lerp(RendererAxisRight.transform.localPosition,
                                                                      new Vector3(-2.707688f, 0.75f, -1.354063f), Time.fixedDeltaTime);
@@ -365,7 +432,7 @@ public class OuyaShowUnityInput : MonoBehaviour,
 
         #region BUTTONS O - A
         //Check O button for down state
-        if (OuyaExampleCommon.GetButton(OuyaSDK.KeyEnum.BUTTON_O, OuyaExampleCommon.Player))
+        if (GetButton(OuyaSDK.KeyEnum.BUTTON_O, OuyaExampleCommon.Player))
         {
             UpdateHighlight(RendererButtonO, true, true);
         }
@@ -375,7 +442,7 @@ public class OuyaShowUnityInput : MonoBehaviour,
         }
 
         //Check U button for down state
-        if (OuyaExampleCommon.GetButton(OuyaSDK.KeyEnum.BUTTON_U, OuyaExampleCommon.Player))
+        if (GetButton(OuyaSDK.KeyEnum.BUTTON_U, OuyaExampleCommon.Player))
         {
             UpdateHighlight(RendererButtonU, true, true);
         }
@@ -385,7 +452,7 @@ public class OuyaShowUnityInput : MonoBehaviour,
         }
 
         //Check Y button for down state
-        if (OuyaExampleCommon.GetButton(OuyaSDK.KeyEnum.BUTTON_Y, OuyaExampleCommon.Player))
+        if (GetButton(OuyaSDK.KeyEnum.BUTTON_Y, OuyaExampleCommon.Player))
         {
             UpdateHighlight(RendererButtonY, true, true);
         }
@@ -395,7 +462,7 @@ public class OuyaShowUnityInput : MonoBehaviour,
         }
 
         //Check A button for down state
-        if (OuyaExampleCommon.GetButton(OuyaSDK.KeyEnum.BUTTON_A, OuyaExampleCommon.Player))
+        if (GetButton(OuyaSDK.KeyEnum.BUTTON_A, OuyaExampleCommon.Player))
         {
             UpdateHighlight(RendererButtonA, true, true);
         }
@@ -405,7 +472,7 @@ public class OuyaShowUnityInput : MonoBehaviour,
         }
 
         //Check L3 button for down state
-        if (OuyaExampleCommon.GetButton(OuyaSDK.KeyEnum.BUTTON_L3, OuyaExampleCommon.Player))
+        if (GetButton(OuyaSDK.KeyEnum.BUTTON_L3, OuyaExampleCommon.Player))
         {
             UpdateHighlight(RendererAxisLeft, true, true);
         }
@@ -415,7 +482,7 @@ public class OuyaShowUnityInput : MonoBehaviour,
         }
 
         //Check R3 button for down state
-        if (OuyaExampleCommon.GetButton(OuyaSDK.KeyEnum.BUTTON_R3, OuyaExampleCommon.Player))
+        if (GetButton(OuyaSDK.KeyEnum.BUTTON_R3, OuyaExampleCommon.Player))
         {
             UpdateHighlight(RendererAxisRight, true, true);
         }
@@ -427,7 +494,7 @@ public class OuyaShowUnityInput : MonoBehaviour,
 
         #region Bumpers
         //Check LB button for down state
-        if (OuyaExampleCommon.GetButton(OuyaSDK.KeyEnum.BUTTON_LB, OuyaExampleCommon.Player))
+        if (GetButton(OuyaSDK.KeyEnum.BUTTON_LB, OuyaExampleCommon.Player))
         {
             UpdateHighlight(RendererLB, true, true);
         }
@@ -437,7 +504,7 @@ public class OuyaShowUnityInput : MonoBehaviour,
         }
 
         //Check RB button for down state
-        if (OuyaExampleCommon.GetButton(OuyaSDK.KeyEnum.BUTTON_RB, OuyaExampleCommon.Player))
+        if (GetButton(OuyaSDK.KeyEnum.BUTTON_RB, OuyaExampleCommon.Player))
         {
             UpdateHighlight(RendererRB, true, true);
         }
@@ -449,7 +516,7 @@ public class OuyaShowUnityInput : MonoBehaviour,
 
         #region triggers
         //Check LT button for down state
-        if (OuyaExampleCommon.GetButton(OuyaSDK.KeyEnum.BUTTON_LT, OuyaExampleCommon.Player))
+        if (GetButton(OuyaSDK.KeyEnum.BUTTON_LT, OuyaExampleCommon.Player))
         {
             UpdateHighlight(RendererLT, true, true);
         }
@@ -459,7 +526,7 @@ public class OuyaShowUnityInput : MonoBehaviour,
         }
 
         //Check RT button for down state
-        if (OuyaExampleCommon.GetButton(OuyaSDK.KeyEnum.BUTTON_RT, OuyaExampleCommon.Player))
+        if (GetButton(OuyaSDK.KeyEnum.BUTTON_RT, OuyaExampleCommon.Player))
         {
             UpdateHighlight(RendererRT, true, true);
         }
@@ -471,7 +538,7 @@ public class OuyaShowUnityInput : MonoBehaviour,
 
         #region DPAD
         //Check DPAD UP button for down state
-        if (OuyaExampleCommon.GetButton(OuyaSDK.KeyEnum.BUTTON_DPAD_UP, OuyaExampleCommon.Player))
+        if (GetButton(OuyaSDK.KeyEnum.BUTTON_DPAD_UP, OuyaExampleCommon.Player))
         {
             UpdateHighlight(RendererDpadUp, true, true);
         }
@@ -481,7 +548,7 @@ public class OuyaShowUnityInput : MonoBehaviour,
         }
 
         //Check DPAD DOWN button for down state
-        if (OuyaExampleCommon.GetButton(OuyaSDK.KeyEnum.BUTTON_DPAD_DOWN, OuyaExampleCommon.Player))
+        if (GetButton(OuyaSDK.KeyEnum.BUTTON_DPAD_DOWN, OuyaExampleCommon.Player))
         {
             UpdateHighlight(RendererDpadDown, true, true);
         }
@@ -491,7 +558,7 @@ public class OuyaShowUnityInput : MonoBehaviour,
         }
 
         //Check DPAD LEFT button for down state
-        if (OuyaExampleCommon.GetButton(OuyaSDK.KeyEnum.BUTTON_DPAD_LEFT, OuyaExampleCommon.Player))
+        if (GetButton(OuyaSDK.KeyEnum.BUTTON_DPAD_LEFT, OuyaExampleCommon.Player))
         {
             UpdateHighlight(RendererDpadLeft, true, true);
         }
@@ -501,7 +568,7 @@ public class OuyaShowUnityInput : MonoBehaviour,
         }
 
         //Check DPAD RIGHT button for down state
-        if (OuyaExampleCommon.GetButton(OuyaSDK.KeyEnum.BUTTON_DPAD_RIGHT, OuyaExampleCommon.Player))
+        if (GetButton(OuyaSDK.KeyEnum.BUTTON_DPAD_RIGHT, OuyaExampleCommon.Player))
         {
             UpdateHighlight(RendererDpadRight, true, true);
         }
