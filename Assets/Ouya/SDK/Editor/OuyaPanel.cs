@@ -1799,7 +1799,7 @@ public class OuyaPanel : EditorWindow
 
                 if (GUILayout.Button("Check for plugin updates"))
                 {
-                    Application.OpenURL("http://tagenigma.com/ouya/OuyaSDK-1.0.0/");
+                    Application.OpenURL("http://github.com/ouya/ouya-unity-plugin");
                 }
 
                 if (GUILayout.Button("Visit Unity3d on OUYA Forum"))
