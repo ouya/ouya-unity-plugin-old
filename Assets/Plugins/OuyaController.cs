@@ -30,6 +30,52 @@ public class OuyaController : OuyaControllerCommon,
         return m_supportedJoysticks;
     }
 
+    public OuyaSDK.KeyEnum[] GetSupportedAxises()
+    {
+        return new OuyaSDK.KeyEnum[]
+                   {
+                       OuyaSDK.KeyEnum.AXIS_LSTICK_X,
+                       OuyaSDK.KeyEnum.AXIS_LSTICK_Y,
+                       OuyaSDK.KeyEnum.AXIS_RSTICK_X,
+                       OuyaSDK.KeyEnum.AXIS_RSTICK_Y,
+                       OuyaSDK.KeyEnum.BUTTON_LT,
+                       OuyaSDK.KeyEnum.BUTTON_RT,
+                   };
+    }
+
+    public OuyaSDK.KeyEnum[] GetSupportedButtons()
+    {
+        return new OuyaSDK.KeyEnum[]
+                   {
+                       OuyaSDK.KeyEnum.BUTTON_LB,
+                       OuyaSDK.KeyEnum.BUTTON_RB,
+                       OuyaSDK.KeyEnum.BUTTON_O,
+                       OuyaSDK.KeyEnum.BUTTON_U,
+                       OuyaSDK.KeyEnum.BUTTON_Y,
+                       OuyaSDK.KeyEnum.BUTTON_A,
+                       OuyaSDK.KeyEnum.BUTTON_L3,
+                       OuyaSDK.KeyEnum.BUTTON_R3,
+                       OuyaSDK.KeyEnum.BUTTON_DPAD_UP,
+                       OuyaSDK.KeyEnum.BUTTON_DPAD_DOWN,
+                       OuyaSDK.KeyEnum.BUTTON_DPAD_LEFT,
+                       OuyaSDK.KeyEnum.BUTTON_DPAD_RIGHT,
+                       OuyaSDK.KeyEnum.BUTTON_LT,
+                       OuyaSDK.KeyEnum.BUTTON_RT,
+                   };
+    }
+
+    public bool HasAxis(OuyaSDK.KeyEnum keyCode)
+    {
+        OuyaSDK.KeyEnum[] axises = GetSupportedAxises();
+        return HasKeyCode(axises, keyCode);
+    }
+
+    public bool HasButton(OuyaSDK.KeyEnum keyCode)
+    {
+        OuyaSDK.KeyEnum[] buttons = GetSupportedButtons();
+        return HasKeyCode(buttons, keyCode);
+    }
+
     public bool GetAxisInverted(OuyaSDK.KeyEnum keyCode)
     {
 #if !UNITY_EDITOR && UNITY_ANDROID

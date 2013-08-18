@@ -26,7 +26,7 @@ using UnityEngine;
 
 public static class OuyaSDK
 {
-    public const string VERSION = "1.0.7.2";
+    public const string VERSION = "1.0.7.3";
 
     /// <summary>
     /// Cache joysticks
@@ -339,6 +339,72 @@ public static class OuyaSDK
         }
 
         return GetSupportedController(joystickName);
+    }
+
+    /// <summary>
+    /// Return the supported axises
+    /// </summary>
+    /// <param name="player"></param>
+    /// <returns></returns>
+    public static OuyaSDK.KeyEnum[] GetSupportedAxises(OuyaSDK.OuyaPlayer player)
+    {
+        IOuyaController controller = GetSupportedController(player);
+        if (null == controller)
+        {
+            return null;
+        }
+
+        return controller.GetSupportedAxises();
+    }
+
+    /// <summary>
+    /// Return the supported buttons
+    /// </summary>
+    /// <param name="player"></param>
+    /// <returns></returns>
+    public static OuyaSDK.KeyEnum[] GetSupportedButtons(OuyaSDK.OuyaPlayer player)
+    {
+        IOuyaController controller = GetSupportedController(player);
+        if (null == controller)
+        {
+            return null;
+        }
+
+        return controller.GetSupportedButtons();
+    }
+
+    /// <summary>
+    /// Check if the controller axis is available
+    /// </summary>
+    /// <param name="keyCode"></param>
+    /// <param name="player"></param>
+    /// <returns></returns>
+    public static bool HasAxis(OuyaSDK.KeyEnum keyCode, OuyaSDK.OuyaPlayer player)
+    {
+        IOuyaController controller = GetSupportedController(player);
+        if (null == controller)
+        {
+            return false;
+        }
+
+        return controller.HasAxis(keyCode);
+    }
+
+    /// <summary>
+    /// Check if the controller button is available
+    /// </summary>
+    /// <param name="keyCode"></param>
+    /// <param name="player"></param>
+    /// <returns></returns>
+    public static bool HasButton(OuyaSDK.KeyEnum keyCode, OuyaSDK.OuyaPlayer player)
+    {
+        IOuyaController controller = GetSupportedController(player);
+        if (null == controller)
+        {
+            return false;
+        }
+
+        return controller.HasButton(keyCode);
     }
 
     /// <summary>

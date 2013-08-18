@@ -17,7 +17,7 @@
 using System;
 using UnityEngine;
 
-public class OuyaControllerCommon
+public abstract class OuyaControllerCommon
 {
     protected string CommonGetKeyString(int buttonNum, OuyaSDK.OuyaPlayer player)
     {
@@ -39,5 +39,17 @@ public class OuyaControllerCommon
         }
         OuyaKeyCode key = (OuyaKeyCode)Enum.Parse(typeof(OuyaKeyCode), keyCode);
         return (KeyCode)(int)key;
+    }
+
+    protected bool HasKeyCode(OuyaSDK.KeyEnum[] supportedCodes, OuyaSDK.KeyEnum keyCode)
+    {
+        foreach (OuyaSDK.KeyEnum item in supportedCodes)
+        {
+            if (item == keyCode)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }

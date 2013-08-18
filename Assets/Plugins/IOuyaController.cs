@@ -19,10 +19,36 @@ using UnityEngine;
 public interface IOuyaController
 {
     /// <summary>
-    /// Return the list of supported Joystick names
+    /// Return the supported Joystick names
     /// </summary>
     /// <returns></returns>
     string[] GetSupportedJoysicks();
+
+    /// <summary>
+    /// Return the supported axises
+    /// </summary>
+    /// <returns></returns>
+    OuyaSDK.KeyEnum[] GetSupportedAxises();
+
+    /// <summary>
+    /// Return the supported buttons
+    /// </summary>
+    /// <returns></returns>
+    OuyaSDK.KeyEnum[] GetSupportedButtons();
+
+    /// <summary>
+    /// Check if the controller supports the axis
+    /// </summary>
+    /// <param name="keyCode"></param>
+    /// <returns></returns>
+    bool HasAxis(OuyaSDK.KeyEnum keyCode);
+
+    /// <summary>
+    /// Check if the controller supports the button
+    /// </summary>
+    /// <param name="keyCode"></param>
+    /// <returns></returns>
+    bool HasButton(OuyaSDK.KeyEnum keyCode);
 
     /// <summary>
     /// Given the keycode and player, check if the axis is inverted
