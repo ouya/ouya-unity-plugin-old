@@ -92,7 +92,7 @@ public class XBox360Controller : OuyaControllerCommon,
                 {
                     OuyaSDK.KeyEnum.BUTTON_LB,
                     OuyaSDK.KeyEnum.BUTTON_RB,
-                    OuyaSDK.KeyEnum.BUTTON_O.
+                    OuyaSDK.KeyEnum.BUTTON_O,
                     OuyaSDK.KeyEnum.BUTTON_U,
                     OuyaSDK.KeyEnum.BUTTON_Y,
                     OuyaSDK.KeyEnum.BUTTON_A,
