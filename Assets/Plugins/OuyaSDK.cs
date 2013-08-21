@@ -26,7 +26,7 @@ using UnityEngine;
 
 public static class OuyaSDK
 {
-    public const string VERSION = "1.0.7.3";
+    public const string VERSION = "1.0.7.4";
 
     /// <summary>
     /// Cache joysticks
@@ -258,6 +258,9 @@ public static class OuyaSDK
     /// </summary>
     static OuyaSDK()
     {
+        // Log the ouya-unity-plugin version:
+        Debug.Log(string.Format("ouya-unity-plugin version: {0}", VERSION));
+
         try
         {
             //Debug.Log("Accessing Assembly for IOuyaController");
@@ -1034,6 +1037,66 @@ public static class OuyaSDK
                 AndroidJNI.PopLocalFrame(IntPtr.Zero);
             }
 #endif
+        }
+
+        public static void JavaOuyaFacadePutData(string key, string val)
+        {
+#if UNITY_ANDROID && !UNITY_EDITOR && !UNITY_STANDALONE_OSX && !UNITY_STANDALONE_WIN && !UNITY_STANDALONE_LINUX
+
+            // again, make sure the thread is attached..
+            AndroidJNI.AttachCurrentThread();
+
+            AndroidJNI.PushLocalFrame(0);
+
+            try
+            {
+                Debug.Log("JavaOuyaFacadePutData");
+                using (AndroidJavaClass ajc = new AndroidJavaClass(JAVA_CLASS))
+                {
+                    ajc.CallStatic<String>("ouyaFacadePutData", new object[] { key + "\0", val + "\0" });
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError(string.Format("OuyaSDK.JavaOuyaFacadePutData exception={0}", ex));
+            }
+            finally
+            {
+                AndroidJNI.PopLocalFrame(IntPtr.Zero);
+            }
+#endif
+        }
+
+        public static string JavaOuyaFacadeGetData(string key)
+        {
+            string result = string.Empty;
+
+#if UNITY_ANDROID && !UNITY_EDITOR && !UNITY_STANDALONE_OSX && !UNITY_STANDALONE_WIN && !UNITY_STANDALONE_LINUX
+
+            // again, make sure the thread is attached..
+            AndroidJNI.AttachCurrentThread();
+
+            AndroidJNI.PushLocalFrame(0);
+
+            try
+            {
+                Debug.Log("JavaOuyaFacadeGetData");
+                using (AndroidJavaClass ajc = new AndroidJavaClass(JAVA_CLASS))
+                {
+                    result = ajc.CallStatic<String>("ouyaFacadeGetData", new object[] { key + "\0" });
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError(string.Format("OuyaSDK.JavaOuyaFacadeGetData exception={0}", ex));
+            }
+            finally
+            {
+                AndroidJNI.PopLocalFrame(IntPtr.Zero);
+            }
+#endif
+
+            return result;
         }
 
         public static void JavaFetchGamerUUID()
