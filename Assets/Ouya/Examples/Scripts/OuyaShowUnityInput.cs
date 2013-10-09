@@ -43,6 +43,8 @@ public class OuyaShowUnityInput : MonoBehaviour,
 
     #endregion
 
+    private bool m_showCursor = true;
+
     #region Thumbstick plots
 
     public Camera ThumbstickPlotCamera = null;
@@ -123,6 +125,9 @@ public class OuyaShowUnityInput : MonoBehaviour,
     public void OuyaMenuButtonUp()
     {
         Debug.Log(System.Reflection.MethodBase.GetCurrentMethod().ToString());
+        m_showCursor = !m_showCursor;
+        Debug.Log(string.Format("OuyaMenuButtonUp: m_showCursor: {0}", m_showCursor));
+        OuyaSDK.OuyaJava.JavaOuyaShowCursor(m_showCursor);
     }
 
     public void OuyaMenuAppearing()

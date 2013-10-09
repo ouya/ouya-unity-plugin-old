@@ -26,7 +26,7 @@ using UnityEngine;
 
 public static class OuyaSDK
 {
-    public const string VERSION = "1.0.7.4";
+    public const string VERSION = "1.0.9.1";
 
     /// <summary>
     /// Cache joysticks
@@ -1031,6 +1031,34 @@ public static class OuyaSDK
             catch (Exception ex)
             {
                 Debug.LogError(string.Format("OuyaSDK.JavaSetResolution exception={0}", ex));
+            }
+            finally
+            {
+                AndroidJNI.PopLocalFrame(IntPtr.Zero);
+            }
+#endif
+        }
+
+        public static void JavaOuyaShowCursor(bool flag)
+        {
+#if UNITY_ANDROID && !UNITY_EDITOR && !UNITY_STANDALONE_OSX && !UNITY_STANDALONE_WIN && !UNITY_STANDALONE_LINUX
+
+            // again, make sure the thread is attached..
+            AndroidJNI.AttachCurrentThread();
+
+            AndroidJNI.PushLocalFrame(0);
+
+            try
+            {
+                //Debug.Log("JavaOuyaShowCursor");
+                using (AndroidJavaClass ajc = new AndroidJavaClass(JAVA_CLASS))
+                {
+                    ajc.CallStatic("showCursor", new object[] { flag.ToString() });
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError(string.Format("OuyaSDK.JavaOuyaShowCursor exception={0}", ex));
             }
             finally
             {
