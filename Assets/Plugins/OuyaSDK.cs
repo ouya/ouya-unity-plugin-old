@@ -1039,7 +1039,7 @@ public static class OuyaSDK
 #endif
         }
 
-        public static void JavaOuyaShowCursor(bool flag)
+        public static void JavaShowCursor(bool flag)
         {
 #if UNITY_ANDROID && !UNITY_EDITOR && !UNITY_STANDALONE_OSX && !UNITY_STANDALONE_WIN && !UNITY_STANDALONE_LINUX
 
@@ -1050,7 +1050,7 @@ public static class OuyaSDK
 
             try
             {
-                //Debug.Log("JavaOuyaShowCursor");
+                //Debug.Log("JavaShowCursor");
                 using (AndroidJavaClass ajc = new AndroidJavaClass(JAVA_CLASS))
                 {
                     ajc.CallStatic("showCursor", new object[] { flag.ToString() });
@@ -1058,7 +1058,7 @@ public static class OuyaSDK
             }
             catch (Exception ex)
             {
-                Debug.LogError(string.Format("OuyaSDK.JavaOuyaShowCursor exception={0}", ex));
+                Debug.LogError(string.Format("OuyaSDK.JavaShowCursor exception={0}", ex));
             }
             finally
             {

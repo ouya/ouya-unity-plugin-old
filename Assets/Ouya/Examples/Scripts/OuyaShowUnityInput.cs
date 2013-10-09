@@ -127,7 +127,7 @@ public class OuyaShowUnityInput : MonoBehaviour,
         Debug.Log(System.Reflection.MethodBase.GetCurrentMethod().ToString());
         m_showCursor = !m_showCursor;
         Debug.Log(string.Format("OuyaMenuButtonUp: m_showCursor: {0}", m_showCursor));
-        OuyaSDK.OuyaJava.JavaOuyaShowCursor(m_showCursor);
+        OuyaSDK.OuyaJava.JavaShowCursor(m_showCursor);
     }
 
     public void OuyaMenuAppearing()
