@@ -624,6 +624,7 @@ public static class OuyaSDK
         public DateTime generatedDate = DateTime.MinValue;
         public string gamer = string.Empty;
         public string uuid = string.Empty;
+        public string currency = string.Empty;
 
         public string getIdentifier()
         {
