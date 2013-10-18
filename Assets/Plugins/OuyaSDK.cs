@@ -626,6 +626,7 @@ public static class OuyaSDK
         public string gamer = string.Empty;
         public string uuid = string.Empty;
         public string currency = string.Empty;
+        public double localPrice = 0;
 
         public string getIdentifier()
         {
