@@ -518,6 +518,21 @@ public static class OuyaSDK
         OuyaSDK.OuyaJava.JavaFetchGamerUUID();
     }
 
+    public static void showCursor(bool flag)
+    {
+        OuyaSDK.OuyaJava.JavaShowCursor(flag);
+    }
+
+    public static void putGameData(string key, string val)
+    {
+        OuyaSDK.OuyaJava.JavaPutGameData(key, val);
+    }
+
+    public static string getGameData(string key)
+    {
+        return OuyaSDK.OuyaJava.JavaGetGameData(key);
+    }
+
     public static void requestProductList(List<Purchasable> purchasables)
     {
         foreach (Purchasable purchasable in purchasables)
@@ -1070,7 +1085,7 @@ public static class OuyaSDK
 #endif
         }
 
-        public static void JavaOuyaFacadePutData(string key, string val)
+        public static void JavaPutGameData(string key, string val)
         {
 #if UNITY_ANDROID && !UNITY_EDITOR && !UNITY_STANDALONE_OSX && !UNITY_STANDALONE_WIN && !UNITY_STANDALONE_LINUX
 
@@ -1081,15 +1096,15 @@ public static class OuyaSDK
 
             try
             {
-                Debug.Log("JavaOuyaFacadePutData");
+                Debug.Log("JavaPutGameData");
                 using (AndroidJavaClass ajc = new AndroidJavaClass(JAVA_CLASS))
                 {
-                    ajc.CallStatic<String>("ouyaFacadePutData", new object[] { key + "\0", val + "\0" });
+                    ajc.CallStatic("putGameData", new object[] { key + "\0", val + "\0" });
                 }
             }
             catch (Exception ex)
             {
-                Debug.LogError(string.Format("OuyaSDK.JavaOuyaFacadePutData exception={0}", ex));
+                Debug.LogError(string.Format("OuyaSDK.JavaPutGameData exception={0}", ex));
             }
             finally
             {
@@ -1098,7 +1113,7 @@ public static class OuyaSDK
 #endif
         }
 
-        public static string JavaOuyaFacadeGetData(string key)
+        public static string JavaGetGameData(string key)
         {
             string result = string.Empty;
 
@@ -1111,15 +1126,15 @@ public static class OuyaSDK
 
             try
             {
-                Debug.Log("JavaOuyaFacadeGetData");
+                Debug.Log("JavaGetGameData");
                 using (AndroidJavaClass ajc = new AndroidJavaClass(JAVA_CLASS))
                 {
-                    result = ajc.CallStatic<String>("ouyaFacadeGetData", new object[] { key + "\0" });
+                    result = ajc.CallStatic<String>("getGameData", new object[] { key + "\0" });
                 }
             }
             catch (Exception ex)
             {
-                Debug.LogError(string.Format("OuyaSDK.JavaOuyaFacadeGetData exception={0}", ex));
+                Debug.LogError(string.Format("OuyaSDK.JavaGetGameData exception={0}", ex));
             }
             finally
             {

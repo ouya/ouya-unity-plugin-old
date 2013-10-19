@@ -400,6 +400,14 @@ public class TestOuyaFacade
 		}        
     }
 
+	public void putGameData(String key, String val) {
+		ouyaFacade.putGameData(key, val);      
+    }
+
+	public String getGameData(String key) {
+		return ouyaFacade.getGameData(key);      
+    }
+
     /**
      * Request the receipts from the users previous purchases from the server.
      */

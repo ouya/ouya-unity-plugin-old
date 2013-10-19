@@ -29,6 +29,16 @@ public class OuyaShowProducts : MonoBehaviour,
     /// </summary>
     private string m_gamerUUID = string.Empty;
 
+    /// <summary>
+    /// A key to store game data
+    /// </summary>
+    private const string KEY_PUT_GAME_DATA = "ShowProductsExample";
+
+    /// <summary>
+    /// The game data to display what was stored
+    /// </summary>
+    private string m_gameData = string.Empty;
+
     void Awake()
     {
         OuyaSDK.registerMenuButtonUpListener(this);
@@ -179,6 +189,22 @@ public class OuyaShowProducts : MonoBehaviour,
             {
                 OuyaSDK.fetchGamerUUID();
             }
+            GUILayout.EndHorizontal();
+
+            GUILayout.Label(string.Empty);
+            GUILayout.Label(string.Empty);
+
+            GUILayout.BeginHorizontal();
+            GUILayout.Space(400);
+            if (GUILayout.Button("Put Game Data", GUILayout.Height(40)))
+            {
+                OuyaSDK.putGameData(KEY_PUT_GAME_DATA, "This is a test!!!!");
+            }
+            if (GUILayout.Button("Get Game Data", GUILayout.Height(40)))
+            {
+                m_gameData = OuyaSDK.getGameData(KEY_PUT_GAME_DATA);
+            }
+            GUILayout.Label(string.Format("GameData: {0}", m_gameData));
             GUILayout.EndHorizontal();
 
             GUILayout.Label(string.Empty);

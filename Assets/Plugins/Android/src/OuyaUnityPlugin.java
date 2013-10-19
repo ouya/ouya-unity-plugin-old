@@ -119,6 +119,50 @@ public class OuyaUnityPlugin
 		}
 	}
 
+	public static void showCursor(String flag)
+	{
+		//Log.i("Unity", "OuyaUnityPlugin.showCursor: flag=" + flag);
+		Boolean show = false;
+		if (flag.equals("True"))
+		{
+			show = true;
+		}
+		Log.i("Unity", "OuyaUnityPlugin.showCursor: show=" + show);
+
+		OuyaController.showCursor(show);
+	}
+
+	public static void putGameData(String key, String val)
+	{
+		//Log.i("Unity", "OuyaUnityPlugin.putGameData: key=" + key + " val=" + val);
+
+		if (null == m_test)
+		{
+			Log.i("Unity", "OuyaUnityPlugin.putGameData: m_test is null");
+		}
+		else
+		{
+			//Log.i("Unity", "OuyaUnityPlugin.putGameData: m_test is valid");
+			m_test.putGameData(key, val);
+		}
+	}
+
+	public static String getGameData(String key)
+	{
+		//Log.i("Unity", "OuyaUnityPlugin.getGameData");
+
+		if (null == m_test)
+		{
+			Log.i("Unity", "OuyaUnityPlugin.getGameData: m_test is null");
+			return "";
+		}
+		else
+		{
+			//Log.i("Unity", "OuyaUnityPlugin.getGameData: m_test is valid");
+			return m_test.getGameData(key);
+		}
+	}
+
 	// most of the java functions that are called, need the ouya facade initialized
 	private static void InitializeTest()
 	{
