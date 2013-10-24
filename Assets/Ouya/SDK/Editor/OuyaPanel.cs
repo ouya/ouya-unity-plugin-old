@@ -1679,6 +1679,8 @@ public class OuyaPanel : EditorWindow
 
                 // show splash screen settings
 
+                string error = string.Empty;
+
                 GUILayout.BeginHorizontal(GUILayout.MaxWidth(position.width));
                 GUILayout.Space(25);
                 GUILayout.Label("Product Name", GUILayout.Width(100));
@@ -1686,6 +1688,21 @@ public class OuyaPanel : EditorWindow
                 PlayerSettings.productName = GUILayout.TextField(PlayerSettings.productName, EditorStyles.wordWrappedLabel, GUILayout.MaxWidth(position.width - 130));
                 GUILayout.EndHorizontal();
 
+                if ((PlayerSettings.bundleIdentifier.Contains(" ") ||
+                    PlayerSettings.bundleIdentifier.Contains("\t") ||
+                    PlayerSettings.bundleIdentifier.Contains("\r") ||
+                    PlayerSettings.bundleIdentifier.Contains("\n") ||
+                    PlayerSettings.bundleIdentifier.Contains("(") ||
+                    PlayerSettings.bundleIdentifier.Contains(")")))
+                {
+                    String fieldError = "[error] (bundle id has an invalid character)\n";
+                    if (string.IsNullOrEmpty(error))
+                    {
+                        ShowNotification(new GUIContent(fieldError));
+                        error = fieldError;
+                    }
+                    GUILayout.Label(fieldError);
+                }
                 GUILayout.BeginHorizontal(GUILayout.MaxWidth(position.width));
                 GUILayout.Space(25);
                 GUILayout.Label("Bundle Identifier", GUILayout.Width(100));
@@ -1705,14 +1722,19 @@ public class OuyaPanel : EditorWindow
                     EditorPrefs.SetString(KEY_APK_NAME, apkName);
                 }
 
-                string error = string.Empty;
                 GUILayout.BeginHorizontal(GUILayout.MaxWidth(position.width));
                 GUILayout.Space(25);
                 GUILayout.Label("Java App Class:", GUILayout.Width(100));
                 GUILayout.Space(5);
-                if (!string.IsNullOrEmpty(error))
+                if (javaAppName.ToUpper().Equals("OUYAUNITYPLUGIN"))
                 {
-                    GUILayout.Label(error);
+                    String fieldError = "[error] (Used reserved Java Class Name)\n";
+                    if (string.IsNullOrEmpty(error))
+                    {
+                        ShowNotification(new GUIContent(fieldError));
+                        error = fieldError;
+                    }
+                    GUILayout.Label(fieldError);
                 }
                 string newJavaAppName = GUILayout.TextField(javaAppName, EditorStyles.wordWrappedLabel, GUILayout.MaxWidth(position.width - 130));
                 GUILayout.EndHorizontal();
@@ -1732,13 +1754,15 @@ public class OuyaPanel : EditorWindow
                 string javaPackageName = GetApplicationJavaPackageName();
                 if (!javaPackageName.Equals(string.Format("package {0};", PlayerSettings.bundleIdentifier)))
                 {
-                    error = "[error] (bundle mismatched)\n";
-                    ShowNotification(new GUIContent(error));
+                    String fieldError = "[error] (bundle mismatched)\n";
+                    if (string.IsNullOrEmpty(error))
+                    {
+                        ShowNotification(new GUIContent(fieldError));
+                        error = fieldError;
+                    }
+                    GUILayout.Label(fieldError);
                 }
-                else
-                {
-                    error = string.Empty;
-                }
+
                 GUILayout.BeginHorizontal(GUILayout.MaxWidth(position.width));
                 GUILayout.Space(25);
                 GUILayout.Label("App Java Pack:", GUILayout.Width(100));
@@ -1749,12 +1773,13 @@ public class OuyaPanel : EditorWindow
                 string manifestPackageName = GetAndroidManifestPackageName();
                 if (!manifestPackageName.Equals(PlayerSettings.bundleIdentifier))
                 {
-                    error = "[error] (bundle mismatched)\n";
-                    ShowNotification(new GUIContent(error));
-                }
-                else
-                {
-                    error = string.Empty;
+                    String fieldError = "[error] (bundle mismatched)\n";
+                    if (string.IsNullOrEmpty(error))
+                    {
+                        ShowNotification(new GUIContent(fieldError));
+                        error = fieldError;
+                    }
+                    GUILayout.Label(fieldError);
                 }
                 GUILayout.BeginHorizontal(GUILayout.MaxWidth(position.width));
                 GUILayout.Space(25);
