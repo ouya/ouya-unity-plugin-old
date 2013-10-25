@@ -597,8 +597,10 @@ public static class OuyaSDK
     {
         public string identifier = string.Empty;
         public string name = string.Empty;
+        public int localPrice = 0;
         public int priceInCents = 0;
         public string currencyCode = string.Empty;
+        public int productVersionToBundle = 0;
 
         public string getIdentifier()
         {
