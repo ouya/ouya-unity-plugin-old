@@ -595,11 +595,11 @@ public static class OuyaSDK
     [Serializable]
     public class Product
     {
-        public string identifier = string.Empty;
-        public string name = string.Empty;
-        public int localPrice = 0;
-        public int priceInCents = 0;
         public string currencyCode = string.Empty;
+        public string identifier = string.Empty;
+        public float localPrice = 0f;
+        public string name = string.Empty;        
+        public int priceInCents = 0;
         public int productVersionToBundle = 0;
 
         public string getIdentifier()
@@ -636,14 +636,14 @@ public static class OuyaSDK
     [Serializable]
     public class Receipt
     {
+        public string currency = string.Empty;
+        public string gamer = string.Empty;
+        public DateTime generatedDate = DateTime.MinValue;
         public string identifier = string.Empty;
+        public float localPrice = 0f;
         public int priceInCents = 0;
         public DateTime purchaseDate = DateTime.MinValue;
-        public DateTime generatedDate = DateTime.MinValue;
-        public string gamer = string.Empty;
         public string uuid = string.Empty;
-        public string currency = string.Empty;
-        public double localPrice = 0;
 
         public string getIdentifier()
         {
