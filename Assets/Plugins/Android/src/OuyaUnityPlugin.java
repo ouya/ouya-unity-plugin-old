@@ -311,7 +311,7 @@ public class OuyaUnityPlugin
 			}
 			else
 			{
-				Log.i("Unity", "OuyaUnityPlugin.getReceiptsAsync: m_test is valid");
+				Log.i("Unity", "OuyaUnityPlugin.getProductsAsync: m_test is valid");
 				m_test.requestProducts();
 			}
 		}
