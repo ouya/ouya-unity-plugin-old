@@ -47,10 +47,10 @@ public class OuyaGameObject : MonoBehaviour
 
     #region Private Variables
     private static OuyaGameObject m_instance = null;
-#if UNITY_4_0 || UNITY_4_1 || UNITY_4_2
+#if UNITY_4_0 || UNITY_4_1 || UNITY_4_2 || UNITY_4_3
     private bool m_sentMenuButtonUp = false;
 #endif
-    #endregion 
+    #endregion
 
     #region Singleton Accessor Class
     /// <summary>
@@ -77,7 +77,7 @@ public class OuyaGameObject : MonoBehaviour
 
     public void onMenuButtonUp(string ignore)
     {
-#if UNITY_4_0 || UNITY_4_1 || UNITY_4_2
+#if UNITY_4_0 || UNITY_4_1 || UNITY_4_2 || UNITY_4_3
         if (m_sentMenuButtonUp)
         {
             return;
@@ -402,7 +402,7 @@ public class OuyaGameObject : MonoBehaviour
 
     #region Controllers
 
-#if UNITY_4_0 || UNITY_4_1 || UNITY_4_2
+#if UNITY_4_0 || UNITY_4_1 || UNITY_4_2 || UNITY_4_3
 
     public void Update()
     {
