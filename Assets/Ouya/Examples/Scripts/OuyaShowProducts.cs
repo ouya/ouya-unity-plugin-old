@@ -263,6 +263,17 @@ public class OuyaShowProducts : MonoBehaviour,
                 OuyaSDK.requestReceiptList();
             }
             GUILayout.EndHorizontal();
+
+            foreach (OuyaSDK.Receipt receipt in m_receipts)
+            {
+                GUILayout.BeginHorizontal();
+                GUILayout.Space(400);
+
+                GUILayout.Label(string.Format("Price={0}", receipt.getPriceInCents()));
+                GUILayout.Label(string.Format("Identifier={0}", receipt.getIdentifier()));
+
+                GUILayout.EndHorizontal();
+            }
         }
         catch (System.Exception)
         {
