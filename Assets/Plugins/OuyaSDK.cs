@@ -26,7 +26,7 @@ using UnityEngine;
 
 public static class OuyaSDK
 {
-    public const string VERSION = "1.0.9.3";
+    public const string VERSION = "1.0.9.4";
 
     /// <summary>
     /// Cache joysticks

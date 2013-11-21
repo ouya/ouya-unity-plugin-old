@@ -803,11 +803,11 @@ public class OuyaExampleCommon
                     case OuyaSDK.KeyEnum.BUTTON_O:
                         return GetButton(0, player, action);
                     case OuyaSDK.KeyEnum.BUTTON_U:
-                        return GetButton(1, player, action);
-                    case OuyaSDK.KeyEnum.BUTTON_Y:
                         return GetButton(2, player, action);
-                    case OuyaSDK.KeyEnum.BUTTON_A:
+                    case OuyaSDK.KeyEnum.BUTTON_Y:
                         return GetButton(3, player, action);
+                    case OuyaSDK.KeyEnum.BUTTON_A:
+                        return GetButton(1, player, action);
                     case OuyaSDK.KeyEnum.BUTTON_L3:
                         return GetButton(8, player, action);
                     case OuyaSDK.KeyEnum.BUTTON_R3:
