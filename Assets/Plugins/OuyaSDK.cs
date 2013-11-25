@@ -26,7 +26,7 @@ using UnityEngine;
 
 public static class OuyaSDK
 {
-    public const string VERSION = "1.0.10.1";
+    public const string VERSION = "1.0.10.2";
 
     /// <summary>
     /// Cache joysticks
@@ -513,9 +513,9 @@ public static class OuyaSDK
     {
     }
 
-    public static void fetchGamerUUID()
+    public static void fetchGamerInfo()
     {
-        OuyaSDK.OuyaJava.JavaFetchGamerUUID();
+        OuyaSDK.OuyaJava.JavaFetchGamerInfo();
     }
 
     public static void showCursor(bool flag)
@@ -571,66 +571,31 @@ public static class OuyaSDK
 
     #region Data containers
 
+    [Serializable]
+    public class GamerInfo
+    {
+        public string uuid = string.Empty;
+        public string username = string.Empty;
+    }
+
+    [Serializable]
     public class Purchasable
     {
         public string productId = string.Empty;
-        public Purchasable(string productId)
-        {
-            this.productId = productId;
-        }
-        public string getProductId()
-        {
-            return productId;
-        }
-        public static implicit operator string(Purchasable rhs)
-        {
-            return rhs.getProductId();
-        }
-        public static implicit operator Purchasable(string rhs)
-        {
-            return new Purchasable(rhs);
-        }
     }
 
     [Serializable]
     public class Product
     {
         public string currencyCode = string.Empty;
+        public string description = string.Empty;
         public string identifier = string.Empty;
         public float localPrice = 0f;
-        public string name = string.Empty;        
+        public string name = string.Empty;
+        public float originalPrice = 0f;
+        public float percentOff = 0f;
         public int priceInCents = 0;
         public int productVersionToBundle = 0;
-
-        public string getIdentifier()
-        {
-            return identifier;
-        }
-
-        public string getName()
-        {
-            return name;
-        }
-
-        public int getPriceInCents()
-        {
-            return priceInCents;
-        }
-
-        public void setIdentifier(string identifier)
-        {
-            this.identifier = identifier;
-        }
-
-        public void setName(string name)
-        {
-            this.name = name;
-        }
-
-        public void setPriceInCents(int priceInCents)
-        {
-            this.priceInCents = priceInCents;
-        }
     }
 
     [Serializable]
@@ -644,46 +609,6 @@ public static class OuyaSDK
         public int priceInCents = 0;
         public DateTime purchaseDate = DateTime.MinValue;
         public string uuid = string.Empty;
-
-        public string getIdentifier()
-        {
-            return identifier;
-        }
-
-        public int getPriceInCents()
-        {
-            return priceInCents;
-        }
-
-        public DateTime getPurchaseDate()
-        {
-            return purchaseDate;
-        }
-
-        public DateTime getGeneratedDate()
-        {
-            return generatedDate;
-        }
-
-        public void setIdentifier(string identifier)
-        {
-            this.identifier = identifier;
-        }
-
-        public void setPriceInCents(int priceInCents)
-        {
-            this.priceInCents = priceInCents;
-        }
-
-        public void setPurchaseDate(DateTime date)
-        {
-            purchaseDate = date;
-        }
-
-        public void setGeneratedDate(DateTime date)
-        {
-            generatedDate = date;
-        }
     }
     
     #endregion
@@ -830,29 +755,29 @@ public static class OuyaSDK
 
     #region Fetch Gamer UUID Listener
 
-    public interface IFetchGamerUUIDListener
+    public interface IFetchGamerInfoListener
     {
-        void OuyaFetchGamerUUIDOnSuccess(string gamerUUID);
-        void OuyaFetchGamerUUIDOnFailure(int errorCode, string errorMessage);
-        void OuyaFetchGamerUUIDOnCancel();
+        void OuyaFetchGamerInfoOnSuccess(string uuid, string username);
+        void OuyaFetchGamerInfoOnFailure(int errorCode, string errorMessage);
+        void OuyaFetchGamerInfoOnCancel();
     }
-    private static List<IFetchGamerUUIDListener> m_fetchGamerUUIDListeners = new List<IFetchGamerUUIDListener>();
-    public static List<IFetchGamerUUIDListener> getFetchGamerUUIDListeners()
+    private static List<IFetchGamerInfoListener> m_FetchGamerInfoListeners = new List<IFetchGamerInfoListener>();
+    public static List<IFetchGamerInfoListener> getFetchGamerInfoListeners()
     {
-        return m_fetchGamerUUIDListeners;
+        return m_FetchGamerInfoListeners;
     }
-    public static void registerFetchGamerUUIDListener(IFetchGamerUUIDListener listener)
+    public static void registerFetchGamerInfoListener(IFetchGamerInfoListener listener)
     {
-        if (!m_fetchGamerUUIDListeners.Contains(listener))
+        if (!m_FetchGamerInfoListeners.Contains(listener))
         {
-            m_fetchGamerUUIDListeners.Add(listener);
+            m_FetchGamerInfoListeners.Add(listener);
         }
     }
-    public static void unregisterFetchGamerUUIDListener(IFetchGamerUUIDListener listener)
+    public static void unregisterFetchGamerInfoListener(IFetchGamerInfoListener listener)
     {
-        if (m_fetchGamerUUIDListeners.Contains(listener))
+        if (m_FetchGamerInfoListeners.Contains(listener))
         {
-            m_fetchGamerUUIDListeners.Remove(listener);
+            m_FetchGamerInfoListeners.Remove(listener);
         }
     }
 
@@ -1147,7 +1072,7 @@ public static class OuyaSDK
             return result;
         }
 
-        public static void JavaFetchGamerUUID()
+        public static void JavaFetchGamerInfo()
         {
 #if UNITY_ANDROID && !UNITY_EDITOR && !UNITY_STANDALONE_OSX && !UNITY_STANDALONE_WIN && !UNITY_STANDALONE_LINUX
             // again, make sure the thread is attached..
@@ -1157,16 +1082,16 @@ public static class OuyaSDK
 
             try
             {
-                Debug.Log(string.Format("{0} OuyaSDK.JavaFetchGamerUUID", DateTime.Now));
+                Debug.Log(string.Format("{0} OuyaSDK.JavaFetchGamerInfo", DateTime.Now));
 
                 using (AndroidJavaClass ajc = new AndroidJavaClass(JAVA_CLASS))
                 {
-                    ajc.CallStatic("fetchGamerUUID");
+                    ajc.CallStatic("fetchGamerInfo");
                 }
             }
             catch (Exception ex)
             {
-                Debug.LogError(string.Format("OuyaSDK.JavaFetchGamerUUID exception={0}", ex));
+                Debug.LogError(string.Format("OuyaSDK.JavaFetchGamerInfo exception={0}", ex));
             }
             finally
             {
@@ -1189,7 +1114,7 @@ public static class OuyaSDK
 
                 using (AndroidJavaClass ajc = new AndroidJavaClass(JAVA_CLASS))
                 {
-                    ajc.CallStatic("addGetProduct", purchasable.getProductId());
+                    ajc.CallStatic("addGetProduct", purchasable.productId);
                 }
             }
             catch (Exception ex)
@@ -1297,11 +1222,11 @@ public static class OuyaSDK
 
             try
             {
-                Debug.Log(string.Format("JavaRequestPurchaseAsync purchasable: {0}", purchasable.getProductId()));
+                Debug.Log(string.Format("JavaRequestPurchaseAsync purchasable: {0}", purchasable.productId));
 
                 using (AndroidJavaClass ajc = new AndroidJavaClass(JAVA_CLASS))
                 {
-                    ajc.CallStatic<String>("requestPurchaseAsync", new object[] { purchasable.getProductId() + "\0" });
+                    ajc.CallStatic<String>("requestPurchaseAsync", new object[] { purchasable.productId + "\0" });
                 }
             }
             catch (Exception ex)

@@ -19,7 +19,7 @@ using UnityEngine;
 
 public class OuyaShowProducts : MonoBehaviour,
     OuyaSDK.IPauseListener, OuyaSDK.IResumeListener,
-    OuyaSDK.IFetchGamerUUIDListener,
+    OuyaSDK.IFetchGamerInfoListener,
     OuyaSDK.IGetProductsListener, OuyaSDK.IPurchaseListener, OuyaSDK.IGetReceiptsListener,
     OuyaSDK.IMenuButtonUpListener,
     OuyaSDK.IMenuAppearingListener
@@ -28,6 +28,11 @@ public class OuyaShowProducts : MonoBehaviour,
     /// The gamer UUID
     /// </summary>
     private string m_gamerUUID = string.Empty;
+
+    /// <summary>
+    /// The gamer User Name
+    /// </summary>
+    private string m_gamerUserName = string.Empty;
 
     /// <summary>
     /// A key to store game data
@@ -45,7 +50,7 @@ public class OuyaShowProducts : MonoBehaviour,
         OuyaSDK.registerMenuAppearingListener(this);
         OuyaSDK.registerPauseListener(this);
         OuyaSDK.registerResumeListener(this);
-        OuyaSDK.registerFetchGamerUUIDListener(this);
+        OuyaSDK.registerFetchGamerInfoListener(this);
         OuyaSDK.registerGetProductsListener(this);
         OuyaSDK.registerPurchaseListener(this);
         OuyaSDK.registerGetReceiptsListener(this);
@@ -56,7 +61,7 @@ public class OuyaShowProducts : MonoBehaviour,
         OuyaSDK.unregisterMenuAppearingListener(this);
         OuyaSDK.unregisterPauseListener(this);
         OuyaSDK.unregisterResumeListener(this);
-        OuyaSDK.unregisterFetchGamerUUIDListener(this);
+        OuyaSDK.unregisterFetchGamerInfoListener(this);
         OuyaSDK.unregisterGetProductsListener(this);
         OuyaSDK.unregisterPurchaseListener(this);
         OuyaSDK.unregisterGetReceiptsListener(this);
@@ -82,18 +87,19 @@ public class OuyaShowProducts : MonoBehaviour,
         Debug.Log(System.Reflection.MethodBase.GetCurrentMethod().ToString());
     }
 
-    public void OuyaFetchGamerUUIDOnSuccess(string gamerUUID)
+    public void OuyaFetchGamerInfoOnSuccess(string gamerUUID, string gamerUserName)
     {
         Debug.Log(System.Reflection.MethodBase.GetCurrentMethod().ToString());
         m_gamerUUID = gamerUUID;
+        m_gamerUserName = gamerUserName;
     }
 
-    public void OuyaFetchGamerUUIDOnFailure(int errorCode, string errorMessage)
+    public void OuyaFetchGamerInfoOnFailure(int errorCode, string errorMessage)
     {
         Debug.Log(System.Reflection.MethodBase.GetCurrentMethod().ToString());
     }
 
-    public void OuyaFetchGamerUUIDOnCancel()
+    public void OuyaFetchGamerInfoOnCancel()
     {
         Debug.Log(System.Reflection.MethodBase.GetCurrentMethod().ToString());
     }
@@ -185,9 +191,14 @@ public class OuyaShowProducts : MonoBehaviour,
 
             GUILayout.BeginHorizontal();
             GUILayout.Space(400);
-            if (GUILayout.Button("Get Gamer UUID", GUILayout.Height(40)))
+            GUILayout.Label(string.Format("Gamer User Name: {0}", m_gamerUserName));
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal();
+            GUILayout.Space(400);
+            if (GUILayout.Button("Get Gamer Info", GUILayout.Height(40)))
             {
-                OuyaSDK.fetchGamerUUID();
+                OuyaSDK.fetchGamerInfo();
             }
             GUILayout.EndHorizontal();
 
@@ -224,7 +235,9 @@ public class OuyaShowProducts : MonoBehaviour,
 
                 foreach (string productId in OuyaGameObject.Singleton.Purchasables)
                 {
-                    productIdentifierList.Add(new OuyaSDK.Purchasable(productId));
+                    OuyaSDK.Purchasable purchasable = new OuyaSDK.Purchasable();
+                    purchasable.productId = productId;
+                    productIdentifierList.Add(purchasable);
                 }
 
                 OuyaSDK.requestProductList(productIdentifierList);
@@ -236,14 +249,16 @@ public class OuyaShowProducts : MonoBehaviour,
                 GUILayout.BeginHorizontal();
                 GUILayout.Space(400);
 
-                GUILayout.Label(string.Format("Name={0}", product.getName()));
-                GUILayout.Label(string.Format("Price={0}", product.getPriceInCents()));
-                GUILayout.Label(string.Format("Identifier={0}", product.getIdentifier()));
+                GUILayout.Label(string.Format("Name={0}", product.name));
+                GUILayout.Label(string.Format("Price={0}", product.priceInCents));
+                GUILayout.Label(string.Format("Identifier={0}", product.identifier));
 
                 if (GUILayout.Button("Purchase"))
                 {
-                    Debug.Log(string.Format("Purchase Identifier: {0}", product.getIdentifier()));
-                    OuyaSDK.requestPurchase(product.getIdentifier());
+                    Debug.Log(string.Format("Purchase Identifier: {0}", product.identifier));
+                    OuyaSDK.Purchasable purchasable = new OuyaSDK.Purchasable();
+                    purchasable.productId = product.identifier;
+                    OuyaSDK.requestPurchase(purchasable);
                 }
 
                 GUILayout.EndHorizontal();
@@ -269,8 +284,8 @@ public class OuyaShowProducts : MonoBehaviour,
                 GUILayout.BeginHorizontal();
                 GUILayout.Space(400);
 
-                GUILayout.Label(string.Format("Price={0}", receipt.getPriceInCents()));
-                GUILayout.Label(string.Format("Identifier={0}", receipt.getIdentifier()));
+                GUILayout.Label(string.Format("Price={0}", receipt.priceInCents));
+                GUILayout.Label(string.Format("Identifier={0}", receipt.identifier));
 
                 GUILayout.EndHorizontal();
             }

@@ -124,19 +124,20 @@ public class OuyaGameObject : MonoBehaviour
     
     #region JSON Data Listeners
 
-    public void FetchGamerUUIDSuccessListener(string gamerUUID)
+    public void FetchGamerInfoSuccessListener(string jsonData)
     {
-        Debug.LogError(string.Format("FetchGamerUUIDSuccessListener gamerUUID={0}", gamerUUID));
-        InvokeOuyaFetchGamerUUIDOnSuccess(gamerUUID);
+        Debug.LogError(string.Format("FetchGamerInfoSuccessListener jsonData={0}", jsonData));
+        OuyaSDK.GamerInfo gamerInfo = JsonMapper.ToObject<OuyaSDK.GamerInfo>(jsonData);
+        InvokeOuyaFetchGamerInfoOnSuccess(gamerInfo.uuid, gamerInfo.username);
     }
-    public void FetchGamerUUIDFailureListener(string jsonData)
+    public void FetchGamerInfoFailureListener(string jsonData)
     {
-        Debug.LogError(string.Format("FetchGamerUUIDFailureListener jsonData={0}", jsonData));
-        InvokeOuyaFetchGamerUUIDOnFailure(0, jsonData);
+        Debug.LogError(string.Format("FetchGamerInfoFailureListener jsonData={0}", jsonData));
+        InvokeOuyaFetchGamerInfoOnFailure(0, jsonData);
     }
-    public void FetchGamerUUIDCancelListener(string ignore)
+    public void FetchGamerInfoCancelListener(string ignore)
     {
-        InvokeOuyaFetchGamerUUIDOnCancel();
+        InvokeOuyaFetchGamerInfoOnCancel();
     }
 
     private List<OuyaSDK.Product> m_products = new List<OuyaSDK.Product>();
@@ -167,7 +168,7 @@ public class OuyaGameObject : MonoBehaviour
         foreach (OuyaSDK.Product product in m_products)
         {
             Debug.Log(string.Format("ProductListCompleteListener Product id={0} name={1} price={2}",
-                product.getIdentifier(), product.getName(), product.getPriceInCents()));
+                product.identifier, product.name, product.priceInCents));
         }
         InvokeOuyaGetProductsOnSuccess(m_products);
     }
@@ -211,10 +212,10 @@ public class OuyaGameObject : MonoBehaviour
         foreach (OuyaSDK.Receipt receipt in m_receipts)
         {
             Debug.Log(string.Format("ReceiptListCompleteListener Receipt id={0} price={1} purchaseDate={2} generatedDate={3}",
-                receipt.getIdentifier(),
-                receipt.getPriceInCents(),
-                receipt.getPurchaseDate(),
-                receipt.getGeneratedDate()));
+                receipt.identifier,
+                receipt.priceInCents,
+                receipt.purchaseDate,
+                receipt.generatedDate));
         }
         InvokeOuyaGetReceiptsOnSuccess(m_receipts);
     }
@@ -270,37 +271,37 @@ public class OuyaGameObject : MonoBehaviour
         OuyaSDK.setIAPInitComplete();
     }
 
-    public void InvokeOuyaFetchGamerUUIDOnSuccess(string gamerUUID)
+    public void InvokeOuyaFetchGamerInfoOnSuccess(string uuid, string username)
     {
-        foreach (OuyaSDK.IFetchGamerUUIDListener listener in OuyaSDK.getFetchGamerUUIDListeners())
+        foreach (OuyaSDK.IFetchGamerInfoListener listener in OuyaSDK.getFetchGamerInfoListeners())
         {
             if (null != listener)
             {
-                listener.OuyaFetchGamerUUIDOnSuccess(gamerUUID);
+                listener.OuyaFetchGamerInfoOnSuccess(uuid, username);
             }
         }
     }
 
-    public void InvokeOuyaFetchGamerUUIDOnFailure(int errorCode, string errorMessage)
+    public void InvokeOuyaFetchGamerInfoOnFailure(int errorCode, string errorMessage)
     {
-        Debug.LogError(string.Format("InvokeOuyaFetchGamerUUIDOnFailure: error={0} errorMessage={1}", errorCode, errorMessage));
-        foreach (OuyaSDK.IFetchGamerUUIDListener listener in OuyaSDK.getFetchGamerUUIDListeners())
+        Debug.LogError(string.Format("InvokeOuyaFetchGamerInfoOnFailure: error={0} errorMessage={1}", errorCode, errorMessage));
+        foreach (OuyaSDK.IFetchGamerInfoListener listener in OuyaSDK.getFetchGamerInfoListeners())
         {
             if (null != listener)
             {
-                listener.OuyaFetchGamerUUIDOnFailure(errorCode, errorMessage);
+                listener.OuyaFetchGamerInfoOnFailure(errorCode, errorMessage);
             }
         }
     }
 
-    public void InvokeOuyaFetchGamerUUIDOnCancel()
+    public void InvokeOuyaFetchGamerInfoOnCancel()
     {
-        //Debug.Log("InvokeOuyaFetchGamerUUIDOnCancel");
-        foreach (OuyaSDK.IFetchGamerUUIDListener listener in OuyaSDK.getFetchGamerUUIDListeners())
+        //Debug.Log("InvokeOuyaFetchGamerInfoOnCancel");
+        foreach (OuyaSDK.IFetchGamerInfoListener listener in OuyaSDK.getFetchGamerInfoListeners())
         {
             if (null != listener)
             {
-                listener.OuyaFetchGamerUUIDOnCancel();
+                listener.OuyaFetchGamerInfoOnCancel();
             }
         }
     }
