@@ -88,10 +88,10 @@ public class OuyaNativeActivity extends NativeActivity
     private BroadcastReceiver mAuthChangeReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-			TestOuyaFacade test = IOuyaActivity.GetTestOuyaFacade();
-			if (null != test)
+			UnityOuyaFacade unityOuyaFacade = IOuyaActivity.GetUnityOuyaFacade();
+			if (null != unityOuyaFacade)
 			{
-				test.requestReceipts();
+				unityOuyaFacade.requestReceipts();
 			}
         }
     };
@@ -153,15 +153,15 @@ public class OuyaNativeActivity extends NativeActivity
     @Override
     protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
         if(resultCode == RESULT_OK) {
-			TestOuyaFacade test = IOuyaActivity.GetTestOuyaFacade();
-			if (null != test)
+			UnityOuyaFacade unityOuyaFacade = IOuyaActivity.GetUnityOuyaFacade();
+			if (null != unityOuyaFacade)
 			{
 				switch (requestCode) {
-					case TestOuyaFacade.GAMER_UUID_AUTHENTICATION_ACTIVITY_ID:
-						test.fetchGamerUUID();
+					case UnityOuyaFacade.GAMER_UUID_AUTHENTICATION_ACTIVITY_ID:
+						unityOuyaFacade.fetchGamerInfo();
 						break;
-					case TestOuyaFacade.PURCHASE_AUTHENTICATION_ACTIVITY_ID:
-						test.restartInterruptedPurchase();
+					case UnityOuyaFacade.PURCHASE_AUTHENTICATION_ACTIVITY_ID:
+						unityOuyaFacade.restartInterruptedPurchase();
 						break;
 				}
             }
@@ -171,10 +171,10 @@ public class OuyaNativeActivity extends NativeActivity
     @Override
     protected void onSaveInstanceState(final Bundle outState)
 	{
-		TestOuyaFacade test = IOuyaActivity.GetTestOuyaFacade();
-		if (null != test)
+		UnityOuyaFacade unityOuyaFacade = IOuyaActivity.GetUnityOuyaFacade();
+		if (null != unityOuyaFacade)
 		{
-			test.onSaveInstanceState(outState);
+			unityOuyaFacade.onSaveInstanceState(outState);
 		}
 	}
 

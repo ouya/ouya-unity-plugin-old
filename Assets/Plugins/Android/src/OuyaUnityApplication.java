@@ -53,7 +53,7 @@ public class OuyaUnityApplication extends Activity
 	//indicates use logging in one place
 	private Boolean m_enableLogging = false;
 
-	protected void onCreate(Bundle savedInstanceState) 
+	protected void onCreate(Bundle savedInstanceState)
 	{
 		//make activity accessible to Unity
 		IOuyaActivity.SetActivity(this);
@@ -104,10 +104,10 @@ public class OuyaUnityApplication extends Activity
     private BroadcastReceiver mAuthChangeReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-			TestOuyaFacade test = IOuyaActivity.GetTestOuyaFacade();
-			if (null != test)
+			UnityOuyaFacade unityOuyaFacade = IOuyaActivity.GetUnityOuyaFacade();
+			if (null != unityOuyaFacade)
 			{
-				test.requestReceipts();
+				unityOuyaFacade.requestReceipts();
 			}
         }
     };
@@ -175,15 +175,15 @@ public class OuyaUnityApplication extends Activity
     @Override
     protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
         if(resultCode == RESULT_OK) {
-			TestOuyaFacade test = IOuyaActivity.GetTestOuyaFacade();
-			if (null != test)
+			UnityOuyaFacade unityOuyaFacade = IOuyaActivity.GetUnityOuyaFacade();
+			if (null != unityOuyaFacade)
 			{
 				switch (requestCode) {
-					case TestOuyaFacade.GAMER_UUID_AUTHENTICATION_ACTIVITY_ID:
-						test.fetchGamerUUID();
+					case UnityOuyaFacade.GAMER_UUID_AUTHENTICATION_ACTIVITY_ID:
+						unityOuyaFacade.fetchGamerInfo();
 						break;
-					case TestOuyaFacade.PURCHASE_AUTHENTICATION_ACTIVITY_ID:
-						test.restartInterruptedPurchase();
+					case UnityOuyaFacade.PURCHASE_AUTHENTICATION_ACTIVITY_ID:
+						unityOuyaFacade.restartInterruptedPurchase();
 						break;
 				}
             }
@@ -193,20 +193,20 @@ public class OuyaUnityApplication extends Activity
 	@Override
     protected void onSaveInstanceState(final Bundle outState)
 	{
-		TestOuyaFacade test = IOuyaActivity.GetTestOuyaFacade();
-		if (null != test)
+		UnityOuyaFacade unityOuyaFacade = IOuyaActivity.GetUnityOuyaFacade();
+		if (null != unityOuyaFacade)
 		{
-			test.onSaveInstanceState(outState);
+			unityOuyaFacade.onSaveInstanceState(outState);
 		}
 	}
 
 	@Override
     protected void onDestroy()
 	{
-		TestOuyaFacade test = IOuyaActivity.GetTestOuyaFacade();
-		if (null != test)
+		UnityOuyaFacade unityOuyaFacade = IOuyaActivity.GetUnityOuyaFacade();
+		if (null != unityOuyaFacade)
 		{
-			test.onDestroy();
+			unityOuyaFacade.onDestroy();
 		}
 
 		if (null != IOuyaActivity.GetUnityPlayer())
@@ -304,7 +304,7 @@ public class OuyaUnityApplication extends Activity
 			Log.i("Unity", "BroadcastReceiver tell Unity we see the menu button up");
 			UnityPlayer.UnitySendMessage("OuyaGameObject", "onMenuButtonUp", "");
 			Log.i("Unity", "BroadcastReceiver notified Unity onMenuButtonUp");
-			 
+
 		}
 
 		if (null == IOuyaActivity.GetUnityPlayer())
@@ -312,7 +312,7 @@ public class OuyaUnityApplication extends Activity
 			Log.i("Unity", "IOuyaActivity.GetUnityPlayer() is null");
 			return false;
 		}
-		
+
 		return IOuyaActivity.GetUnityPlayer().onKeyUp(keyCode, event);
 	}
 
@@ -339,7 +339,7 @@ public class OuyaUnityApplication extends Activity
 			Log.i("Unity", "IOuyaActivity.GetUnityPlayer() is null");
 			return false;
 		}
-		
+
 		return IOuyaActivity.GetUnityPlayer().onTouchEvent(event);
 	}
 
@@ -351,7 +351,7 @@ public class OuyaUnityApplication extends Activity
 			Log.i("Unity", "IOuyaActivity.GetUnityPlayer() is null");
 			return false;
 		}
-		
+
 		return IOuyaActivity.GetUnityPlayer().onTrackballEvent(event);
 	}
 }

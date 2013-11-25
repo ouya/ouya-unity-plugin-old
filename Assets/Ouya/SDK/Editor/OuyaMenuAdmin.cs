@@ -167,7 +167,7 @@ public class OuyaMenuAdmin : MonoBehaviour
             Directory.CreateDirectory(pathClasses);
         }
 
-        string includeFiles = string.Format("\"{0}/OuyaUnityPlugin.java\" \"{0}/IOuyaActivity.java\" \"{0}/TestOuyaFacade.java\"", m_pathSrc);
+        string includeFiles = string.Format("\"{0}/OuyaUnityPlugin.java\" \"{0}/IOuyaActivity.java\" \"{0}/UnityOuyaFacade.java\"", m_pathSrc);
         string jars = string.Empty;
 
         if (File.Exists(m_pathToolsJar))
@@ -256,7 +256,7 @@ public class OuyaMenuAdmin : MonoBehaviour
         string pathClasses = string.Format("{0}/Assets/Plugins/Android/Classes", m_pathUnityProject);
         OuyaPanel.RunProcess(m_pathJar, pathClasses, string.Format("cvfM OuyaUnityPlugin.jar tv/"));
         OuyaPanel.RunProcess(m_pathJavaP, pathClasses, "-s tv.ouya.sdk.OuyaUnityPlugin");
-        OuyaPanel.RunProcess(m_pathJavaP, pathClasses, "-s tv.ouya.sdk.TestOuyaFacade");
+        OuyaPanel.RunProcess(m_pathJavaP, pathClasses, "-s tv.ouya.sdk.UnityOuyaFacade");
         OuyaPanel.RunProcess(m_pathJavaP, pathClasses, "-s tv.ouya.sdk.IOuyaActivity");
 
         string pathAppJar = string.Format("{0}/OuyaUnityPlugin.jar", pathClasses);

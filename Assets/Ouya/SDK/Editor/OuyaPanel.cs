@@ -1108,7 +1108,7 @@ public class OuyaPanel : EditorWindow
             Debug.LogError("R.java cannot be found");
             return false;
         }
-        string includeFiles = string.Format("\"{0}/{1}.java\" \"{0}/IOuyaActivity.java\" \"{0}/TestOuyaFacade.java\" \"{2}\"",
+        string includeFiles = string.Format("\"{0}/{1}.java\" \"{0}/IOuyaActivity.java\" \"{0}/UnityOuyaFacade.java\" \"{2}\"",
             pathSrc, javaAppName, pathRJava);
         string jars = string.Empty;
 
@@ -1239,14 +1239,14 @@ public class OuyaPanel : EditorWindow
         }
 
         //@hack: remove extra class file
-        // tv/ouya/sdk/TestOuyaFacade.class
-        extraClass = string.Format("{0}/tv/ouya/sdk/TestOuyaFacade.class", pathClasses);
+        // tv/ouya/sdk/UnityOuyaFacade.class
+        extraClass = string.Format("{0}/tv/ouya/sdk/UnityOuyaFacade.class", pathClasses);
         if (File.Exists(extraClass))
         {
             File.Delete(extraClass);
             Debug.Log(string.Format("Removed: {0}", extraClass));
         }
-        extraClass = string.Format("{0}/tv/ouya/sdk/TestOuyaFacade.class.meta", pathClasses);
+        extraClass = string.Format("{0}/tv/ouya/sdk/UnityOuyaFacade.class.meta", pathClasses);
         if (File.Exists(extraClass))
         {
             File.Delete(extraClass);
