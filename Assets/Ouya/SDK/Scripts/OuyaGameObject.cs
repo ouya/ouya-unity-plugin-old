@@ -126,7 +126,7 @@ public class OuyaGameObject : MonoBehaviour
 
     public void FetchGamerInfoSuccessListener(string jsonData)
     {
-        Debug.LogError(string.Format("FetchGamerInfoSuccessListener jsonData={0}", jsonData));
+        //Debug.Log(string.Format("FetchGamerInfoSuccessListener jsonData={0}", jsonData));
         OuyaSDK.GamerInfo gamerInfo = JsonMapper.ToObject<OuyaSDK.GamerInfo>(jsonData);
         InvokeOuyaFetchGamerInfoOnSuccess(gamerInfo.uuid, gamerInfo.username);
     }
@@ -150,7 +150,7 @@ public class OuyaGameObject : MonoBehaviour
     {
         if (string.IsNullOrEmpty(jsonData))
         {
-            Debug.LogError("OuyaSDK.ProductListListener: received empty jsondata");
+            Debug.Log("OuyaSDK.ProductListListener: received empty jsondata");
             return;
         }
 
@@ -175,7 +175,7 @@ public class OuyaGameObject : MonoBehaviour
 
     public void PurchaseSuccessListener(string jsonData)
     {
-        Debug.LogError(string.Format("PurchaseSuccessListener jsonData={0}", jsonData));
+        Debug.Log(string.Format("PurchaseSuccessListener jsonData={0}", jsonData));
         OuyaSDK.Product product = JsonMapper.ToObject<OuyaSDK.Product>(jsonData);
         InvokeOuyaPurchaseOnSuccess(product);
     }
@@ -199,7 +199,7 @@ public class OuyaGameObject : MonoBehaviour
     {
         if (string.IsNullOrEmpty(jsonData))
         {
-            Debug.LogError("OuyaSDK.ReceiptListListener: received empty jsondata");
+            Debug.Log("OuyaSDK.ReceiptListListener: received empty jsondata");
             return;
         }
 
