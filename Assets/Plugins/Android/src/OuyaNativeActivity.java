@@ -79,6 +79,11 @@ public class OuyaNativeActivity extends NativeActivity
 
 		// Create the UnityPlayer
         IOuyaActivity.SetUnityPlayer(mUnityPlayer);
+
+		Context context = getBaseContext();
+
+		// Init the controller
+		OuyaController.init(context);
 	}
 
     /**
