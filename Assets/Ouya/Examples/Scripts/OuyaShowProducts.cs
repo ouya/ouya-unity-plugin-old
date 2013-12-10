@@ -25,6 +25,16 @@ public class OuyaShowProducts : MonoBehaviour,
     OuyaSDK.IMenuAppearingListener
 {
     /// <summary>
+    /// The products to display for purchase
+    /// </summary>
+    public string[] Purchasables =
+    {
+        "long_sword",
+        "sharp_axe",
+        "__DECLINED__THIS_PURCHASE",
+    };
+
+    /// <summary>
     /// The gamer UUID
     /// </summary>
     private string m_gamerUUID = string.Empty;
@@ -233,7 +243,7 @@ public class OuyaShowProducts : MonoBehaviour,
                 List<OuyaSDK.Purchasable> productIdentifierList =
                     new List<OuyaSDK.Purchasable>();
 
-                foreach (string productId in OuyaGameObject.Singleton.Purchasables)
+                foreach (string productId in Purchasables)
                 {
                     OuyaSDK.Purchasable purchasable = new OuyaSDK.Purchasable();
                     purchasable.productId = productId;

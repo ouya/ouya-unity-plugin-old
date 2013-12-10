@@ -26,13 +26,6 @@ public class OuyaGameObject : MonoBehaviour
     public string DEVELOPER_ID = "310a8f51-4d6e-4ae5-bda0-b93878e5f5d0";
     public bool debugOff = false;
 
-    public string[] Purchasables =
-    {
-        "long_sword",
-        "sharp_axe",
-        "__DECLINED__THIS_PURCHASE",
-    };
-
     [@HideInInspector]
     private static string m_inputData = null;
     public static string InputData{
