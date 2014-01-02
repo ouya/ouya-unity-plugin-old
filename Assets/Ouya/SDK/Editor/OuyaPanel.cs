@@ -1743,7 +1743,7 @@ public class OuyaPanel : EditorWindow
 #else
                 if (javaAppName.ToUpper().Equals("OUYANATIVEACTIVITY"))
                 {
-                    String fieldError = "[error] (OuyaUnityApplication should be used as the 'Java App Class' in Unity 3.X for to avoid a crash in the Unity input)\n";
+                    String fieldError = "[error] (OuyaUnityApplication should be used as the 'Java App Class' in Unity 3.X to avoid a crash within the Unity player input handling)\n";
                     if (string.IsNullOrEmpty(error))
                     {
                         ShowNotification(new GUIContent(fieldError));
