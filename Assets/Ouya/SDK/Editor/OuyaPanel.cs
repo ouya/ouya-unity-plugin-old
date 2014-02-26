@@ -311,17 +311,53 @@ public class OuyaPanel : EditorWindow
         return string.Format("{0}/platforms/android-{1}/android.jar", pathSDK, (int)PlayerSettings.Android.minSdkVersion);
     }
 
+    public static void FindFile(DirectoryInfo searchFolder, string searchFile, ref string path)
+    {
+        if (null == searchFolder)
+        {
+            return;
+        }
+        foreach (FileInfo file in searchFolder.GetFiles(searchFile))
+        {
+            if (string.IsNullOrEmpty(file.FullName))
+            {
+                continue;
+            }
+            path = file.FullName;
+            return;
+        }
+        foreach (DirectoryInfo subDir in searchFolder.GetDirectories())
+        {
+            if (null == subDir)
+            {
+                continue;
+            }
+            if (subDir.Name.ToUpper().Equals(".SVN"))
+            {
+                continue;
+            }
+            if (subDir.Name.ToUpper().Equals(".GIT"))
+            {
+                continue;
+            }
+            //Debug.Log(string.Format("Directory: {0}", subDir));
+            FindFile(subDir, searchFile, ref path);
+        }
+    }
+
     void UpdateAndroidSDKPaths()
     {
         switch (Application.platform)
         {
             case RuntimePlatform.OSXEditor:
-                pathADB = string.Format("{0}/{1}/{2}", pathSDK, REL_ANDROID_PLATFORM_TOOLS, FILE_ADB_MAC);
-                pathAAPT = string.Format("{0}/{1}/{2}", pathSDK, REL_ANDROID_PLATFORM_TOOLS, FILE_AAPT_MAC);
+                FindFile(new DirectoryInfo(string.Format("{0}", pathSDK)), FILE_ADB_MAC, ref pathADB);
+                FindFile(new DirectoryInfo(string.Format("{0}", pathSDK)), FILE_AAPT_MAC, ref pathAAPT);
+                pathADB = pathADB.Replace(@"\", "/");
+                pathAAPT = pathAAPT.Replace(@"\", "/");
                 break;
             case RuntimePlatform.WindowsEditor:
-                pathADB = string.Format("{0}/{1}/{2}", pathSDK, REL_ANDROID_PLATFORM_TOOLS, FILE_ADB_WIN);
-                pathAAPT = string.Format("{0}/{1}/{2}", pathSDK, REL_ANDROID_PLATFORM_TOOLS, FILE_AAPT_WIN);
+                FindFile(new DirectoryInfo(string.Format("{0}", pathSDK)), FILE_ADB_WIN, ref pathADB);
+                FindFile(new DirectoryInfo(string.Format("{0}", pathSDK)), FILE_AAPT_WIN, ref pathAAPT);
                 break;
         }
 
