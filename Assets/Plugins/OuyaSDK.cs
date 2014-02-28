@@ -26,7 +26,7 @@ using UnityEngine;
 
 public static class OuyaSDK
 {
-    public const string VERSION = "1.0.10.7";
+    public const string VERSION = "1.0.10.8";
 
     /// <summary>
     /// Cache joysticks
@@ -43,6 +43,7 @@ public static class OuyaSDK
     /// </summary>
     public static void UpdateJoysticks()
     {
+#if !UNITY_WP8
         if (m_timerJoysticks < DateTime.Now)
         {
             //check for new joysticks every N seconds
@@ -84,6 +85,7 @@ public static class OuyaSDK
                 }
             }
         }
+#endif
     }
 
     /// <summary>
