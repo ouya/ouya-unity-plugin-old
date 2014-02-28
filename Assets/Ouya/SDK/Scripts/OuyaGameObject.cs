@@ -15,7 +15,11 @@
  */
 
 using System;
+
+#if !UNITY_WP8
 using LitJson;
+#endif
+
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -119,9 +123,11 @@ public class OuyaGameObject : MonoBehaviour
 
     public void FetchGamerInfoSuccessListener(string jsonData)
     {
+#if !UNITY_WP8
         //Debug.Log(string.Format("FetchGamerInfoSuccessListener jsonData={0}", jsonData));
         OuyaSDK.GamerInfo gamerInfo = JsonMapper.ToObject<OuyaSDK.GamerInfo>(jsonData);
         InvokeOuyaFetchGamerInfoOnSuccess(gamerInfo.uuid, gamerInfo.username);
+#endif
     }
     public void FetchGamerInfoFailureListener(string jsonData)
     {
@@ -141,6 +147,7 @@ public class OuyaGameObject : MonoBehaviour
     }
     public void ProductListListener(string jsonData)
     {
+#if !UNITY_WP8
         if (string.IsNullOrEmpty(jsonData))
         {
             Debug.Log("OuyaSDK.ProductListListener: received empty jsondata");
@@ -150,6 +157,7 @@ public class OuyaGameObject : MonoBehaviour
         Debug.Log(string.Format("OuyaSDK.ProductListListener: jsonData={0}", jsonData));
         OuyaSDK.Product product = JsonMapper.ToObject<OuyaSDK.Product>(jsonData);
         m_products.Add(product);
+#endif
     }
     public void ProductListFailureListener(string jsonData)
     {
@@ -168,9 +176,11 @@ public class OuyaGameObject : MonoBehaviour
 
     public void PurchaseSuccessListener(string jsonData)
     {
+#if !UNITY_WP8
         Debug.Log(string.Format("PurchaseSuccessListener jsonData={0}", jsonData));
         OuyaSDK.Product product = JsonMapper.ToObject<OuyaSDK.Product>(jsonData);
         InvokeOuyaPurchaseOnSuccess(product);
+#endif
     }
     public void PurchaseFailureListener(string jsonData)
     {
@@ -190,6 +200,7 @@ public class OuyaGameObject : MonoBehaviour
     }
     public void ReceiptListListener(string jsonData)
     {
+#if !UNITY_WP8
         if (string.IsNullOrEmpty(jsonData))
         {
             Debug.Log("OuyaSDK.ReceiptListListener: received empty jsondata");
@@ -199,6 +210,7 @@ public class OuyaGameObject : MonoBehaviour
         Debug.Log(string.Format("OuyaSDK.ReceiptListListener: jsonData={0}", jsonData));
         OuyaSDK.Receipt receipt = JsonMapper.ToObject<OuyaSDK.Receipt>(jsonData);
         m_receipts.Add(receipt);
+#endif
     }
     public void ReceiptListCompleteListener(string ignore)
     {
