@@ -243,6 +243,29 @@ public class OuyaShowUnityInput : MonoBehaviour,
             nguiHandler.axis8.text = Input.GetAxisRaw(string.Format("Joy{0} Axis 8", (int)OuyaExampleCommon.Player)).ToString("F5");
             nguiHandler.axis9.text = Input.GetAxisRaw(string.Format("Joy{0} Axis 9", (int)OuyaExampleCommon.Player)).ToString("F5");
             nguiHandler.axis10.text = Input.GetAxisRaw(string.Format("Joy{0} Axis 10", (int)OuyaExampleCommon.Player)).ToString("F5");
+#if UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1
+            nguiHandler.axis11.text = Input.GetAxisRaw(string.Format("Joy{0} Axis 11", (int)OuyaExampleCommon.Player)).ToString("F5");
+            nguiHandler.axis12.text = Input.GetAxisRaw(string.Format("Joy{0} Axis 12", (int)OuyaExampleCommon.Player)).ToString("F5");
+            nguiHandler.axis13.text = Input.GetAxisRaw(string.Format("Joy{0} Axis 13", (int)OuyaExampleCommon.Player)).ToString("F5");
+            nguiHandler.axis14.text = Input.GetAxisRaw(string.Format("Joy{0} Axis 14", (int)OuyaExampleCommon.Player)).ToString("F5");
+            nguiHandler.axis15.text = Input.GetAxisRaw(string.Format("Joy{0} Axis 15", (int)OuyaExampleCommon.Player)).ToString("F5");
+            nguiHandler.axis16.text = Input.GetAxisRaw(string.Format("Joy{0} Axis 16", (int)OuyaExampleCommon.Player)).ToString("F5");
+            nguiHandler.axis17.text = Input.GetAxisRaw(string.Format("Joy{0} Axis 17", (int)OuyaExampleCommon.Player)).ToString("F5");
+            nguiHandler.axis18.text = Input.GetAxisRaw(string.Format("Joy{0} Axis 18", (int)OuyaExampleCommon.Player)).ToString("F5");
+            nguiHandler.axis19.text = Input.GetAxisRaw(string.Format("Joy{0} Axis 19", (int)OuyaExampleCommon.Player)).ToString("F5");
+            nguiHandler.axis20.text = Input.GetAxisRaw(string.Format("Joy{0} Axis 20", (int)OuyaExampleCommon.Player)).ToString("F5");
+#else
+            nguiHandler.axis11.text = "N/A";
+            nguiHandler.axis12.text = "N/A";
+            nguiHandler.axis13.text = "N/A";
+            nguiHandler.axis14.text = "N/A";
+            nguiHandler.axis15.text = "N/A";
+            nguiHandler.axis16.text = "N/A";
+            nguiHandler.axis17.text = "N/A";
+            nguiHandler.axis18.text = "N/A";
+            nguiHandler.axis19.text = "N/A";
+            nguiHandler.axis20.text = "N/A";
+#endif
         }
     }
 

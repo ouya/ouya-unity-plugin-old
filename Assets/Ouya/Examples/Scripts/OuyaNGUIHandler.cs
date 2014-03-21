@@ -48,6 +48,16 @@ public class OuyaNGUIHandler : MonoBehaviour
     public UILabel axis8;
     public UILabel axis9;
     public UILabel axis10;
+    public UILabel axis11;
+    public UILabel axis12;
+    public UILabel axis13;
+    public UILabel axis14;
+    public UILabel axis15;
+    public UILabel axis16;
+    public UILabel axis17;
+    public UILabel axis18;
+    public UILabel axis19;
+    public UILabel axis20;
 
     //button
     public UILabel button1;
