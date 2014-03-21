@@ -224,7 +224,7 @@ public class OuyaPlotMeshThumbstick : MonoBehaviour
                 ++index;
             }
 
-            if (GUI.Button(new Rect(Screen.width * 0.8f, 50, 250, 40), "Clear Thumbstick Graph"))
+            if (GUI.Button(new Rect(Screen.width * 0.5f, 50, 250, 40), "Clear Thumbstick Graph"))
             {
                 foreach (OuyaPlotMeshThumbstick plot in m_plots)
                 {
@@ -235,7 +235,7 @@ public class OuyaPlotMeshThumbstick : MonoBehaviour
                 }
             }
 
-            if (GUI.Button(new Rect(Screen.width * 0.8f, 100, 250, 40), "Toggle Thumbstick Graph"))
+            if (GUI.Button(new Rect(Screen.width * 0.5f, 100, 250, 40), "Toggle Thumbstick Graph"))
             {
                 m_toggleGraph = !m_toggleGraph;
 

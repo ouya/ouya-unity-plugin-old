@@ -277,39 +277,35 @@ public class OuyaShowUnityInput : MonoBehaviour,
 
     void OnGUI()
     {
-        GUILayout.FlexibleSpace();
-        GUILayout.FlexibleSpace();
-        GUILayout.FlexibleSpace();
-        GUILayout.FlexibleSpace();
-
-        GUILayout.BeginHorizontal();
-        GUILayout.Space(600);
+        int x = 300;
         for (int index = 1; index <= 4; ++index)
         {
-            if (GUILayout.Button(string.Format("JOY{0}", index), GUILayout.MaxHeight(40)))
+            if (GUI.Button(new Rect(x, 60, 50, 30), string.Format("JOY{0}", index)))
             {
                 OuyaExampleCommon.Player = (OuyaSDK.OuyaPlayer)index;
                 UpdatePlayerButtons();
             }
+            x += 52;
         }
-        GUILayout.EndHorizontal();
 
-        GUILayout.BeginHorizontal();
-        GUILayout.Space(600);
+        x = 300;
         for (int index = 5; index <= 8; ++index)
         {
-            if (GUILayout.Button(string.Format("JOY{0}", index), GUILayout.MaxHeight(40)))
+            if (GUI.Button(new Rect(x, 100, 50, 30), string.Format("JOY{0}", index)))
             {
                 OuyaExampleCommon.Player = (OuyaSDK.OuyaPlayer)index;
                 UpdatePlayerButtons();
             }
+            x += 52;
         }
-        GUILayout.EndHorizontal();
 
+        /*
+        // prototyping
         GUILayout.BeginHorizontal();
         GUILayout.Space(600);
         m_useSDKForInput = GUILayout.Toggle(m_useSDKForInput, "Use OuyaSDK Mappings and Unity Input", GUILayout.MinHeight(45));
         GUILayout.EndHorizontal();
+        */
     }
 
     void UpdatePlayerButtons()
