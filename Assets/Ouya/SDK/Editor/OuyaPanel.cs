@@ -1767,7 +1767,7 @@ public class OuyaPanel : EditorWindow
 #if UNITY_4 || UNITY_4_0 || UNITY_4_1 || UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6
                 if (javaAppName.ToUpper().Equals("OUYAUNITYAPPLICATION"))
                 {
-                    String fieldError = "[error] (OuyaNativeActivity should be used as the 'Java App Class' in Unity 4.X to let Unity handle native input)\n";
+                    String fieldError = "[error] (OuyaNativeActivity should be used as the 'Main Activity' in Unity 4.X to let Unity handle native input)\n";
                     if (string.IsNullOrEmpty(error))
                     {
                         ShowNotification(new GUIContent(fieldError));
@@ -1779,7 +1779,7 @@ public class OuyaPanel : EditorWindow
 #else
                 if (javaAppName.ToUpper().Equals("OUYANATIVEACTIVITY"))
                 {
-                    String fieldError = "[error] (OuyaUnityApplication should be used as the 'Java App Class' in Unity 3.X to avoid a crash within the Unity player input handling)\n";
+                    String fieldError = "[error] (OuyaUnityApplication should be used as the 'Main Activity' in Unity 3.X to avoid a crash within the Unity player input handling)\n";
                     if (string.IsNullOrEmpty(error))
                     {
                         ShowNotification(new GUIContent(fieldError));
@@ -1804,7 +1804,7 @@ public class OuyaPanel : EditorWindow
                 }
                 GUILayout.BeginHorizontal(GUILayout.MaxWidth(position.width));
                 GUILayout.Space(25);
-                GUILayout.Label("Java App Class:", GUILayout.Width(100));
+                GUILayout.Label("Main Activity:", GUILayout.Width(100));
                 GUILayout.Space(5);
                 string newJavaAppName = GUILayout.TextField(javaAppName, EditorStyles.wordWrappedLabel, GUILayout.MaxWidth(position.width - 130));
                 GUILayout.EndHorizontal();
@@ -1888,7 +1888,7 @@ public class OuyaPanel : EditorWindow
                 GUIDisplayUnityFile("Manifest", pathManifestPath);
                 GUIDisplayUnityFile("key.der", "Assets/Plugins/Android/res/raw/key.der");
                 GUIDisplayUnityFile("R.Java", GetRJava());
-                GUIDisplayUnityFile("Application.Java", GetApplicationJava());
+                GUIDisplayUnityFile("Activity.Java", GetApplicationJava());
                 GUIDisplayUnityFile("IOuyaActivity.Java", GetIOuyaActivityJava());
                 //GUIDisplayFolder("Bin", pathBin);
                 GUIDisplayFolder("Res", pathRes);
