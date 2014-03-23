@@ -92,6 +92,13 @@ public class OuyaExampleCommon
         bool invert = false;
         string axisName = string.Empty;
 
+               if (joystickName.Equals("Broadcom Bluetooth HID", StringComparison.CurrentCultureIgnoreCase)) {
+                       if (SystemInfo.deviceModel.Contains("M.O.J.O.")) {
+                               // The M.O.J.O. reports the wrong name for the OUYA Game Controller
+                               joystickName = "OUYA Game Controller";
+                       }
+               }
+
         switch (joystickName.ToUpper())
         {
             case "HARMONIX ROCK BAND DRUMKIT":
@@ -163,6 +170,48 @@ public class OuyaExampleCommon
                 }
 #endif
                 break;
+
+                       case "MAD CATZ C.T.R.L.R (SMART)":
+                               switch (keyCode)
+                               {
+                               case OuyaSDK.KeyEnum.AXIS_LSTICK_X:
+                                       axisName = string.Format("Joy{0} Axis 1", (int)player);
+                                       break;
+                               case OuyaSDK.KeyEnum.AXIS_LSTICK_Y:
+                                       axisName = string.Format("Joy{0} Axis 2", (int)player);
+                                       break;
+                               case OuyaSDK.KeyEnum.AXIS_RSTICK_X:
+                                       axisName = string.Format("Joy{0} Axis 3", (int)player);
+                                       break;
+                               case OuyaSDK.KeyEnum.AXIS_RSTICK_Y:
+                                       axisName = string.Format("Joy{0} Axis 4", (int)player);
+                                       break;
+                               case OuyaSDK.KeyEnum.BUTTON_LT:
+                                       axisName = string.Format("Joy{0} Axis 13", (int)player);
+                                       break;
+                               case OuyaSDK.KeyEnum.BUTTON_RT:
+                                       axisName = string.Format("Joy{0} Axis 12", (int)player);
+                                       break;
+                               case OuyaSDK.KeyEnum.BUTTON_DPAD_DOWN:
+                                       axisName = string.Format("Joy{0} Axis 6", (int)player);
+                                       invert = true;
+                                       break;
+                               case OuyaSDK.KeyEnum.BUTTON_DPAD_LEFT:
+                                       axisName = string.Format("Joy{0} Axis 5", (int)player);
+                                       break;
+                               case OuyaSDK.KeyEnum.BUTTON_DPAD_RIGHT:
+                                       axisName = string.Format("Joy{0} Axis 5", (int)player);
+                                       break;
+                               case OuyaSDK.KeyEnum.BUTTON_DPAD_UP:
+                                       axisName = string.Format("Joy{0} Axis 6", (int)player);
+                                       invert = true;
+                                       break;
+                               default:
+                                       return 0f;
+                               }
+                           break;
+
+            default:
             case "OUYA GAME CONTROLLER":
 
 
@@ -765,6 +814,13 @@ public class OuyaExampleCommon
             return false;
         }
 
+               if (joystickName.Equals("Broadcom Bluetooth HID", StringComparison.CurrentCultureIgnoreCase)) {
+                       if (SystemInfo.deviceModel.Contains("M.O.J.O.")) {
+                               // The M.O.J.O. reports the wrong name for the OUYA Game Controller
+                               joystickName = "OUYA Game Controller";
+                       }
+               }
+
         switch (joystickName.ToUpper())
         {
             case "HARMONIX ROCK BAND DRUMKIT":
@@ -884,6 +940,42 @@ public class OuyaExampleCommon
                         return false;
                 }
 
+                       case "MAD CATZ C.T.R.L.R (SMART)":
+                               switch (keyCode)
+                               {
+                                       case OuyaSDK.KeyEnum.BUTTON_LB:
+                                               return GetButton(4, player, action);
+                                       case OuyaSDK.KeyEnum.BUTTON_RB:
+                                               return GetButton(5, player, action);
+                                       case OuyaSDK.KeyEnum.BUTTON_O:
+                                               return GetButton(0, player, action);
+                                       case OuyaSDK.KeyEnum.BUTTON_U:
+                                               return GetButton(2, player, action);
+                                       case OuyaSDK.KeyEnum.BUTTON_Y:
+                                               return GetButton(3, player, action);
+                                       case OuyaSDK.KeyEnum.BUTTON_A:
+                                               return GetButton(1, player, action);
+                                       case OuyaSDK.KeyEnum.BUTTON_L3:
+                                               return GetButton(8, player, action);
+                                       case OuyaSDK.KeyEnum.BUTTON_R3:
+                                               return GetButton(9, player, action);
+                                       case OuyaSDK.KeyEnum.BUTTON_DPAD_DOWN:
+                                               return GetAxis(keyCode, player) < 0f;
+                                       case OuyaSDK.KeyEnum.BUTTON_DPAD_LEFT:
+                                               return GetAxis(keyCode, player) < 0f;
+                                       case OuyaSDK.KeyEnum.BUTTON_DPAD_RIGHT:
+                                               return GetAxis(keyCode, player) > 0f;
+                                       case OuyaSDK.KeyEnum.BUTTON_DPAD_UP:
+                                               return GetAxis(keyCode, player) > 0f;
+                                       case OuyaSDK.KeyEnum.BUTTON_LT:
+                                               return GetAxis(keyCode, player) > 0f;
+                                       case OuyaSDK.KeyEnum.BUTTON_RT:
+                                               return GetAxis(keyCode, player) > 0f;
+                                       default:
+                                               return false;
+                               }
+
+            default:
             case "OUYA GAME CONTROLLER":
 
 #if UNITY_4_3
