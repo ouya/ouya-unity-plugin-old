@@ -548,7 +548,7 @@ public class OuyaShowUnityInput : MonoBehaviour,
 
         #region triggers
         //Check LT button for down state
-        if (GetButton(OuyaSDK.KeyEnum.BUTTON_LT, OuyaExampleCommon.Player))
+        if (GetAxis(OuyaSDK.KeyEnum.BUTTON_LT, OuyaExampleCommon.Player) > 0.25f)
         {
             UpdateHighlight(RendererLT, true, true);
         }
@@ -558,7 +558,7 @@ public class OuyaShowUnityInput : MonoBehaviour,
         }
 
         //Check RT button for down state
-        if (GetButton(OuyaSDK.KeyEnum.BUTTON_RT, OuyaExampleCommon.Player))
+        if (GetAxis(OuyaSDK.KeyEnum.BUTTON_RT, OuyaExampleCommon.Player) > 0.25f)
         {
             UpdateHighlight(RendererRT, true, true);
         }
