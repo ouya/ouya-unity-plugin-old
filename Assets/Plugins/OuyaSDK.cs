@@ -26,7 +26,7 @@ using UnityEngine;
 
 public static class OuyaSDK
 {
-    public const string VERSION = "1.0.10.12";
+    public const string VERSION = "1.0.10.13";
 
     /// <summary>
     /// Cache joysticks
@@ -525,6 +525,11 @@ public static class OuyaSDK
         OuyaSDK.OuyaJava.JavaShowCursor(flag);
     }
 
+    public static void enableUnityInput(bool enabled)
+    {
+        OuyaSDK.OuyaJava.JavaEnableUnityInput(enabled);
+    }
+
     public static void putGameData(string key, string val)
     {
         OuyaSDK.OuyaJava.JavaPutGameData(key, val);
@@ -1006,6 +1011,34 @@ public static class OuyaSDK
             catch (Exception ex)
             {
                 Debug.LogError(string.Format("OuyaSDK.JavaShowCursor exception={0}", ex));
+            }
+            finally
+            {
+                AndroidJNI.PopLocalFrame(IntPtr.Zero);
+            }
+#endif
+        }
+
+        public static void JavaEnableUnityInput(bool enabled)
+        {
+#if UNITY_ANDROID && !UNITY_EDITOR && !UNITY_STANDALONE_OSX && !UNITY_STANDALONE_WIN && !UNITY_STANDALONE_LINUX
+
+            // again, make sure the thread is attached..
+            AndroidJNI.AttachCurrentThread();
+
+            AndroidJNI.PushLocalFrame(0);
+
+            try
+            {
+                //Debug.Log("JavaEnableUnityInput");
+                using (AndroidJavaClass ajc = new AndroidJavaClass(JAVA_CLASS))
+                {
+                    ajc.CallStatic("enableUnityInput", new object[] { enabled.ToString() });
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError(string.Format("OuyaSDK.JavaEnableUnityInput exception={0}", ex));
             }
             finally
             {

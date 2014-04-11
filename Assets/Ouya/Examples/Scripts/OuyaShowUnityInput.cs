@@ -45,6 +45,8 @@ public class OuyaShowUnityInput : MonoBehaviour,
 
     private bool m_showCursor = true;
 
+    private bool m_inputToggle = true;
+
     #region Thumbstick plots
 
     public Camera ThumbstickPlotCamera = null;
@@ -297,6 +299,12 @@ public class OuyaShowUnityInput : MonoBehaviour,
                 UpdatePlayerButtons();
             }
             x += 52;
+        }
+
+        if (GUI.Button(new Rect(300, 140, 200, 20), m_inputToggle ? "[Toggle Unity Input]" : "Toggle Unity Input"))
+        {
+            m_inputToggle = !m_inputToggle;
+            OuyaSDK.enableUnityInput(m_inputToggle);
         }
 
         /*
