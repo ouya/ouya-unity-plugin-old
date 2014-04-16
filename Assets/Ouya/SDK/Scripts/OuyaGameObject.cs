@@ -17,7 +17,7 @@
 using System;
 
 #if !UNITY_WP8
-using LitJson;
+using OuyaSDK_LitJson;
 #endif
 
 using System.Collections.Generic;
