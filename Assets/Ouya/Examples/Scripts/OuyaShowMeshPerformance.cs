@@ -170,8 +170,8 @@ public class OuyaShowMeshPerformance : MonoBehaviour,
             }
         }
 
-        float x = OuyaExampleCommon.GetAxis("LY", OuyaSDK.OuyaPlayer.player1);
-        float y = OuyaExampleCommon.GetAxis("LX", OuyaSDK.OuyaPlayer.player1);
+        float x = OuyaExampleCommon.GetAxis(OuyaSDK.KeyEnum.AXIS_LSTICK_Y, OuyaSDK.OuyaPlayer.player1);
+        float y = OuyaExampleCommon.GetAxis(OuyaSDK.KeyEnum.AXIS_LSTICK_X, OuyaSDK.OuyaPlayer.player1);
         Camera.main.transform.RotateAround(new Vector3(0, 0, 3), Camera.main.transform.rotation * Vector3.right, x * 45 * Time.fixedDeltaTime);
         Camera.main.transform.RotateAround(new Vector3(0, 0, 3), Camera.main.transform.rotation * Vector3.up, y * 45 * Time.fixedDeltaTime);
     }

@@ -26,7 +26,14 @@ using UnityEngine;
 
 public static class OuyaSDK
 {
-    public const string VERSION = "1.0.10.13";
+    public const string VERSION = "1.0.11.1";
+
+    /// <summary>
+    /// Input starts out disabled and turns on once Unity has loaded,
+    /// turn off input between scene changes,
+    /// Toggle with OuyaSDK.enableInput(boolean)
+    /// </summary>
+    public static bool m_EnableUnityInput = false;
 
     /// <summary>
     /// Cache joysticks
@@ -44,6 +51,11 @@ public static class OuyaSDK
     public static void UpdateJoysticks()
     {
 #if !UNITY_WP8
+        if (!m_EnableUnityInput)
+        {
+            return;
+        }
+
         if (m_timerJoysticks < DateTime.Now)
         {
             //check for new joysticks every N seconds
@@ -1021,6 +1033,8 @@ public static class OuyaSDK
 
         public static void JavaEnableUnityInput(bool enabled)
         {
+            m_EnableUnityInput = enabled;
+
 #if UNITY_ANDROID && !UNITY_EDITOR && !UNITY_STANDALONE_OSX && !UNITY_STANDALONE_WIN && !UNITY_STANDALONE_LINUX
 
             // again, make sure the thread is attached..

@@ -30,49 +30,35 @@ public class OuyaExampleCommon
 
     public static float GetAxis(OuyaSDK.KeyEnum keyCode, OuyaSDK.OuyaPlayer player)
     {
-        return GetAxisWithDelegate(keyCode, player, Input.GetAxis);
+        if (OuyaSDK.m_EnableUnityInput)
+        {
+            return GetAxisWithDelegate(keyCode, player, Input.GetAxis);
+        }
+        else
+        {
+            return 0f;
+        }
     }
 
     public static float GetAxisRaw(OuyaSDK.KeyEnum keyCode, OuyaSDK.OuyaPlayer player)
     {
-        return GetAxisWithDelegate(keyCode, player, Input.GetAxisRaw);
-    }
-
-    public static float GetAxis(string ouyaMapping, OuyaSDK.OuyaPlayer player)
-    {
-        switch (ouyaMapping)
+        if (OuyaSDK.m_EnableUnityInput)
         {
-            case "LB":
-                return GetAxis(OuyaSDK.KeyEnum.BUTTON_LB, player);
-            case "LT":
-                return GetAxis(OuyaSDK.KeyEnum.BUTTON_LT, player);
-            case "LX":
-                return GetAxis(OuyaSDK.KeyEnum.AXIS_LSTICK_X, player);
-            case "LY":
-                return GetAxis(OuyaSDK.KeyEnum.AXIS_LSTICK_Y, player);
-            case "RB":
-                return GetAxis(OuyaSDK.KeyEnum.BUTTON_RB, player);
-            case "RT":
-                return GetAxis(OuyaSDK.KeyEnum.BUTTON_RT, player);
-            case "RX":
-                return GetAxis(OuyaSDK.KeyEnum.AXIS_RSTICK_X, player);
-            case "RY":
-                return GetAxis(OuyaSDK.KeyEnum.AXIS_RSTICK_Y, player);
-            case "DL":
-                return GetAxis(OuyaSDK.KeyEnum.BUTTON_DPAD_LEFT, player);
-            case "DR":
-                return GetAxis(OuyaSDK.KeyEnum.BUTTON_DPAD_RIGHT, player);
-            case "DU":
-                return GetAxis(OuyaSDK.KeyEnum.BUTTON_DPAD_UP, player);
-            case "DD":
-                return GetAxis(OuyaSDK.KeyEnum.BUTTON_DPAD_DOWN, player);
-            default:
-                return 0f;
+            return GetAxisWithDelegate(keyCode, player, Input.GetAxisRaw);
+        }
+        else
+        {
+            return 0f;
         }
     }
 
     public static float GetAxisWithDelegate(OuyaSDK.KeyEnum keyCode, OuyaSDK.OuyaPlayer player, GetAxisDelegate action)
     {
+        if (!OuyaSDK.m_EnableUnityInput)
+        {
+            return 0f;
+        }
+
         if (null == OuyaSDK.Joysticks)
         {
             return 0f;
@@ -806,12 +792,19 @@ public class OuyaExampleCommon
 
     public static string GetKeyCode(int buttonNum, OuyaSDK.OuyaPlayer player)
     {
-        switch (player)
+        if (OuyaSDK.m_EnableUnityInput)
         {
-            case OuyaSDK.OuyaPlayer.none:
-                return string.Format("JoystickButton{0}", buttonNum);
-            default:
-                return string.Format("Joystick{0}Button{1}", ((int)player), buttonNum);
+            switch (player)
+            {
+                case OuyaSDK.OuyaPlayer.none:
+                    return string.Format("JoystickButton{0}", buttonNum);
+                default:
+                    return string.Format("Joystick{0}Button{1}", ((int) player), buttonNum);
+            }
+        }
+        else
+        {
+            return string.Empty;
         }
     }
 
@@ -819,11 +812,23 @@ public class OuyaExampleCommon
 
     public static bool GetButton(int buttonNum, OuyaSDK.OuyaPlayer player)
     {
-        return GetButton(buttonNum, player, Input.GetKey);
+        if (OuyaSDK.m_EnableUnityInput)
+        {
+            return GetButton(buttonNum, player, Input.GetKey);
+        }
+        else
+        {
+            return false;
+        }
     }
 
     public static bool GetButton(int buttonNum, OuyaSDK.OuyaPlayer player, GetButtonDelegate action)
     {
+        if (!OuyaSDK.m_EnableUnityInput)
+        {
+            return false;
+        }
+
         string keyCode = GetKeyCode(buttonNum, player);
         if (string.IsNullOrEmpty(keyCode))
         {
@@ -835,6 +840,11 @@ public class OuyaExampleCommon
 
     public static bool GetButton(OuyaSDK.KeyEnum keyCode)
     {
+        if (!OuyaSDK.m_EnableUnityInput)
+        {
+            return false;
+        }
+
         return (
                    GetButton(keyCode, OuyaSDK.OuyaPlayer.player1) ||
                    GetButton(keyCode, OuyaSDK.OuyaPlayer.player2) ||
@@ -848,21 +858,47 @@ public class OuyaExampleCommon
 
     public static bool GetButton(OuyaSDK.KeyEnum keyCode, OuyaSDK.OuyaPlayer player)
     {
-        return GetButtonWithDelegate(keyCode, player, Input.GetKey);
+        if (OuyaSDK.m_EnableUnityInput)
+        {
+            return GetButtonWithDelegate(keyCode, player, Input.GetKey);
+        }
+        else
+        {
+            return false;
+        }
     }
 
     public static bool GetButtonUp(OuyaSDK.KeyEnum keyCode, OuyaSDK.OuyaPlayer player)
     {
-        return GetButtonWithDelegate(keyCode, player, Input.GetKeyUp);
+        if (OuyaSDK.m_EnableUnityInput)
+        {
+            return GetButtonWithDelegate(keyCode, player, Input.GetKeyUp);
+        }
+        else
+        {
+            return false;
+        }
     }
 
     public static bool GetButtonDown(OuyaSDK.KeyEnum keyCode, OuyaSDK.OuyaPlayer player)
     {
-        return GetButtonWithDelegate(keyCode, player, Input.GetKeyDown);
+        if (OuyaSDK.m_EnableUnityInput)
+        {
+            return GetButtonWithDelegate(keyCode, player, Input.GetKeyDown);
+        }
+        else
+        {
+            return false;
+        }
     }
 
     public static bool GetButtonWithDelegate(OuyaSDK.KeyEnum keyCode, OuyaSDK.OuyaPlayer player, GetButtonDelegate action)
     {
+        if (!OuyaSDK.m_EnableUnityInput)
+        {
+            return false;
+        }
+
         if (null == OuyaSDK.Joysticks)
         {
             return false;

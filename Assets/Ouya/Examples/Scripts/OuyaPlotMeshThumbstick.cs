@@ -144,8 +144,8 @@ public class OuyaPlotMeshThumbstick : MonoBehaviour
     void UpdateTexture()
     {
         // range -1 to 1
-        float axisX = OuyaExampleCommon.GetAxis(StickX, Player);
-        float axisY = OuyaExampleCommon.GetAxis(StickY, Player);
+        float axisX = OuyaExampleCommon.GetAxis(OuyaSDK.KeyEnum.AXIS_LSTICK_X, Player);
+        float axisY = OuyaExampleCommon.GetAxis(OuyaSDK.KeyEnum.AXIS_LSTICK_Y, Player);
 
         // put in 0 to TextureSize range
         int x = (int)((axisX + 1) * 0.5f * (TextureSize - 1));

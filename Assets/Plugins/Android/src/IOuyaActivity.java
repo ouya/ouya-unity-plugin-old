@@ -97,7 +97,7 @@ public class IOuyaActivity
 	* like changing scenes and we want to stop the input
 	* going to Unity for a little bit.
 	*/
-	protected static boolean m_enableUnityInput = true;
+	protected static boolean m_enableUnityInput = false;
 	public static boolean GetEnableUnityInput()
 	{
 		return m_enableUnityInput;
