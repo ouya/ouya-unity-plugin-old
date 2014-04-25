@@ -1959,10 +1959,22 @@ public class OuyaPanel : EditorWindow
 
                 GUILayout.EndHorizontal();
 
-                if (GUILayout.Button("Download JDK 6 32-bit"))
+				GUILayout.Label("Java JDK Download Links (32bit)", EditorStyles.boldLabel);	
+
+                if (GUILayout.Button("Windows XP, Vista, 7"))
                 {
                     Application.OpenURL("http://www.oracle.com/technetwork/java/javasebusiness/downloads/java-archive-downloads-javase6-419409.html#jdk-6u45-oth-JPR");
                 }
+
+				if (GUILayout.Button("Windows 8"))
+				{
+					Application.OpenURL("http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html");
+				}
+
+				if (GUILayout.Button("OSX"))
+				{
+					Application.OpenURL("http://support.apple.com/kb/DL1572?viewlocale=en_US");
+				}
 
                 break;
             case 3:
