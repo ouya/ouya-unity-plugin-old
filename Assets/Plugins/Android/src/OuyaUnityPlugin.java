@@ -414,7 +414,7 @@ public class OuyaUnityPlugin
 			else
 			{
 				Log.i(LOG_TAG, "OuyaUnityPlugin.getReceiptsAsync: m_unityOuyaFacade is valid");
-				Product product = new Product(sku, "", 0, 0, "", 0, 0, "");
+				Product product = new Product(sku, "", 0, 0, "", 0, 0, "", "");
 				m_unityOuyaFacade.requestPurchase(product);
 			}
 		}
